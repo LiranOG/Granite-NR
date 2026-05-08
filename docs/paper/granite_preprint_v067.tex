@@ -745,7 +745,7 @@ hardware access is restored---either through a replacement workstation or
 an allocated HPC partition---all three benchmark families will be completed
 and the formal convergence orders reported.
 Until that point, correctness of the CCZ4 and GRMHD modules is supported
-by the 92-test GoogleTest suite (Sec.~\ref{sec:testing}) and the
+by the 92-test GoogleTest suite (Sec.~\ref{sec:architecture}, Table~\ref{tab:tests}) and the
 single-puncture and binary evolution results shown below, which demonstrate
 constraint stability and monotonic decay across $500\,M$ of evolution.
 
@@ -776,8 +776,10 @@ $\norm{\mathcal{H}}_2 = 1.083\times10^{-2}$ at $t = 0.75\,M$ to
 $1.277\times10^{-4}$ at $t = 500\,M$---a factor of $\mathbf{84.8\times}$
 reduction---demonstrating that the CCZ4 constraint-damping system functions
 correctly over long single-puncture evolutions.
-The central lapse converges to $\alpha_{\rm center} \approx 0.94$,
-consistent with the analytic trumpet geometry of the $1+\log$ gauge.
+The central lapse diagnostic reads $\alpha_{\rm center} \approx 0.94$
+at AMR level~0; the expected trumpet value at the finest level near
+the puncture is $\alpha \approx 0.3$~\cite{Campanelli2006}.
+See the known diagnostic limitation in Sec.~\ref{sec:limitations}.
 No NaN events were recorded across 1{,}334 time steps.
 
 At $128^3$ ($\Delta x_{\rm finest} = 0.09375\,M$), the constraint norm
@@ -886,6 +888,14 @@ constraint after the initial gauge transient.
 \section{OpenMP Thread Scaling}
 \label{sec:scaling}
 
+\paragraph{Note on hardware availability.}
+The thread-scaling measurements reported in this section were performed on
+Machine~B prior to the loss of access to that hardware.
+The planned extension of the scaling study to a $128^3$ base grid---which
+would validate the predicted $\eta_\parallel \gtrsim 60\%$ regime---is
+deferred to v0.7, together with the full gauge-wave and BBH convergence
+campaigns.
+
 Thread-scaling measurements were performed on Machine~B (Intel Core
 i5-12600KF, Alder Lake: 6 performance cores with Hyper-Threading + 4
 efficiency cores, 3.70\,GHz base, 32\,GB DDR4-3600, WSL2) with
@@ -972,6 +982,11 @@ We discuss the most significant items below.
   No GRMHD or radiation benchmarks validated to date
     & GRMHD module correctness demonstrated by unit tests only;
       convergence tests (Brio--Wu, OT vortex, TOV oscillation) pending
+    & Known & v0.7 \\[2pt]
+    Three-resolution gauge-wave convergence study, thread-scaling extension
+    to $128^3$, and matched BBH convergence series not yet executed
+    & Formal 4th-order convergence order undemonstrated;
+      SXS:BBH:3634 validation pending
     & Known & v0.7 \\[2pt]
   GPU acceleration not yet implemented
     & Production-scale B5\_star requires H100-class hardware
@@ -1451,9 +1466,11 @@ Validated benchmarks demonstrate:
     with moving-puncture gauges.
   \item \textbf{Binary black hole inspiral}: $61.3\times$ constraint reduction
     over $500\,M$ at $64^3$ resolution with zero NaN events and correct
-    Bowen--York trumpet convergence.
+    Bowen--York initial-data construction and stable long-term evolution.
   \item \textbf{Thread safety}: bit-for-bit identical physics output across
     1--6 OpenMP threads, confirming deterministic reproducibility.
+    Full thread-scaling to $128^3$ base resolution is a v0.7 deliverable,
+    pending restoration of the second development machine.
   \item \textbf{Dynamic AMR}: fully live per-step regridding with
     puncture-tracking spheres wired into the production RK3 loop.
   \item \textbf{\textsc{Vortex} companion engine}: a browser-native
@@ -1466,6 +1483,11 @@ Validated benchmarks demonstrate:
 Known limitations---including the M1/neutrino loop coupling, the
 checkpoint-restart CLI, the AMR reflux stub, and the absence of
 GRMHD convergence benchmarks---are documented explicitly.
+The three-resolution gauge-wave convergence study, the matched BBH
+convergence series, and the $128^3$ thread-scaling extension are
+additionally pending restoration of dedicated hardware for long-running
+campaigns; these are v0.7 deliverables and will accompany a revised
+arXiv submission.
 
 \granite{} is publicly available under GPL-3.0 at
 \url{https://github.com/LiranOG/Granite}, archived at Zenodo with
