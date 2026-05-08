@@ -124,6 +124,8 @@ The table below shows the current implementation status of GRANITE v0.6.7.2 rela
 
 All results are from **production runs on a single desktop workstation** (Intel i5-8400, 6-core, 16 GB DDR4, Linux/WSL2). Every number below is from real simulation logs and is fully reproducible by cloning this repository.
 
+> - **Hardware note:** The three-resolution gauge-wave convergence test, the `{1,2,3,6}`-thread scaling extension to 128³, and the matched BBH convergence series targeting SXS:BBH:3634 have **not yet been executed** — access to the second development machine (i5-12600KF) is temporarily unavailable. These are v0.7 deliverables; once hardware is restored, all runs will be completed and results published here.
+
 ### Single Moving Puncture — Schwarzschild Stability
 
 | Resolution | AMR Levels | dx finest | ‖H‖₂ t=0 | ‖H‖₂ final | Reduction | t\_final | NaN events |
@@ -395,6 +397,7 @@ Scientific integrity demands transparency. These limitations are known, document
 | `writeCheckpoint()` fully implemented; `--resume` CLI flag not yet wired | Long runs cannot be resumed without code modification | 🔄 Active | v0.7 |
 | M1 radiation built but not wired into RK3 loop | Radiation not active in production runs | 🔄 Active | v0.7 |
 | `alpha_center` reads from AMR level 0, not finest level near puncture | Misleading lapse diagnostic | 📋 Known | v0.7 |
+| Three-resolution gauge-wave convergence, 128³ thread-scaling, and matched BBH convergence runs not yet executed | Formal 4th-order convergence order undemonstrated; SXS:BBH:3634 validation pending | 📋 Known | v0.7 |
 | GTX 1050 Ti not viable for FP64 GPU compute | GPU path requires H100-class hardware | 📋 Known | Post GPU porting |
 | Native Windows unsupported; macOS Homebrew experimental (not CI-gated) | Limits CI coverage; macOS issues cannot be caught automatically | 📋 Tracked | v0.8+ |
 | Tangential BY momenta required for inspiral p_t ≈ ±0.0954 per BH (quasi-circular, d = 10 M) | Zero momenta → head-on, not inspiral | 📝 Documented | User parameter |
