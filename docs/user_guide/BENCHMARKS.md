@@ -274,6 +274,18 @@ amr:
 | 64³ | 1.5 | 0.1875 | ~3.5 × 10⁻⁴ | Interpolated from 500M run |
 | 128³ | 0.75 | 0.09375 | 1.039 × 10⁻³ | Direct measurement |
 
+> **Status — Pending hardware restoration:** Formal convergence order testing
+> requires three runs at ×2 resolution ratios (64³ / 128³ / 256³) with
+> identical parameters under controlled conditions. This campaign has not yet
+> been executed: access to the secondary development workstation (i5-12600KF,
+> 32 GB DDR4) required for multi-hour high-resolution runs is temporarily
+> unavailable. The formal convergence study — expected to demonstrate the
+> theoretical 4th-order rate of the CCZ4 advection stencil — is a **v0.7
+> deliverable**. Once hardware is restored, results will be published in this
+> section alongside the matched BBH convergence series targeting SXS:BBH:3634.
+> Until then, module correctness is validated by the 107-test GoogleTest suite
+> and the single-puncture stability results above.
+
 ---
 
 ## 7. Throughput & Wall-Time Scaling
