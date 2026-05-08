@@ -104,6 +104,15 @@ The table below shows the current implementation status of GRANITE v0.6.7.2 rela
 
 > *N>3 BH: Brill-Lindquist multi-BH initial data and 5-BH `B5_star` benchmark configuration exist; production run at research resolution (256³+) requires GPU porting (v0.7 target).*
 
+> *Dynamic AMR marked 🔶 for GRANITE: the Berger–Oliger subcycling hierarchy
+> is implemented and integrated into the production RK3 loop with live
+> per-step regridding and puncture-tracking spheres. However, three known
+> limitations remain: (1) the reflux correction operator at coarse–fine
+> interfaces is a stub — computed but not applied; (2) AMR prolongation is
+> trilinear (2nd-order) only; (3) production benchmarks are validated at
+> 4 refinement levels, not the 12-level target required for B5\_star.
+> Full ✅ status is the v0.8 target.*
+
 *(Table abridged. See the full feature matrix below.)*
 
 **Legend:**
@@ -209,6 +218,7 @@ All results are from **production runs on a single desktop workstation** (Intel 
 >3. Extract the ZIP inside WSL/Linux.
 >4. Follow the build/run commands included in the tagged version.
 >5. Use the legacy `sim_tracker.py` workflow for live telemetry.
+
 
 ### Step 1 — Clone the Repository
 ```bash
@@ -463,7 +473,7 @@ GRANITE uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html). During 
 | `v0.6.5` | 2026-04-07 | ✅ | Tactical reset — stable baseline, 92 tests, 8-layer stability guard |
 | `v0.6.5.4` | 2026-04-10 | ✅ | GitHub Wiki launch — 17 technical pages, ~18,000 words |
 | `v0.6.5.5` | 2026-04-11 | ✅ | `README.md` overhaul — benchmarks, roadmap, competitor matrix |
-| `v0.6.6` | 2026-04-12\15 | ✅ | VORTEX WebGL engine + Gold Master cinematic & analytical systems |
+| `v0.6.6` | 2026-04-12—15 | ✅ | VORTEX WebGL engine + Gold Master cinematic & analytical systems |
 | **`v0.6.7.2`** | **2026-04-27** | ✅ **Current** | **107 tests / 20 suites — 100% CI clean. Full repo seal.** |
 | `v0.7.0` | Q2 2026 | 🔄 Planned | GPU CUDA kernels, checkpoint-restart, full dynamic AMR, M1 wired into RK3 |
 | `v1.0.0` | Q1 2027 | 🎯 Target | B5_star production run, full community release, GitHub Releases activated |
