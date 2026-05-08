@@ -726,6 +726,28 @@ cores at 2.8--4.0\,GHz, 16\,GB DDR4-2400, running \granite{} v0.6.7 compiled
 with GCC~11.4, \code{-O3 -march=native -DNDEBUG}, under WSL2 Ubuntu~22.04
 with OpenMPI~4.1.2).
 
+\paragraph{Hardware availability and benchmark scope.}
+The benchmark suite presented in this section reflects the computational
+resources available at the time of writing.
+A subset of the planned validation runs---specifically, the three-resolution
+gauge-wave convergence study required to demonstrate formal fourth-order
+convergence of the CCZ4 advection stencil, the OpenMP thread-scaling
+measurement across the full $\{1,2,3,6\}$-thread matrix, and the matched
+binary black-hole convergence series---have not yet been executed.
+Access to Machine~B (Intel Core i5-12600KF, 32\,GB DDR4-3600), which was
+previously used to supplement the desktop node for computationally intensive
+runs, is no longer available; the remaining development hardware (Machine~A,
+Sec.~\ref{sec:benchmarks}) is insufficient to execute high-resolution
+multi-hour campaigns without disrupting active code-development iterations.
+These outstanding runs are designated as v0.7 deliverables: once stable
+hardware access is restored---either through a replacement workstation or
+an allocated HPC partition---all three benchmark families will be completed
+and the formal convergence orders reported.
+Until that point, correctness of the CCZ4 and GRMHD modules is supported
+by the 92-test GoogleTest suite (Sec.~\ref{sec:testing}) and the
+single-puncture and binary evolution results shown below, which demonstrate
+constraint stability and monotonic decay across $500\,M$ of evolution.
+
 \subsection{Gauge-Wave Propagation}
 \label{sec:gw_bench}
 
