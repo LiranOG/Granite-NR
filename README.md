@@ -200,13 +200,6 @@ All results are from **production runs on a single desktop workstation** (Intel 
 
 ## 🚀 Quick Start Guide
 
-> [!WARNING]
-> **v0.6.7.2 — Active Stabilization in Progress**
->
-> A recent structural reorganisation of the `scripts/` directory introduced several integration issues that are currently being triaged and resolved. Some CLI workflows, Python analysis tools, and virtual environment setup steps may temporarily behave unexpectedly until the patch is complete. All core physics (C++ engine, unit tests, simulation runs) is unaffected — 107/107 tests pass clean.
->
-> Fixes are being pushed continuously. If something doesn't work as documented, check [`CHANGELOG.md`](./CHANGELOG.md) for the latest patch status or open an [issue](https://github.com/LiranOG/Granite-NR/issues).
-
 > [!TIP]
 > **Stable baseline for first-time users:** The current `main` branch is under active v0.6.7.x restructuring, including CLI cleanup, Python tooling migration, documentation synchronization, and benchmark-schema updates. If you prefer a known-good first-run workflow without debugging current `main`-branch integration changes, use the `v0.6.5` tag as the recommended stable baseline.
 > 
@@ -219,6 +212,12 @@ All results are from **production runs on a single desktop workstation** (Intel 
 >4. Follow the build/run commands included in the tagged version.
 >5. Use the legacy `sim_tracker.py` workflow for live telemetry.
 
+> [!WARNING]
+> **v0.6.7.2 — Active Stabilization in Progress**
+>
+> A recent structural reorganisation of the `scripts/` directory introduced several integration issues that are currently being triaged and resolved. Some CLI workflows, Python analysis tools, and virtual environment setup steps may temporarily behave unexpectedly until the patch is complete. All core physics (C++ engine, unit tests, simulation runs) is unaffected — 107/107 tests pass clean.
+>
+> Fixes are being pushed continuously. If something doesn't work as documented, check [`CHANGELOG.md`](./CHANGELOG.md) for the latest patch status or open an [issue](https://github.com/LiranOG/Granite-NR/issues).
 
 ### Step 1 — Clone the Repository
 ```bash
