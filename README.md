@@ -140,9 +140,50 @@ All results are from **production runs on a single desktop workstation** (Intel 
 | 64³ | 4 | 0.781 M | 8.226 × 10⁻⁴ | **1.341 × 10⁻⁵** | **×61.3** | 98.9 min | 0.084 M/s | 0 |
 | 96³ | 4 | 0.521 M | 2.385 × 10⁻³ | **3.538 × 10⁻⁵** | **×67.4** | 496 min | 0.017 M/s | 0 |
 
-> **What ‖H‖₂ reduction means:** The Hamiltonian constraint measures how accurately the evolved spacetime satisfies Einstein's equations. A monotonically *decreasing* ‖H‖₂ over 500 M of simulated time is a necessary (but not sufficient) indicator of **numerical stability and correct constraint damping**.
+---
+
+### Constraint Violation Reduction
+
+> **Figure 1:** Normalized ‖H‖₂ decay demonstrated from devlog telemetry —
+> single puncture 64³ (×84.8 reduction) and equal-mass BBH 64³ (×61.3 reduction)
+> over 500 M of evolution. Zero NaN events recorded in both runs.
+
+<p align="center">
+  <img src="docs/paper/figures/fig3_constraint_comparison.png"
+       width="700"
+       alt="Normalized Hamiltonian constraint decay: ×84.8 (SP) and ×61.3 (BBH) over 500M"/>
+</p>
+
+---
+
+### OpenMP Thread Scaling
+
+> **Figure 2:** Parallel speedup and efficiency on Intel i5-12600KF (6 P-cores, WSL2).
+> Physics output is bit-for-bit identical across all thread counts.
+> Extension to 128³ base grid pending hardware restoration (v0.7 target).
+
+<p align="center">
+  <img src="docs/paper/figures/fig4_scaling.png"
+       width="680"
+       alt="OpenMP parallel speedup and efficiency: 1.68× at 6 threads (i5-12600KF, WSL2)"/>
+</p>
+
+---
+
+### BBH Comprehensive Diagnostics
+
+> **Figure 3:** Four-panel BBH evolution from devlog telemetry —
+> ‖H‖₂ decay, central lapse α, AMR block count, and throughput (M/s) over 500 M.
+
+<p align="center">
+  <img src="docs/paper/figures/fig9_bbh_comprehensive.png"
+       width="700"
+       alt="BBH evolution: constraint decay, lapse, AMR blocks, and throughput over 500M"/>
+</p>
+
+> - **What ‖H‖₂ reduction means:** The Hamiltonian constraint measures how accurately the evolved spacetime satisfies Einstein's equations. A monotonically *decreasing* ‖H‖₂ over 500 M of simulated time is a necessary (but not sufficient) indicator of **numerical stability and correct constraint damping**.
 >
-> **What these benchmarks do NOT yet prove:** The t=500M runs above reach *early inspiral phase only* (no merger observed). Merger-waveform validation against the SXS catalog is a **v0.8–v0.9 target**. See [Known Limitations](#️-known-limitations-v067).
+> - **What these benchmarks do NOT yet prove:** The t=500M runs above reach *early inspiral phase only* (no merger observed). Merger-waveform validation against the SXS catalog is a **v0.8–v0.9 target**. See [Known Limitations](#️-known-limitations-v067).
 >
 > 📄 Raw telemetry, step-by-step logs, and extended resolution tables: [`docs/user_guide/BENCHMARKS.md`](./docs/user_guide/BENCHMARKS.md)
 
