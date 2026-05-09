@@ -746,7 +746,7 @@ Completely rebuilt `README.md` from its v0.6.5 baseline. The restructure adds a 
                  Tool for Extreme Astrophysics},
     year      = {2026},
     version   = {v0.6.5},
-    url       = {https://github.com/LiranOG/Granite},
+    url       = {https://github.com/LiranOG/Granite-NR},
     note      = {CCZ4 + GRMHD + AMR engine for multi-body black hole merger simulations}
   }
 
@@ -770,7 +770,7 @@ tangential momenta.
 
 ### Added — GitHub Wiki (17 pages, ~18,000 words)
 
-**Wiki URL:** https://github.com/LiranOG/Granite/wiki
+**Wiki URL:** https://github.com/LiranOG/Granite-NR/wiki
 
 All 17 pages were authored, cross-referenced, and validated on April 10, 2026.
 Each page is technically grounded in the actual v0.6.5 source code — no claim
@@ -781,7 +781,7 @@ reflecting the full iterative authoring session.
 
 #### `Home.md` — Project Landing Page
 
-**URL:** https://github.com/LiranOG/Granite/wiki/Home
+**URL:** https://github.com/LiranOG/Granite-NR/wiki/Home
 
 - Engine capability overview: CCZ4, GRMHD Valencia, AMR, multi-physics matter, GW
   extraction, HPC parallelism.
@@ -798,7 +798,7 @@ reflecting the full iterative authoring session.
 
 #### `Architecture-Overview.md` — Engine Architecture Reference
 
-**URL:** https://github.com/LiranOG/Granite/wiki/Architecture-Overview
+**URL:** https://github.com/LiranOG/Granite-NR/wiki/Architecture-Overview
 
 10 major sections. The most comprehensive technical page on the wiki.
 
@@ -836,7 +836,7 @@ reflecting the full iterative authoring session.
 
 #### `Physics-Formulations.md` — Governing Equations Reference
 
-**URL:** https://github.com/LiranOG/Granite/wiki/Physics-Formulations
+**URL:** https://github.com/LiranOG/Granite-NR/wiki/Physics-Formulations
 
 - **Â§1 CCZ4:** Full evolution equations for âˆ‚_t Ï‡, âˆ‚_t Î³Ìƒ_ij, âˆ‚_t K, âˆ‚_t Î˜ with
   Îºâ‚, Îºâ‚‚ terms. Production defaults: Îºâ‚=0.02, Îºâ‚‚=0, Î·=2.0.
@@ -860,7 +860,7 @@ reflecting the full iterative authoring session.
 
 #### `Parameter-Reference.md` — Complete params.yaml Reference
 
-**URL:** https://github.com/LiranOG/Granite/wiki/Parameter-Reference
+**URL:** https://github.com/LiranOG/Granite-NR/wiki/Parameter-Reference
 
 The single most operationally important wiki page. Documents every configurable
 parameter with type, default, units, valid range, and warnings.
@@ -899,7 +899,7 @@ parameter with type, default, units, valid range, and warnings.
 
 #### `AMR-Design.md` — Berger-Oliger AMR Technical Reference
 
-**URL:** https://github.com/LiranOG/Granite/wiki/AMR-Design
+**URL:** https://github.com/LiranOG/Granite-NR/wiki/AMR-Design
 
 - **Â§1 Subcycling:** `dt_â„“ = dt_0 / 2^â„“` formula. Pseudo-code for recursive
   subcycle function with restrict step labeled.
@@ -922,7 +922,7 @@ parameter with type, default, units, valid range, and warnings.
 
 #### `Initial-Data.md` — Initial Data Reference
 
-**URL:** https://github.com/LiranOG/Granite/wiki/Initial-Data
+**URL:** https://github.com/LiranOG/Granite-NR/wiki/Initial-Data
 
 - **Â§1 Two-Punctures / Bowen-York:** Physics background (conformal factor Ïˆ = Ïˆ_BL + u).
   5-row quasi-circular momentum table for separations d=6M to d=15M with
@@ -941,7 +941,7 @@ parameter with type, default, units, valid range, and warnings.
 
 #### `Known-Fixed-Bugs.md` — Authoritative Bug Registry
 
-**URL:** https://github.com/LiranOG/Granite/wiki/Known-Fixed-Bugs
+**URL:** https://github.com/LiranOG/Granite-NR/wiki/Known-Fixed-Bugs
 
 Standing order header: "Every PR that touches any of the files listed in this table
 MUST explicitly verify that the corresponding fix is still in place."
@@ -966,7 +966,7 @@ with before/after code snippets where applicable, consequence, and verification 
 
 #### `Simulation-Health-&-Debugging.md` — Debugging Reference
 
-**URL:** https://github.com/LiranOG/Granite/wiki/Simulation-Health-&-Debugging
+**URL:** https://github.com/LiranOG/Granite-NR/wiki/Simulation-Health-&-Debugging
 
 **This page supersedes the outdated `docs/diagnostic_handbook.md`.**
 All thresholds calibrated to actual v0.6.5 production run output.
@@ -1012,7 +1012,7 @@ All thresholds calibrated to actual v0.6.5 production run output.
 
 #### `Benchmarks-&-Validation.md` — Numerical Results
 
-**URL:** https://github.com/LiranOG/Granite/wiki/Benchmarks-&-Validation
+**URL:** https://github.com/LiranOG/Granite-NR/wiki/Benchmarks-&-Validation
 
 - Hardware: i5-8400, 16 GB DDR4, WSL2 Ubuntu 22.04, GCC 11.4 -O3, OpenMPI 4.1.2.
 - **Single Puncture 64Â³:** â€–Hâ€–â‚‚: 1.083e-2 â†’ 1.277e-4 (Ã—84.8 reduction). 0 NaN. 497 min.
@@ -1030,7 +1030,7 @@ All thresholds calibrated to actual v0.6.5 production run output.
 
 #### `Developer-Guide.md` — Contributor Reference
 
-**URL:** https://github.com/LiranOG/Granite/wiki/Developer-Guide
+**URL:** https://github.com/LiranOG/Granite-NR/wiki/Developer-Guide
 
 - **Â§1 Coding Standards:** C++17 mandate. No exceptions policy. Logger not cout.
   Naming convention table (namespace snake_case / class PascalCase / function
@@ -1051,7 +1051,7 @@ All thresholds calibrated to actual v0.6.5 production run output.
 
 #### `HPC-Deployment.md` — HPC Operations Guide
 
-**URL:** https://github.com/LiranOG/Granite/wiki/HPC-Deployment
+**URL:** https://github.com/LiranOG/Granite-NR/wiki/HPC-Deployment
 
 - **Â§1 Pre-Flight:** `health_check.py` as mandatory first step.
 - **Â§2 Memory Requirements:** 5-row table (64Â³â†’B5_star) with RAM estimates and formula
@@ -1071,7 +1071,7 @@ All thresholds calibrated to actual v0.6.5 production run output.
 
 #### `Gravitational-Wave-Extraction.md` — GW Extraction Reference
 
-**URL:** https://github.com/LiranOG/Granite/wiki/Gravitational-Wave-Extraction
+**URL:** https://github.com/LiranOG/Granite-NR/wiki/Gravitational-Wave-Extraction
 
 - **Â§1 Newman-Penrose Î¨â‚„:** Î¨â‚„ = âˆ’(á¸§â‚Š âˆ’ iá¸§Ã—) / 2r. NP formalism on CCZ4 metric.
 - **Â§2 Spherical Harmonic Decomposition:** Full spin-weighted decomposition formula.
@@ -1089,7 +1089,7 @@ All thresholds calibrated to actual v0.6.5 production run output.
 
 #### `FAQ.md` — Frequently Asked Questions
 
-**URL:** https://github.com/LiranOG/Granite/wiki/FAQ
+**URL:** https://github.com/LiranOG/Granite-NR/wiki/FAQ
 
 12 questions across Science, Engineering, and HPC categories. Key entries:
 
@@ -1115,7 +1115,7 @@ All thresholds calibrated to actual v0.6.5 production run output.
 
 #### `Scientific-Context.md` — Scientific Motivation
 
-**URL:** https://github.com/LiranOG/Granite/wiki/Scientific-Context
+**URL:** https://github.com/LiranOG/Granite-NR/wiki/Scientific-Context
 
 - **Â§1 The Problem:** 4 coupled physics systems. Binary BH domain vs. GRANITE domain.
 - **Â§2 Why Existing Codes Are Insufficient:** 5-row code comparison table
@@ -1134,7 +1134,7 @@ All thresholds calibrated to actual v0.6.5 production run output.
 
 #### `Roadmap.md` — Development Roadmap
 
-**URL:** https://github.com/LiranOG/Granite/wiki/Roadmap
+**URL:** https://github.com/LiranOG/Granite-NR/wiki/Roadmap
 
 - **Version Table:** v0.6.5 âœ… Released â†’ v0.7 ðŸ”„ In Progress â†’ v0.8 ðŸ“‹ Planned â†’
   v0.9 ðŸ“‹ Planned â†’ v1.0 ðŸŽ¯ Target Q1 2027.
@@ -1150,7 +1150,7 @@ All thresholds calibrated to actual v0.6.5 production run output.
 
 #### `CHANGELOG-Summary.md` — Version History Summary
 
-**URL:** https://github.com/LiranOG/Granite/wiki/CHANGELOG-Summary
+**URL:** https://github.com/LiranOG/Granite-NR/wiki/CHANGELOG-Summary
 
 High-level summary of all versions from Phase 4A through v0.6.5 with key deliverables
 per version. References the full `CHANGELOG.md` for complete technical details.
@@ -1159,7 +1159,7 @@ per version. References the full `CHANGELOG.md` for complete technical details.
 
 #### `Documentation-Index-&-Master-Reference.md` — Complete Document Inventory
 
-**URL:** https://github.com/LiranOG/Granite/wiki/Documentation-Index-&-Master-Reference
+**URL:** https://github.com/LiranOG/Granite-NR/wiki/Documentation-Index-&-Master-Reference
 
 The most comprehensive wiki page (15 sections, ~6,000 words). A per-file encyclopedia
 of every document in the repository.
@@ -2337,7 +2337,7 @@ Complete engine stabilization session that took the test suite from **47 â†�
 
 ---
 
-## [Commit `029e240`](https://github.com/LiranOG/Granite/commit/029e240b5447ad95a7afb1fadc1a5ba092d7a671) — Fix CI Build Environment & Static Analysis (2026-03-28)
+## [Commit `029e240`](https://github.com/LiranOG/Granite-NR/commit/029e240b5447ad95a7afb1fadc1a5ba092d7a671) — Fix CI Build Environment & Static Analysis (2026-03-28)
 
 ### Fixed — CI/CD Pipeline (`.github/workflows/ci.yml`)
 
@@ -2364,7 +2364,7 @@ Complete engine stabilization session that took the test suite from **47 â†�
 
 ---
 
-## [Commit `54cc210`](https://github.com/LiranOG/Granite/commit/54cc2103d905932a718ccf6695adcea02b5f3792) — Test Suite Regressions, MPI Boundary Tests, Struct Initialization (2026-03-28)
+## [Commit `54cc210`](https://github.com/LiranOG/Granite-NR/commit/54cc2103d905932a718ccf6695adcea02b5f3792) — Test Suite Regressions, MPI Boundary Tests, Struct Initialization (2026-03-28)
 
 ### Fixed — API Compatibility (`GridBlock::iend`)
 
@@ -2407,7 +2407,7 @@ Complete engine stabilization session that took the test suite from **47 â†�
 
 ---
 
-## [Commit `5ad4331`](https://github.com/LiranOG/Granite/commit/5ad433130013fd11ba5dd60920e107007fa6cff8) — Non-Blocking MPI Ghost Zone Synchronization for AMR (2026-03-28)
+## [Commit `5ad4331`](https://github.com/LiranOG/Granite-NR/commit/5ad433130013fd11ba5dd60920e107007fa6cff8) — Non-Blocking MPI Ghost Zone Synchronization for AMR (2026-03-28)
 
 ### Added — HPC Features (`GridBlock`)
 
@@ -2444,7 +2444,7 @@ Complete engine stabilization session that took the test suite from **47 â†�
 
 ---
 
-## [Commit `2e1d977`](https://github.com/LiranOG/Granite/commit/2e1d9776c62153d178c7bc085bcbb2ea475c85c3) — Complete v0.1.0 Integration: AMR + GRMHD Coupling (2026-03-28)
+## [Commit `2e1d977`](https://github.com/LiranOG/Granite-NR/commit/2e1d9776c62153d178c7bc085bcbb2ea475c85c3) — Complete v0.1.0 Integration: AMR + GRMHD Coupling (2026-03-28)
 
 ### Added — Engine Integration
 
@@ -2482,7 +2482,7 @@ Complete engine stabilization session that took the test suite from **47 â†�
 
 ---
 
-## [Commit `e9d44fc`](https://github.com/LiranOG/Granite/commit/e9d44fc64de46c43b0e5104a0f55f36c5c7e8091) — Full Project Optimization: CI, Runner Script, README (2026-03-28)
+## [Commit `e9d44fc`](https://github.com/LiranOG/Granite-NR/commit/e9d44fc64de46c43b0e5104a0f55f36c5c7e8091) — Full Project Optimization: CI, Runner Script, README (2026-03-28)
 
 ### Added — Tooling
 
@@ -2509,7 +2509,7 @@ Complete engine stabilization session that took the test suite from **47 â†�
 
 ---
 
-## [Commit `792085a`](https://github.com/LiranOG/Granite/commit/792085afa25fa1bc88d7765705cda9a960dc14ab) — Initial Repository Upload (2026-03-27)
+## [Commit `792085a`](https://github.com/LiranOG/Granite-NR/commit/792085afa25fa1bc88d7765705cda9a960dc14ab) — Initial Repository Upload (2026-03-27)
 
 ### Added — Complete Engine Architecture
 

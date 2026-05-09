@@ -5,7 +5,7 @@ labels: bug
 ---
 
 > [!IMPORTANT]
-> **Before submitting:** Please search the [Issue Tracker](https://github.com/LiranOG/Granite/issues) and the `Known-Fixed-Bugs` wiki page to ensure this is not a duplicate or already resolved issue.
+> **Before submitting:** Please search the [Issue Tracker](https://github.com/LiranOG/Granite-NR/issues) and the `Known-Fixed-Bugs` wiki page to ensure this is not a duplicate or already resolved issue.
 
 ## 🚨 What Happened
 
@@ -17,7 +17,7 @@ labels: bug
 
 ```bash
 # Example:
-git clone https://github.com/LiranOG/Granite && cd Granite
+git clone https://github.com/LiranOG/Granite-NR && cd Granite
 python3 scripts/run_granite.py build --release
 python3 scripts/run_granite.py run --benchmark B2_eq
 # or exact cmake + ctest commands

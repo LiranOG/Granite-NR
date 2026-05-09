@@ -2,7 +2,7 @@ Initial Data Formulation
 ========================
 
 .. note::
-   **v0.7 TARGET STUB:** See ``src/initial_data/initial_data.cpp`` and the `Initial-Data wiki page <https://github.com/LiranOG/Granite/wiki/Initial-Data>`_ for exhaustive implementation details. This documentation is a stub scheduled for completion in the v0.7 cycle.
+   **v0.7 TARGET STUB:** See ``src/initial_data/initial_data.cpp`` and the `Initial-Data wiki page <https://github.com/LiranOG/Granite-NR/wiki/Initial-Data>`_ for exhaustive implementation details. This documentation is a stub scheduled for completion in the v0.7 cycle.
 
 **GRANITE** provides three distinct initial data solvers for configuring the spacetime geometry and matter distribution at :math:`t=0`.
 

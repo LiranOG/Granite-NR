@@ -3,7 +3,7 @@ Gravitational Wave Extraction
 
 .. note::
    **v0.7 TARGET STUB:** The GW extraction infrastructure is fully implemented on the analysis side in ``python/granite_analysis/gw.py``, but production activation within the C++ engine is targeted for v0.7. 
-   See the `GW Extraction wiki page <https://github.com/LiranOG/Granite/wiki/Gravitational-Wave-Extraction>`_ for comprehensive details.
+   See the `GW Extraction wiki page <https://github.com/LiranOG/Granite-NR/wiki/Gravitational-Wave-Extraction>`_ for comprehensive details.
 
 **GRANITE** extracts gravitational wave signals directly from the evolved spacetime using the rigorous Newman-Penrose :math:`\Psi_4` scalar formalism `[Newman1962]`_.
 

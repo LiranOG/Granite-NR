@@ -30,8 +30,8 @@
 8. [Tactical Minimap 3.0](#️-tactical-minimap-30)
 9. [Interaction & Controls](#-interaction--controls)
 10. [Keyboard Reference](#️-keyboard-reference)
-11. [Comparison with Related Tools](https://github.com/LiranOG/Granite/blob/main/viz/vortex_eternity/README.md#%EF%B8%8F-keyboard-reference)
-12. [Known Limitations](https://github.com/LiranOG/Granite/blob/main/viz/vortex_eternity/README.md#%EF%B8%8F-known-limitations-v07)
+11. [Comparison with Related Tools](https://github.com/LiranOG/Granite-NR/blob/main/viz/vortex_eternity/README.md#%EF%B8%8F-keyboard-reference)
+12. [Known Limitations](https://github.com/LiranOG/Granite-NR/blob/main/viz/vortex_eternity/README.md#%EF%B8%8F-known-limitations-v07)
 13. [Roadmap to v1.0](#-roadmap-to-v10)
 
 ---
@@ -344,7 +344,7 @@ v1.0.0  ── Unified Visualization Dashboard
                Simulation Engine},
   year      = {2026},
   version   = {v0.6.7},
-  url       = {https://github.com/LiranOG/Granite},
+  url       = {https://github.com/LiranOG/Granite-NR},
   note      = {WebGL frontend for the GRANITE numerical relativity
                ecosystem. 2.5PN dynamics, GW sonification, real-time
                lens shader, Cinematic Autopilot.}
@@ -359,7 +359,7 @@ v1.0.0  ── Unified Visualization Dashboard
 
 **VORTEX v0.6.7 · 2026 · LiranOG**
 
-[![GRANITE Backend](https://img.shields.io/badge/Backend-GRANITE_NR_Engine-0d6efd.svg)](https://github.com/LiranOG/Granite)
-[![Wiki](https://img.shields.io/badge/Docs-GRANITE_Wiki-7c3aed.svg)](https://github.com/LiranOG/Granite/wiki)
+[![GRANITE Backend](https://img.shields.io/badge/Backend-GRANITE_NR_Engine-0d6efd.svg)](https://github.com/LiranOG/Granite-NR)
+[![Wiki](https://img.shields.io/badge/Docs-GRANITE_Wiki-7c3aed.svg)](https://github.com/LiranOG/Granite-NR/wiki)
 
 </div>

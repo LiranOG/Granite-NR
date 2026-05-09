@@ -12,7 +12,7 @@ This directory contains job scheduler templates and telemetry documentation for 
 
 ## Quick Start
 
-1. **Build GRANITE** on the target system (see [INSTALLATION.md](../../INSTALLATION.md) or [docs/INSTALL.md](../../docs/INSTALL.md)).
+1. **Build GRANITE** on the target system (see [INSTALLATION.md](../../docs/getting_started/Installation.md or [docs/INSTALL.md](../../docs/getting_started/Installation.md).
 
 2. **Choose a template** and edit the `USER CONFIGURATION` section:
    - Set `GRANITE_ROOT` to the absolute path of your checkout.

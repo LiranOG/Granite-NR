@@ -308,7 +308,7 @@ All benchmark runs are fully reproducible from the repository. The following com
 
 ```bash
 # Clone and build
-git clone https://github.com/LiranOG/Granite.git
+git clone https://github.com/LiranOG/Granite-NR.git
 cd Granite
 python3 scripts/run_granite.py build --release
 

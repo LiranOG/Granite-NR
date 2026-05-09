@@ -275,7 +275,7 @@ They are preserved verbatim in the Suite because they are the **computational la
 ### 6.1 Repository Topology
 
 ```
-github.com/LiranOG/Granite                       (This Repository)
+github.com/LiranOG/Granite-NR                       (This Repository)
 ──────────────────────────────────────────────────
 Contains:  C++20 production engine (CCZ4, GRMHD, M1, AMR)
 Role:      Numerical validation engine — implements the physics derived in the Suite

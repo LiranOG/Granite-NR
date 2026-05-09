@@ -9,7 +9,7 @@
 | **Release Date (Stable)** | April 10, 2026 |
 | **Maintainer** | LiranOG (Founder & Lead Developer) |
 | **License** | GPL-3.0 (see `LICENSE`) |
-| **Repository** | https://github.com/LiranOG/Granite |
+| **Repository** | https://github.com/LiranOG/Granite-NR |
 | **Language** | C++17 + MPI + OpenMP (CUDA/HIP roadmap in progress) |
 | **Test Suite** | 107 tests, 100% pass rate (GoogleTest) |
 | **Status** | Active development — binary black hole production runs operational |

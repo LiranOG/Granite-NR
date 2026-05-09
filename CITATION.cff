@@ -3,7 +3,7 @@ title: "GRANITE: General-Relativistic Adaptive N-body Integrated Tool for Extrem
 message: "If you use GRANITE in your research, please cite the following paper."
 type: software
 license: GPL-3.0-or-later
-repository-code: "https://github.com/LiranOG/Granite"
+repository-code: "https://github.com/LiranOG/Granite-NR"
 version: 0.6.7
 date-released: "2026-04-07"
 keywords:

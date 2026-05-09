@@ -3,8 +3,8 @@
 # GRANITE 🌌
 ### **General-Relativistic Adaptive N-body Integrated Tool for Extreme Astrophysics**
 
-[![Build Status](https://github.com/LiranOG/Granite/actions/workflows/ci.yml/badge.svg)](https://github.com/LiranOG/Granite/actions) 
-[![Development Status](https://img.shields.io/badge/Status-Active%20Development-2d3436.svg)](https://github.com/LiranOG/Granite/pulse)
+[![Build Status](https://github.com/LiranOG/Granite-NR/actions/workflows/ci.yml/badge.svg)](https://github.com/LiranOG/Granite-NR/actions) 
+[![Development Status](https://img.shields.io/badge/Status-Active%20Development-2d3436.svg)](https://github.com/LiranOG/Granite-NR/pulse)
 
 [![ORCID](https://img.shields.io/badge/ORCID-Profile-A6CE39?logo=orcid&logoColor=white)](https://orcid.org/0009-0008-8035-1308)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19502265.svg)](https://doi.org/10.5281/zenodo.19502265)
@@ -15,7 +15,7 @@
 [![OpenMP](https://img.shields.io/badge/OpenMP-4.5%2B-007acc.svg)](https://www.openmp.org/)
 [![MPI](https://img.shields.io/badge/MPI-OpenMPI%20%7C%20MS--MPI-007acc.svg)](https://www.open-mpi.org/)
 
-[![Wiki](https://img.shields.io/badge/docs-GRANITE%20Wiki-002b36.svg)](https://github.com/LiranOG/Granite/wiki)
+[![Wiki](https://img.shields.io/badge/docs-GRANITE%20Wiki-002b36.svg)](https://github.com/LiranOG/Granite-NR/wiki)
 
 ---
 
@@ -153,7 +153,7 @@ All results are from **production runs on a single desktop workstation** (Intel 
 >
 > A recent structural reorganisation of the `scripts/` directory introduced several integration issues that are currently being triaged and resolved. Some CLI workflows, Python analysis tools, and virtual environment setup steps may temporarily behave unexpectedly until the patch is complete. All core physics (C++ engine, unit tests, simulation runs) is unaffected — 107/107 tests pass clean.
 >
-> Fixes are being pushed continuously. If something doesn't work as documented, check [`CHANGELOG.md`](./CHANGELOG.md) for the latest patch status or open an [issue](https://github.com/LiranOG/Granite/issues).
+> Fixes are being pushed continuously. If something doesn't work as documented, check [`CHANGELOG.md`](./CHANGELOG.md) for the latest patch status or open an [issue](https://github.com/LiranOG/Granite-NR/issues).
 
 > [!TIP]
 > **Stable baseline for first-time users:** The current `main` branch is under active v0.6.7.x restructuring, including CLI cleanup, Python tooling migration, documentation synchronization, and benchmark-schema updates. If you prefer a known-good first-run workflow without debugging current `main`-branch integration changes, use the `v0.6.5` tag as the recommended stable baseline.
@@ -521,29 +521,29 @@ No contribution requires understanding the whole codebase. The modules are delib
 
 The `docs/` directory covers the essentials, but GRANITE is a large and technically demanding engine. For researchers, contributors, and institutions who need to go beyond the surface level, every subsystem has its own dedicated Wiki page — written at the same level of technical depth as a peer-reviewed software paper.
 
-> **[→ Visit the GRANITE Wiki](https://github.com/LiranOG/Granite/wiki)**
+> **[→ Visit the GRANITE Wiki](https://github.com/LiranOG/Granite-NR/wiki)**
 
 The Wiki covers, in full technical detail:
 
 | Topic | Wiki Page |
 | --- | --- |
-| Engine architecture, data flow, and memory layout | [Architecture Overview](https://github.com/LiranOG/Granite/wiki/Architecture-Overview) |
-| Every `params.yaml` parameter with ranges, units, and failure modes | [Parameter Reference](https://github.com/LiranOG/Granite/wiki/Parameter-Reference) |
-| Simulation health, ‖H‖₂ interpretation, NaN forensics, debugging flowchart | [Simulation Health & Debugging](https://github.com/LiranOG/Granite/wiki/Simulation-Health-&-Debugging) |
-| All confirmed fixed bugs with code diffs — never re-introduce these | [Known Fixed Bugs](https://github.com/LiranOG/Granite/wiki/Known-Fixed-Bugs) |
-| Full CCZ4, GRMHD, M1, and CT governing equations with references | [Physics Formulations](https://github.com/LiranOG/Granite/wiki/Physics-Formulations) |
-| Bowen-York momenta, TOV solver, initial data compatibility matrix | [Initial Data](https://github.com/LiranOG/Granite/wiki/Initial-Data) |
-| Berger-Oliger subcycling, prolongation, restriction, ghost zones | [AMR Design](https://github.com/LiranOG/Granite/wiki/AMR-Design) |
-| Ψ₄ extraction, spherical harmonics, strain recovery, recoil kick | [GW Extraction](https://github.com/LiranOG/Granite/wiki/Gravitational-Wave-Extraction) |
-| Full benchmark tables, reproducibility commands, HPC projections | [Benchmarks & Validation](https://github.com/LiranOG/Granite/wiki/Benchmarks-&-Validation) |
-| SLURM templates, Lustre I/O tuning, container deployment, GPU roadmap | [HPC Deployment](https://github.com/LiranOG/Granite/wiki/HPC-Deployment) |
-| Coding standards, PR checklist, CI/CD, adding physics modules | [Developer Guide](https://github.com/LiranOG/Granite/wiki/Developer-Guide) |
-| B5_star scenario, multi-messenger physics, LISA / PTA signals | [Scientific Context](https://github.com/LiranOG/Granite/wiki/Scientific-Context) |
-| Version targets, GPU porting plan, Tier-1 blockers for v0.7 | [Roadmap](https://github.com/LiranOG/Granite/wiki/Roadmap) |
-| 15 answered questions on science, engineering, and HPC | [FAQ](https://github.com/LiranOG/Granite/wiki/FAQ) |
-| Complete inventory of every document in the repository | [Documentation Index](https://github.com/LiranOG/Granite/wiki/Documentation-Index-&-Master-Reference) |
-| Explore the interactive WebGL N-body simulator | [VORTEX Engine](https://github.com/LiranOG/Granite/wiki/VORTEX-Simulator) |
-| Learn about the Architecture History of GRANITE & VORTEX | [Theoretical & Architectural Overview](https://github.com/LiranOG/Granite/wiki/GRANITE%E2%80%90Astrophysics%E2%80%90Suite-%E2%80%94-Theoretical-&-Architectural-Overview#-granite-astrophysics-suite--the-definitive-theoretical--architectural-overview) |
+| Engine architecture, data flow, and memory layout | [Architecture Overview](https://github.com/LiranOG/Granite-NR/wiki/Architecture-Overview) |
+| Every `params.yaml` parameter with ranges, units, and failure modes | [Parameter Reference](https://github.com/LiranOG/Granite-NR/wiki/Parameter-Reference) |
+| Simulation health, ‖H‖₂ interpretation, NaN forensics, debugging flowchart | [Simulation Health & Debugging](https://github.com/LiranOG/Granite-NR/wiki/Simulation-Health-&-Debugging) |
+| All confirmed fixed bugs with code diffs — never re-introduce these | [Known Fixed Bugs](https://github.com/LiranOG/Granite-NR/wiki/Known-Fixed-Bugs) |
+| Full CCZ4, GRMHD, M1, and CT governing equations with references | [Physics Formulations](https://github.com/LiranOG/Granite-NR/wiki/Physics-Formulations) |
+| Bowen-York momenta, TOV solver, initial data compatibility matrix | [Initial Data](https://github.com/LiranOG/Granite-NR/wiki/Initial-Data) |
+| Berger-Oliger subcycling, prolongation, restriction, ghost zones | [AMR Design](https://github.com/LiranOG/Granite-NR/wiki/AMR-Design) |
+| Ψ₄ extraction, spherical harmonics, strain recovery, recoil kick | [GW Extraction](https://github.com/LiranOG/Granite-NR/wiki/Gravitational-Wave-Extraction) |
+| Full benchmark tables, reproducibility commands, HPC projections | [Benchmarks & Validation](https://github.com/LiranOG/Granite-NR/wiki/Benchmarks-&-Validation) |
+| SLURM templates, Lustre I/O tuning, container deployment, GPU roadmap | [HPC Deployment](https://github.com/LiranOG/Granite-NR/wiki/HPC-Deployment) |
+| Coding standards, PR checklist, CI/CD, adding physics modules | [Developer Guide](https://github.com/LiranOG/Granite-NR/wiki/Developer-Guide) |
+| B5_star scenario, multi-messenger physics, LISA / PTA signals | [Scientific Context](https://github.com/LiranOG/Granite-NR/wiki/Scientific-Context) |
+| Version targets, GPU porting plan, Tier-1 blockers for v0.7 | [Roadmap](https://github.com/LiranOG/Granite-NR/wiki/Roadmap) |
+| 15 answered questions on science, engineering, and HPC | [FAQ](https://github.com/LiranOG/Granite-NR/wiki/FAQ) |
+| Complete inventory of every document in the repository | [Documentation Index](https://github.com/LiranOG/Granite-NR/wiki/Documentation-Index-&-Master-Reference) |
+| Explore the interactive WebGL N-body simulator | [VORTEX Engine](https://github.com/LiranOG/Granite-NR/wiki/VORTEX-Simulator) |
+| Learn about the Architecture History of GRANITE & VORTEX | [Theoretical & Architectural Overview](https://github.com/LiranOG/Granite-NR/wiki/GRANITE%E2%80%90Astrophysics%E2%80%90Suite-%E2%80%94-Theoretical-&-Architectural-Overview#-granite-astrophysics-suite--the-definitive-theoretical--architectural-overview) |
 
 ***If something is unclear — in the code, in the physics, or in the parameters — the answer is almost certainly in one of these pages.***
 
@@ -637,9 +637,9 @@ I have written a **[Personal Note to the Community](docs/design/PERSONAL_NOTE.md
 
 <div align="right">
 
-[![GitHub Issues](https://img.shields.io/github/issues/LiranOG/Granite?label=open%20issues&color=blue)](https://github.com/LiranOG/Granite/issues)
-[![GitHub Discussions](https://img.shields.io/github/discussions/LiranOG/Granite?label=discussions&color=purple)](https://github.com/LiranOG/Granite/discussions)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/LiranOG/Granite/blob/main/.github/CONTRIBUTING.md)
+[![GitHub Issues](https://img.shields.io/github/issues/LiranOG/Granite?label=open%20issues&color=blue)](https://github.com/LiranOG/Granite-NR/issues)
+[![GitHub Discussions](https://img.shields.io/github/discussions/LiranOG/Granite?label=discussions&color=purple)](https://github.com/LiranOG/Granite-NR/discussions)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/LiranOG/Granite-NR/blob/main/.github/CONTRIBUTING.md)
 
 </div>
 
@@ -650,7 +650,7 @@ I have written a **[Personal Note to the Community](docs/design/PERSONAL_NOTE.md
 GRANITE is currently a **solo project** by [Liran M. Schwartz](https://orcid.org/0009-0008-8035-1308).
 
 If you use, test, review, or contribute to GRANITE in any way — you are part of the story.
-See [Open for Collaboration](#-open-for-collaboration) or open a [GitHub Discussion](https://github.com/LiranOG/Granite/discussions) to get involved.
+See [Open for Collaboration](#-open-for-collaboration) or open a [GitHub Discussion](https://github.com/LiranOG/Granite-NR/discussions) to get involved.
 
 ---
 

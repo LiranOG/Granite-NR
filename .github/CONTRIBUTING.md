@@ -73,7 +73,7 @@ git clone https://github.com/<your-username>/Granite.git
 cd Granite
 
 # 2. Add the upstream remote
-git remote add upstream https://github.com/LiranOG/Granite.git
+git remote add upstream https://github.com/LiranOG/Granite-NR.git
 
 # 3. Install dependencies (Ubuntu / WSL2)
 sudo apt update && sudo apt install -y \
