@@ -1,8 +1,8 @@
-# Reproducibility Artifact — B2_eq 64³ (v0.6.7)
+# Reproducibility Artifact — single_puncture 64³ (v0.6.8)
 Status: Pending — output files to be added after benchmark runs complete.
 
 ## Reproduction command
-python3 scripts/run_granite.py run benchmarks/B2_eq/params.yaml
+python3 scripts/run_granite.py run benchmarks/single_puncture/params.yaml
 
 ## Expected outputs (to be populated)
 - params.yaml — exact input file used

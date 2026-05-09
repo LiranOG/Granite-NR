@@ -1,7 +1,7 @@
 /**
  * @file test_amr_basic.cpp
  * @author Liran M. Schwartz
- * @version v0.6.7
+ * @version v0.6.8
  * @brief High-fidelity smoke tests for the AMR hierarchy and Berger-Oliger algorithms.
  *
  * P1-01 remediation: Adds the first unit coverage for src/amr/amr.cpp

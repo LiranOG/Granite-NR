@@ -1,7 +1,7 @@
 /**
  * @file test_schwarzschild_horizon.cpp
  * @author Liran M. Schwartz
- * @version v0.6.7
+ * @version v0.6.8
  * @brief High-fidelity smoke tests for the apparent horizon finder on a Schwarzschild spacetime.
  *
  * P1-01 remediation: Adds the first unit coverage for src/horizon/horizon_finder.cpp (565 lines).

@@ -1494,4 +1494,4 @@ GRANITE uses geometrized units throughout: **G = c = 1**, with mass scale set by
 ---
 
 *This document is version-controlled. Always refer to the latest version in the repository.*
-*GRANITE v0.6.7 — April 27, 2026 — LiranOG*
+*GRANITE v0.6.8 — April 27, 2026 — LiranOG*

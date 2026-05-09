@@ -53,6 +53,6 @@ under research and will be announced when concrete plans exist.
 
 ### The Road Ahead
 
-This is not science fiction; it is an engineering roadmap. The foundation (v0.6.7) is already built, tested, and validated. As the project pushes toward GPU-porting (v0.7) and full community deployment (v1.0), the tracks for this new ecosystem are being laid.
+This is not science fiction; it is an engineering roadmap. The foundation (v0.6.8) is already built, tested, and validated. As the project pushes toward GPU-porting (v0.7) and full community deployment (v1.0), the tracks for this new ecosystem are being laid.
 
 I invite developers, physicists, HPC cluster managers, and enthusiasts to join this effort. **Do not just learn about the universe—help build the engine that simulates it.**

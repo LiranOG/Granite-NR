@@ -1,7 +1,7 @@
 /**
  * @file test_hdf5_roundtrip.cpp
  * @author Liran M. Schwartz
- * @version v0.6.7
+ * @version v0.6.8
  * @brief High-fidelity smoke tests for HDF5 I/O subsystem
  *        (write + read round-trip data integrity).
  *

@@ -1,6 +1,6 @@
 # GRANITE Diagnostic Handbook
 
-**Version:** v0.6.7 (current development) | v0.6.5 (last stable release)
+**Version:** v0.6.8 (current development) | v0.6.5 (last stable release)
 
 > This handbook explains how to interpret GRANITE's real-time telemetry output,
 > diagnose common failure modes, and distinguish physics problems from numerical
@@ -95,7 +95,7 @@ informational, not an error.
 The lapse recovers to a stationary value as the coordinate system settles into
 the trumpet geometry. For a single Schwarzschild puncture at sufficient
 resolution, the expected trumpet value is α_∞ ≈ 0.3. In BBH runs where
-`α_center` is sampled from AMR level 0 (a known limitation in v0.6.7), the
+`α_center` is sampled from AMR level 0 (a known limitation in v0.6.8), the
 reported value is larger (~0.94–0.97) because level 0 does not resolve the
 puncture region. This is a diagnostic limitation, not a physics error.
 
@@ -236,7 +236,7 @@ refinement criterion threshold is too conservative or that dynamic regridding
 is not active.
 
 > [!NOTE]
-> Dynamic regridding is the default in v0.6.7. If block count is frozen,
+> Dynamic regridding is the default in v0.6.8. If block count is frozen,
 > check that `regrid_interval` is set in params.yaml and is less than the
 > total step count.
 
@@ -416,7 +416,7 @@ trumpet value of ~0.3 is never seen.
 
 **Cause:** This is a resolution and diagnostic artefact, not a physics
 failure. At 128³ with dx_finest = 0.094 M, the trumpet geometry near the
-puncture (scale ~0.05 M) is marginally resolved. Additionally, in v0.6.7,
+puncture (scale ~0.05 M) is marginally resolved. Additionally, in v0.6.8,
 `α_center` is sampled from AMR level 0, not the finest level near the
 puncture. The level-0 lapse does not reach the trumpet asymptote.
 
@@ -425,5 +425,5 @@ unaffected. See the v0.7 roadmap for the `alpha_center` diagnostic fix.
 
 ---
 
-*GRANITE v0.6.7 — Diagnostic Handbook*
+*GRANITE v0.6.8 — Diagnostic Handbook*
 *For simulation health interpretation, NaN forensics, and failure mode diagnosis.*

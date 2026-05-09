@@ -1,5 +1,5 @@
 % ============================================================================
-%  GRANITE v0.6.7: A General-Relativistic Adaptive N-body Integrated Tool
+%  GRANITE v0.6.8: A General-Relativistic Adaptive N-body Integrated Tool
 %                  for Extreme Astrophysical Simulations
 %
 %  arXiv submission — Physical Review D format (revtex4-2)
@@ -46,7 +46,7 @@
   linkcolor=blue!60!black,
   citecolor=blue!60!black,
   urlcolor=blue!60!black,
-  pdftitle={GRANITE v0.6.7: General-Relativistic Adaptive N-body Integrated Tool for Extreme Astrophysics},
+  pdftitle={GRANITE v0.6.8: General-Relativistic Adaptive N-body Integrated Tool for Extreme Astrophysics},
   pdfauthor={Liran M. Schwartz}
 }
 
@@ -54,7 +54,7 @@
 \begin{document}
 
 \title{%
-  \granite{} v0.6.7: A General-Relativistic Adaptive N-body Integrated Tool\\
+  \granite{} v0.6.8: A General-Relativistic Adaptive N-body Integrated Tool\\
   for Extreme Astrophysical Simulations%
 }
 
@@ -165,7 +165,7 @@ supporting up to 12 tested refinement levels with live Berger--Oliger
 subcycling.
 
 We note explicitly the current development status.
-As of v0.6.7, the spacetime (CCZ4) and GRMHD sectors are fully integrated
+As of v0.6.8, the spacetime (CCZ4) and GRMHD sectors are fully integrated
 and validated.
 The M1 radiation and neutrino modules compile, pass their unit tests, and
 expose well-defined public interfaces, but are not yet wired into the main
@@ -622,7 +622,7 @@ with polytropic EOS, used for GRMHD module validation.
 \section{Software Architecture and Test Suite}
 \label{sec:architecture}
 
-\granite{} v0.6.7 consists of approximately $8{,}918$ lines of C++17 source
+\granite{} v0.6.8 consists of approximately $8{,}918$ lines of C++17 source
 code (13 source files), $1{,}954$ lines of public header interfaces,
 $2{,}927$ lines of unit tests (10 test files), and $3{,}749$ lines of Python
 tooling.
@@ -634,10 +634,10 @@ Sphinx + Breathe (documentation generation).
 
 \paragraph{Source module summary.}
 Table~\ref{tab:modules} gives the principal source files and their
-line counts for v0.6.7, reflecting the full physics scope of the engine.
+line counts for v0.6.8, reflecting the full physics scope of the engine.
 
 \begin{table}[t]
-\caption{Principal source modules in \granite{} v0.6.7.
+\caption{Principal source modules in \granite{} v0.6.8.
   All files reside under \code{src/}. The rightmost column indicates
   whether the module is fully wired into the production RK3 loop (\checkmark)
   or implemented and unit-tested but pending loop integration ($\circ$).}
@@ -675,7 +675,7 @@ conformal factor construction for up to five black holes, TOV solver
 monotonicity, and grid memory layout round-trips.
 
 \begin{table}[t]
-\caption{Unit test suites in \granite{} v0.6.7 (92 total tests).}
+\caption{Unit test suites in \granite{} v0.6.8 (92 total tests).}
 \label{tab:tests}
 \begin{ruledtabular}
 \begin{tabular}{lcc}
@@ -722,7 +722,7 @@ plotting helpers, and a live simulation-tracking dashboard
 \label{sec:benchmarks}
 
 All benchmarks were performed on Machine~A (Intel Core i5-8400, 6 physical
-cores at 2.8--4.0\,GHz, 16\,GB DDR4-2400, running \granite{} v0.6.7 compiled
+cores at 2.8--4.0\,GHz, 16\,GB DDR4-2400, running \granite{} v0.6.8 compiled
 with GCC~11.4, \code{-O3 -march=native -DNDEBUG}, under WSL2 Ubuntu~22.04
 with OpenMPI~4.1.2).
 
@@ -915,11 +915,11 @@ parallelization.
 
 Scientific integrity requires transparent documentation of current limitations.
 Table~\ref{tab:limitations} summarizes all known limitations of \granite{}
-v0.6.7.
+v0.6.8.
 We discuss the most significant items below.
 
 \begin{table*}[t]
-\caption{Known limitations of \granite{} v0.6.7. Status: \textit{Active} =
+\caption{Known limitations of \granite{} v0.6.8. Status: \textit{Active} =
   under development; \textit{Known} = documented, fix planned;
   \textit{Planned} = scheduled for a future version.}
 \label{tab:limitations}
@@ -1278,7 +1278,7 @@ the zero-allocation constraint.
 \subsection{Cinematic and Presentation Systems}
 \label{sec:vortex_cinematic}
 
-\textsc{Vortex} v0.6.7 includes a complete professional recording suite:
+\textsc{Vortex} v0.6.8 includes a complete professional recording suite:
 \textbf{Zen Mode} (\code{Z}) fades the entire UI in 0.5\,s via CSS
 opacity transitions, leaving only the WebGL canvas visible for
 distraction-free screen recording or scientific photography;
@@ -1338,7 +1338,7 @@ Table~\ref{tab:comparison} summarizes the capability matrix against the most
 relevant existing codes.
 
 \begin{table}[t]
-\caption{Capability comparison between \granite{} v0.6.7 and major
+\caption{Capability comparison between \granite{} v0.6.8 and major
   open-source NR codes. Legend: \checkmark~=~fully implemented;
   $\circ$~=~implemented, pending integration; $\triangle$~=~partial;
   ---~=~not available.}
@@ -1383,7 +1383,7 @@ release through the v1.0 production target.
 \begin{ruledtabular}
 \begin{tabular}{llp{4.5cm}}
   Version & Target & Key deliverables \\ \hline
-  v0.6.7 & Q2 2026 & Current release: CCZ4+GRMHD+dynamic AMR, 92 tests, VORTEX Gold Master \\
+  v0.6.8 & Q2 2026 & Current release: CCZ4+GRMHD+dynamic AMR, 92 tests, VORTEX Gold Master \\
   v0.7.0 & Q4 2026 & GPU CUDA kernels, M1+neutrino wired, \code{--resume} CLI, full reflux, GRMHD convergence tests \\
   v0.8.0 & Q1 2027 & Tabulated nuclear EOS + reaction network, macOS/Windows native \\
   v0.9.0 & Q2 2027 & Full SXS catalog validation (${\sim}60$ BBH configs), multi-group M1 \\
@@ -1413,7 +1413,7 @@ Several caveats apply to the results and claims in this paper:
 \section{Conclusion}
 \label{sec:conclusion}
 
-We have presented \granite{} v0.6.7, an open-source C++17 numerical-relativity
+We have presented \granite{} v0.6.8, an open-source C++17 numerical-relativity
 framework designed for extreme multi-physics astrophysical simulations.
 The code couples CCZ4 spacetime evolution and Valencia GRMHD under a single
 SSP-RK3 driver on a fully dynamic block-structured Berger--Oliger AMR

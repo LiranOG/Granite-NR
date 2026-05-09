@@ -1,7 +1,7 @@
 /**
  * @file test_m1_diffusion.cpp
  * @author Liran M. Schwartz
- * @version v0.6.7
+ * @version v0.6.8
  * @brief High-fidelity smoke tests for the M1 grey radiation transport module.
  *
  * P1-01 remediation: Adds the first unit coverage for src/radiation/m1.cpp (416 lines).

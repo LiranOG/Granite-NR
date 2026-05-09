@@ -1,6 +1,6 @@
 # GRANITE Benchmark Report
 
-**Version:** v0.6.7 (current) | **Date:** April 2026
+**Version:** v0.6.8 (current) | **Date:** April 2026
 
 > All results on this page are from **real production runs** on a single consumer desktop workstation. No HPC allocation, no external infrastructure. Every number is fully reproducible by cloning the repository and running the provided benchmark configs.
 
@@ -31,7 +31,7 @@
 | MPI | OpenMPI 4.1.2 |
 | HDF5 | 1.12.1 (parallel) |
 | OpenMP threads | 6 (all physical cores) |
-| GRANITE version | v0.6.7 |
+| GRANITE version | v0.6.8 |
 | Build type | Release |
 
 All runs verified via `health_check.py` to confirm Release flags, correct OMP thread count, and memory allocation before launch.
@@ -339,7 +339,7 @@ python3 -m granite_analysis.cli.sim_tracker run.log --json run_telemetry.json --
 
 ---
 
-*GRANITE v0.6.7 (current) — Benchmark Report — April 2026*
+*GRANITE v0.6.8 (current) — Benchmark Report — April 2026*
 
 *All results verified on Intel i5-8400, 16 GB DDR4, Linux/WSL2.*
 *These benchmarks demonstrate CCZ4 stability; full merger validation is a v0.8 target.*

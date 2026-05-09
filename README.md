@@ -1,4 +1,4 @@
-﻿<div align="center">
+<div align="center">
 
 # GRANITE 🌌
 ### **General-Relativistic Adaptive N-body Integrated Tool for Extreme Astrophysics**
@@ -89,7 +89,7 @@ validated at 4 levels.
 
 ## ⚖️ How GRANITE Compares
 
-The table below shows the current implementation status of GRANITE v0.6.7.2 relative to other open‑source NR codes. Combining all of these capabilities in a single, validated framework is a long‑term goal; the present version is verified for single‑BH and binary‑BH inspiral.
+The table below shows the current implementation status of GRANITE v0.6.8 relative to other open‑source NR codes. Combining all of these capabilities in a single, validated framework is a long‑term goal; the present version is verified for single‑BH and binary‑BH inspiral.
 
 ### Summary Comparison
 

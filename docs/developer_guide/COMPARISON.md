@@ -1,6 +1,6 @@
 # GRANITE vs. Existing NR Codes — Detailed Comparison
 
-**Version:** v0.6.7 (current) | **April 27, 2026**
+**Version:** v0.6.8 (current) | **April 27, 2026**
 
 > This document provides a source-cited, capability-by-capability comparison of GRANITE against the four most widely used open-source numerical relativity frameworks: Einstein Toolkit, GRChombo, SpECTRE, and AthenaK. The goal is not to disparage these codes — they are excellent scientific instruments — but to clearly define where GRANITE fits in the landscape and what gap it addresses.
 
@@ -170,5 +170,5 @@ The development roadmap (see [`README.md`](../README.md#roadmap)) targets:
 
 ---
 
-*GRANITE v0.6.7 — Code Comparison — April 2026*
+*GRANITE v0.6.8 — Code Comparison — April 2026*
 *This comparison is maintained in good faith. If you identify any inaccuracies, please open a GitHub Issue tagged `[comparison]`.*

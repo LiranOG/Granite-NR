@@ -1,6 +1,6 @@
 # GRANITE — Frequently Asked Questions
 
-**Version:** v0.6.7 | **April 27, 2026**
+**Version:** v0.6.8 | **April 27, 2026**
 
 ---
 
@@ -19,13 +19,13 @@
 
 ## Science & Physics
 
-**Q: What physical scenarios can GRANITE simulate in its current state (v0.6.7)?**
+**Q: What physical scenarios can GRANITE simulate in its current state (v0.6.8)?**
 
 A: GRANITE is currently validated for single moving-puncture (single Schwarzschild black hole) stability runs and equal-mass binary black hole inspiral using Two-Punctures/Bowen-York initial data. The physics modules for GRMHD, M1 radiation, and neutrino leakage are implemented and pass unit tests, but radiation is not yet wired into the main RK3 evolution loop (planned for v0.7). Neutron star simulations require tabulated EOS support, which is planned for v0.8. The flagship B5\_star multi-SMBH scenario is the long-term production target.
 
 **Q: How accurate is GRANITE compared to production NR codes like SpECTRE or Einstein Toolkit?**
 
-A: GRANITE uses 4th-order finite-difference spatial discretization and SSP-RK3 time integration, which are standard in the NR community. The constraint norms achieved in v0.6.7 BBH runs (‖H‖₂ decaying to ~10⁻⁵ over 500M) are consistent with published results from comparable resolution runs in other codes. Formal convergence-order testing against the SXS waveform catalog is planned for v0.9. For precision waveform generation at the LIGO/Virgo accuracy standard, SpECTRE remains the gold standard; GRANITE's strength is the breadth of multi-physics coupling, not (yet) spectral-level phase accuracy.
+A: GRANITE uses 4th-order finite-difference spatial discretization and SSP-RK3 time integration, which are standard in the NR community. The constraint norms achieved in v0.6.8 BBH runs (‖H‖₂ decaying to ~10⁻⁵ over 500M) are consistent with published results from comparable resolution runs in other codes. Formal convergence-order testing against the SXS waveform catalog is planned for v0.9. For precision waveform generation at the LIGO/Virgo accuracy standard, SpECTRE remains the gold standard; GRANITE's strength is the breadth of multi-physics coupling, not (yet) spectral-level phase accuracy.
 
 **Q: Why CCZ4 and not BSSN?**
 
@@ -89,7 +89,7 @@ A: Yes, almost certainly. `ko_sigma: 0.35` causes over-dissipation that destroys
 
 **Q: The AMR block count stays at 4 throughout my simulation. Is dynamic regridding working?**
 
-A: Dynamic regridding is **fully implemented and active in v0.6.7**. Gradient-based and puncture-tracking triggers fire per step via `AMRHierarchy::subcycle()`, with iterative union-merge box aggregation and live regridding integrated into the main RK3 loop. If your block count is not changing, verify that your refinement thresholds in `params.yaml` are appropriate for your resolution.
+A: Dynamic regridding is **fully implemented and active in v0.6.8**. Gradient-based and puncture-tracking triggers fire per step via `AMRHierarchy::subcycle()`, with iterative union-merge box aggregation and live regridding integrated into the main RK3 loop. If your block count is not changing, verify that your refinement thresholds in `params.yaml` are appropriate for your resolution.
 
 **Q: How do I know if my simulation is scientifically valid?**
 
@@ -204,6 +204,6 @@ or the machine-readable `CITATION.cff` at the repository root.
 
 ---
 
-*GRANITE v0.6.7 — FAQ — April 2026*
+*GRANITE v0.6.8 — FAQ — April 2026*
 
 *This document is maintained continuously. If your question is not answered here, open a GitHub Discussion — your question will be added to the next FAQ update.*

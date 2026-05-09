@@ -279,7 +279,7 @@ github.com/LiranOG/Granite-NR                       (This Repository)
 ──────────────────────────────────────────────────
 Contains:  C++20 production engine (CCZ4, GRMHD, M1, AMR)
 Role:      Numerical validation engine — implements the physics derived in the Suite
-Version:   v0.6.7 · 92 tests · 100% pass rate
+Version:   v0.6.8 · 92 tests · 100% pass rate
 License:   GPL-3.0
 
 github.com/LiranOG/GRANITE-Astrophysics-Suite    (The Genesis Archive)

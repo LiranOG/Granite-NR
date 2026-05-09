@@ -1,6 +1,6 @@
 # GRANITE — Science & Physics Reference
 
-**Version:** v0.6.7 (current) | **April 27, 2026**
+**Version:** v0.6.8 (current) | **April 27, 2026**
 
 > This document explains the physical and mathematical foundations of GRANITE: what it simulates, why it matters, and which governing equations it implements. For implementation details, see [`DEVELOPER_GUIDE.md`](../developer_guide/DEVELOPER_GUIDE.md).
 
@@ -112,7 +112,7 @@ The B5\_star evolution is expected to proceed through the following phases:
 | CPU-hours (estimated) | ~5 × 10⁶ |
 | GPU-hours (estimated, H100) | ~5 × 10⁵ |
 
-These requirements place B5\_star firmly in the Tier-0 supercomputer category. The current v0.6.7 development work on desktop hardware is building and validating the physics and numerics at 128³ resolution; the full production run will require institutional HPC allocation.
+These requirements place B5\_star firmly in the Tier-0 supercomputer category. The current v0.6.8 development work on desktop hardware is building and validating the physics and numerics at 128³ resolution; the full production run will require institutional HPC allocation.
 
 ---
 
@@ -330,4 +330,4 @@ For stellar-mass BH mergers (M ~ 30 M☉): length unit ~ 45 km, time unit ~ 150 
 
 ---
 
-*GRANITE v0.6.7 — Science & Physics Reference — April 27, 2026*
+*GRANITE v0.6.8 — Science & Physics Reference — April 27, 2026*
