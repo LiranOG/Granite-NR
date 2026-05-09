@@ -54,6 +54,12 @@ public:
     explicit AMRHierarchy(const AMRParams& params, const SimulationParams& sim_params);
     ~AMRHierarchy() = default;
 
+    // Rule-of-Five: levels_ contains unique_ptr — must be move-only
+    AMRHierarchy(AMRHierarchy&&) noexcept = default;
+    AMRHierarchy& operator=(AMRHierarchy&&) noexcept = default;
+    AMRHierarchy(const AMRHierarchy&) = delete;
+    AMRHierarchy& operator=(const AMRHierarchy&) = delete;
+
     /// Initialize the hierarchy recursively with internal tagging
     void initialize(const TaggingFunction& tagger);
 
@@ -109,10 +115,20 @@ private:
     SimulationParams sim_params_;
 
     struct Level {
-        int level_id;
+        int level_id = 0;
         std::vector<std::unique_ptr<GridBlock>> blocks;
-        Real dt;           ///< Time step for this level
-        Real current_time; ///< Local evolution time
+        Real dt = 0.0;           ///< Time step for this level
+        Real current_time = 0.0; ///< Local evolution time
+
+        // Rule-of-Five: blocks contains unique_ptr — must be move-only.
+        // noexcept is critical: std::vector<Level>::resize() will copy
+        // instead of move if the move constructor is not noexcept,
+        // triggering a static assertion on unique_ptr's deleted copy ctor.
+        Level() = default;
+        Level(Level&&) noexcept = default;
+        Level& operator=(Level&&) noexcept = default;
+        Level(const Level&) = delete;
+        Level& operator=(const Level&) = delete;
     };
 
     std::vector<Level> levels_;

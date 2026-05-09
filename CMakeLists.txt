@@ -343,6 +343,36 @@ foreach(_target IN LISTS GRANITE_OBJECT_TARGETS)
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src>
     )
+
+    # Propagate external dependency includes & flags to OBJECT compilation
+    if(GRANITE_ENABLE_MPI)
+        target_link_libraries(${_target} PUBLIC MPI::MPI_CXX)
+    endif()
+    if(GRANITE_ENABLE_OPENMP)
+        target_link_libraries(${_target} PUBLIC OpenMP::OpenMP_CXX)
+    endif()
+    if(GRANITE_ENABLE_HDF5)
+        if(GRANITE_HDF5_TARGET_MODE)
+            foreach(_hdf5_tgt hdf5::hdf5-shared hdf5::hdf5_cpp-shared
+                              hdf5-shared hdf5_cpp-shared HDF5::HDF5)
+                if(TARGET ${_hdf5_tgt})
+                    target_link_libraries(${_target} PUBLIC ${_hdf5_tgt})
+                endif()
+            endforeach()
+        else()
+            target_link_libraries(${_target} PUBLIC ${HDF5_LIBRARIES})
+            target_include_directories(${_target} PUBLIC ${HDF5_INCLUDE_DIRS})
+        endif()
+    endif()
+    if(GRANITE_ENABLE_PETSC)
+        target_link_libraries(${_target} PUBLIC PkgConfig::PETSC)
+    endif()
+    target_link_libraries(${_target} PUBLIC yaml-cpp::yaml-cpp)
+
+    # Version macro needed by cli_parser.cpp
+    target_compile_definitions(${_target} PRIVATE
+        GRANITE_VERSION_STR="${PROJECT_VERSION}"
+    )
 endforeach()
 
 # ---------------------------------------------------------------------------
