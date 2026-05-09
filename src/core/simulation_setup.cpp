@@ -9,6 +9,7 @@
  * construction logic into a single translation unit.
  */
 #include "granite/simulation_setup.hpp"
+
 #include "granite/initial_data/initial_data.hpp"
 #include "granite/spacetime/ccz4.hpp"
 
@@ -54,13 +55,12 @@ void SimulationContext::syncBlocks() {
 
     // Remove stale bundles whose IDs no longer appear in the hierarchy.
     // O(N) scan with O(1) lookup per bundle — replaces previous O(N log N) std::set.
-    active_bundles.erase(
-        std::remove_if(active_bundles.begin(),
-                        active_bundles.end(),
-                        [&](const BlockBundle& bundle) {
-                            return active_map.find(bundle.id) == active_map.end();
-                        }),
-        active_bundles.end());
+    active_bundles.erase(std::remove_if(active_bundles.begin(),
+                                        active_bundles.end(),
+                                        [&](const BlockBundle& bundle) {
+                                            return active_map.find(bundle.id) == active_map.end();
+                                        }),
+                         active_bundles.end());
 
     // Rebuild id_to_index for the surviving bundles (needed for O(1) "exists?" check below)
     id_to_index.clear();
@@ -187,14 +187,13 @@ std::unique_ptr<SimulationContext> setupSimulation(ParsedConfig& config) {
     int initial_ncells = params.ncells[0];
 
     // Build context
-    auto ctx = std::make_unique<SimulationContext>(
-        std::move(ccz4_evo),
-        std::move(grmhd_evo),
-        std::move(hierarchy),
-        std::move(writer),
-        dt,
-        initial_ncells,
-        params);
+    auto ctx = std::make_unique<SimulationContext>(std::move(ccz4_evo),
+                                                   std::move(grmhd_evo),
+                                                   std::move(hierarchy),
+                                                   std::move(writer),
+                                                   dt,
+                                                   initial_ncells,
+                                                   params);
 
     // --- Set initial data ---
     std::cout << "Setting initial data: type='" << initial_data_type << "'\n";
@@ -274,8 +273,8 @@ std::unique_ptr<SimulationContext> setupSimulation(ParsedConfig& config) {
         }
 
     } else if (initial_data_type == "gauge_wave") {
-        std::cout << "  Gauge wave: A=" << config.gauge_wave_amplitude << ", L=" << config.gauge_wave_wavelength
-                  << "\n";
+        std::cout << "  Gauge wave: A=" << config.gauge_wave_amplitude
+                  << ", L=" << config.gauge_wave_wavelength << "\n";
         for (auto& bundle : ctx->active_bundles) {
             spacetime::setFlatSpacetime(*(bundle.st));
             GridBlock& st = *(bundle.st);
@@ -284,7 +283,8 @@ std::unique_ptr<SimulationContext> setupSimulation(ParsedConfig& config) {
                     for (int i = 0; i < st.totalCells(0); ++i) {
                         Real x = st.x(0, i);
                         Real lapse = 1.0 +
-                            config.gauge_wave_amplitude * std::sin(2.0 * M_PI * x / config.gauge_wave_wavelength);
+                            config.gauge_wave_amplitude *
+                                std::sin(2.0 * M_PI * x / config.gauge_wave_wavelength);
                         st.data(static_cast<int>(SpacetimeVar::LAPSE), i, j, k) = lapse;
                     }
             setAtmosphere(*(bundle.hydro));

@@ -229,11 +229,16 @@ Real CCZ4Evolution::d2(
 // Shared Christoffel + Ricci computation (used by both RHS and constraints)
 // ===========================================================================
 
-void CCZ4Evolution::computeChristoffelAndRicci(const GridBlock& grid, int i, int j, int k,
-                                               const Real gt[6], const Real gtu[6],
+void CCZ4Evolution::computeChristoffelAndRicci(const GridBlock& grid,
+                                               int i,
+                                               int j,
+                                               int k,
+                                               const Real gt[6],
+                                               const Real gtu[6],
                                                Real chi,
                                                Real chris[3][6],
-                                               Real Rt[6], Real Rchi[6]) const {
+                                               Real Rt[6],
+                                               Real Rchi[6]) const {
     // First derivatives of conformal metric and chi
     Real d_gt[6][3];
     Real d_chi[3];
@@ -309,8 +314,8 @@ void CCZ4Evolution::computeChristoffelAndRicci(const GridBlock& grid, int i, int
 
             // Term 2
             for (int idx = 0; idx < 3; ++idx) {
-                R_ij += 0.5 * (gt[symIdx(idx, ii)] * d_Ghat[idx][jj] +
-                               gt[symIdx(idx, jj)] * d_Ghat[idx][ii]);
+                R_ij += 0.5 *
+                    (gt[symIdx(idx, ii)] * d_Ghat[idx][jj] + gt[symIdx(idx, jj)] * d_Ghat[idx][ii]);
             }
 
             // Term 3
@@ -331,8 +336,9 @@ void CCZ4Evolution::computeChristoffelAndRicci(const GridBlock& grid, int i, int
                             Gam_jkm += gt[symIdx(idx, n)] * chris[n][symIdx(jj, m)];
                             Gam_ikm += gt[symIdx(idx, n)] * chris[n][symIdx(ii, m)];
                         }
-                        R_ij += gtu_lm * (chris[idx][symIdx(l, ii)] * Gam_jkm +
-                                          chris[idx][symIdx(l, jj)] * Gam_ikm);
+                        R_ij += gtu_lm *
+                            (chris[idx][symIdx(l, ii)] * Gam_jkm +
+                             chris[idx][symIdx(l, jj)] * Gam_ikm);
                         Real Gam_kij = 0.0;
                         for (int n = 0; n < 3; ++n)
                             Gam_kij += gt[symIdx(idx, n)] * chris[n][symIdx(ii, jj)];
@@ -361,8 +367,8 @@ void CCZ4Evolution::computeChristoffelAndRicci(const GridBlock& grid, int i, int
             }
 
             Real term1 = (0.5 / (chi + 1e-30)) * (D_i_D_j_chi + gt[ij] * D_k_D_k_chi);
-            Real term2 = (0.25 / ((chi * chi) + 1e-30)) *
-                (d_chi[ii] * d_chi[jj] - 3.0 * gt[ij] * d_chi_sq);
+            Real term2 =
+                (0.25 / ((chi * chi) + 1e-30)) * (d_chi[ii] * d_chi[jj] - 3.0 * gt[ij] * d_chi_sq);
             Rchi[ij] = term1 - term2;
         }
     }

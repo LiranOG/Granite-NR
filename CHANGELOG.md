@@ -36,7 +36,7 @@ Final stabilization pass concluding the architectural overhaul of the repository
 - **`validation/` Directory Structure:** Established the reproducibility artifact structure for `v0.6.8/single_puncture_64` and `v0.6.8/B2_eq_64` benchmarks with placeholder READMEs.
 
 ### Fixed
-- **Stale Links Sanity Pass:** Globally replaced stale `github.com/LiranOG/Granite` slugs with `github.com/LiranOG/Granite-NR` across 15+ documentation files, `CMakeLists.txt`, `CITATION.cff`, and `pyproject.toml`.
+- **Stale Links Sanity Pass:** Globally replaced stale `github.com/LiranOG/Granite(old)` slugs with `github.com/LiranOG/Granite-NR` across 15+ documentation files, `CMakeLists.txt`, `CITATION.cff`, and `pyproject.toml`.
 - **"Ghost Flags" & CLI Parity:** Eliminated nonexistent CLI flags (`--release`, `--debug`, `--tests`, `health_check`) from `DEVELOPER_GUIDE.md`, `FAQ.md`, `src/README.md`, validation scripts, and the Wiki. Corrected the documentation to use the actual `--build-type` and `test` subcommands.
 - **Broken Markdown Anchors:** Repaired the "Known Limitations" anchor link in `README.md` and fixed broken relative paths pointing to `Installation.md`.
 - **Stale Directory References:** Deprecated references to non-existent `src/diagnostics/` and `src/matter/` directories across the ROOT and Wiki, mapping them accurately to `src/postprocess/`, `src/horizon/`, and `src/grmhd/`.
