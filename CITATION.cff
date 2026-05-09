@@ -4,8 +4,8 @@ message: "If you use GRANITE in your research, please cite the following paper."
 type: software
 license: GPL-3.0-or-later
 repository-code: "https://github.com/LiranOG/Granite-NR"
-version: 0.6.7.2
-date-released: "2026-04-07"
+version: 0.6.8
+date-released: "2026-05-09"
 keywords:
   - numerical-relativity
   - general-relativity

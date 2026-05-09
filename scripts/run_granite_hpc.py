@@ -4,7 +4,7 @@
 # =============================================================================
 #
 #  Author  : Liran M. Schwartz
-#  Version : 0.6.7.2  (tracks engine version)
+#  Version : 0.6.8  (tracks engine version)
 #  License : GPL-3.0 (GRANITE engine) / MIT (this wrapper)
 #
 #  Purpose

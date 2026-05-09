@@ -6,7 +6,7 @@ modes, computing strain, plotting, and generating publication-quality
 figures.
 """
 
-__version__ = "0.6.7"
+__version__ = "0.6.8"
 __author__ = "Liran M. Schwartz"
 
 from granite_analysis.reader import GraniteDataset

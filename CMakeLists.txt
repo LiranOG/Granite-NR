@@ -7,7 +7,7 @@
 cmake_minimum_required(VERSION 3.20)
 
 project(GRANITE
-    VERSION 0.6.7.2
+    VERSION 0.6.8
     DESCRIPTION "General-Relativistic Adaptive N-body Integrated Tool for Extreme Astrophysics"
     HOMEPAGE_URL "https://github.com/LiranOG/Granite-NR"
     LANGUAGES CXX

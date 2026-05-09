@@ -1,18 +1,18 @@
-# GRANITE-NR — Source of Truth Registry
+﻿# GRANITE-NR — Source of Truth Registry
 
-For v0.6.7.x, authoritative sources are ranked as follows.
+For v0.6.8, authoritative sources are ranked as follows.
 Any contradiction between sources must be resolved in this order:
 
   1. Runtime code (src/main.cpp YAML parser) — what the binary actually reads.
   2. Benchmark YAML files (benchmarks/) — canonical runnable examples.
   3. Root README.md — user-facing install/build/run workflow.
-  4. docs/ — technical reference (currently being synchronized with v0.6.7.2).
+  4. docs/ — technical reference (currently being synchronized with v0.6.8).
   5. Wiki — public navigation layer; may temporarily lag during restructuring.
 
-## Currently accepted top-level YAML keys (runtime parser, v0.6.7.2)
+## Currently accepted top-level YAML keys (runtime parser, v0.6.8)
   grid, time, ccz4, io, initial_data, black_holes, amr
 
-## Known drift areas (resolved in v0.6.7.2 stabilization pass)
+## Known drift areas (resolved in v0.6.8 stabilization pass)
 - Pacing: All roadmap milestones have been shifted +2 months due to solo-developer constraints.
 - Wiki Parameter Reference shows older conceptual schema keys
   (simulation, domain, dissipation, time_integration, boundary, diagnostics)
