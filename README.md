@@ -578,8 +578,6 @@ No contribution requires understanding the whole codebase. The modules are delib
 | [`docs/getting_started/Installation.md`](./docs/getting_started/Installation.md) | **Complete Installation Guide** — per-terminal dependency setup, troubleshooting Q&A, and build verification. |
 | [`docs/paper/granite_preprint_v067.tex`](./docs/paper/granite_preprint_v067.tex) | **Technical Paper (Draft)** — Full formalism, CCZ4/GRMHD/VORTEX description, and validated benchmarks. In preparation for *Physical Review D*. ([compiled PDF](./docs/paper/granite_preprint_v067.pdf)) |
 
-> **Documentation status:** The repository has recently undergone a structural update affecting CLI workflows, Python tooling, documentation paths, benchmark configuration, and Wiki organization. Some older Wiki pages or documentation links may temporarily be inconsistent with the current repository layout. The root `README.md`, `docs/getting_started/Installation.md`, and runnable YAML files under `benchmarks/` are currently treated as the most reliable references while the Wiki and long-form docs are being synchronized. I am actively working through these inconsistencies and documenting fixes as they land.
-
 ---
 
 ## 📖 Deep-Dive Documentation — GRANITE Wiki
