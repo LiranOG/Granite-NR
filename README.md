@@ -501,6 +501,15 @@ No contribution requires understanding the whole codebase. The modules are delib
 ---
 ## 📚 Documentation
 
+> 📋 **Docs sync in progress:** GRANITE-NR completed a repository restructuring
+> in v0.6.7.2 that reorganized the `docs/` tree and renamed the repository from
+> `Granite` to `Granite-NR`. Some documentation paths, Wiki pages, and older
+> links may temporarily be inconsistent with the current codebase. The root
+> `README.md`, `docs/getting_started/Installation.md`, and the YAML files under
+> `benchmarks/` are the current source of truth while the Wiki and long-form docs
+> are being brought into alignment. I am working through these inconsistencies as
+> part of the active v0.6.7.x stabilization pass.
+
 | Document | Description |
 |---|---|
 | [`docs/developer_guide/DEVELOPER_GUIDE.md`](./docs/developer_guide/DEVELOPER_GUIDE.md) | **Complete Developer Reference** — architecture, all 22 CCZ4 variables, physics formulations, data structures, coding standards, testing workflow, and HPC guidelines. |
