@@ -278,6 +278,9 @@ include_directories(
 # ── Core infrastructure ───────────────────────────────────────────────────
 add_library(granite_core OBJECT
     src/core/grid.cpp
+    src/core/cli_parser.cpp
+    src/core/simulation_setup.cpp
+    src/core/evolution_loop.cpp
 )
 
 # ── Spacetime evolution ───────────────────────────────────────────────────
