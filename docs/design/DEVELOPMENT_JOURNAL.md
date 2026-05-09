@@ -677,10 +677,10 @@ Completely rebuilt `README.md` from its v0.6.5 baseline. The restructure adds a 
   | Version | Target | Status | Key Deliverables |
   |---|---|:---:|---|
   | **v0.6.5** | Q1 2026 | âœ… **Released** | BBH stable to t=500M, 4-level AMR, 92 tests, Python dashboard |
-  | **v0.7.0** | Q2 2026 | ðŸ”„ In Progress | GPU CUDA kernels, checkpoint-restart, full dynamic AMR regrid, M1 wired into RK3 |
-  | **v0.8.0** | Q3 2026 | ðŸ“‹ Planned | Tabulated nuclear EOS + reaction network |
-  | **v0.9.0** | Q4 2026 | ðŸ“‹ Planned | Full SXS catalog validation (~60 BBH configs), multi-group M1 |
-  | **v1.0.0** | Q1 2027 | ðŸŽ¯ Target | B5\_star production run + publication, full community release, native all-OS support |
+  | **v0.7.0** | Q4 2026 | ðŸ”„ In Progress | GPU CUDA kernels, checkpoint-restart, full dynamic AMR regrid, M1 wired into RK3 |
+  | **v0.8.0** | Q1 2027 | ðŸ“‹ Planned | Tabulated nuclear EOS + reaction network |
+  | **v0.9.0** | Q2 2027 | ðŸ“‹ Planned | Full SXS catalog validation (~60 BBH configs), multi-group M1 |
+  | **v1.0.0** | Q3 2027 | ðŸŽ¯ Target | B5\_star production run + publication, full community release, native all-OS support |
 
 - **B5_star scaling path noted:** Desktop (128Â³) â†’ GPU (vast.ai H100) â†’ cluster (256Â³—512Â³) â†’ flagship (12 AMR levels, ~2 TB RAM, ~5Ã—10â¶ CPU-hours).
 
@@ -1137,7 +1137,7 @@ All thresholds calibrated to actual v0.6.5 production run output.
 **URL:** https://github.com/LiranOG/Granite-NR/wiki/Roadmap
 
 - **Version Table:** v0.6.5 âœ… Released â†’ v0.7 ðŸ”„ In Progress â†’ v0.8 ðŸ“‹ Planned â†’
-  v0.9 ðŸ“‹ Planned â†’ v1.0 ðŸŽ¯ Target Q1 2027.
+  v0.9 ðŸ“‹ Planned â†’ v1.0 ðŸŽ¯ Target Q3 2027.
 - **Tier-1 Blockers for v0.7:** 3-row table (dynamic AMR regridding, loadCheckpoint,
   M1 wired into RK3 loop) with exact files.
 - **GPU Porting Plan:** 4 kernel priorities in order (CCZ4 RHS hot loop first).

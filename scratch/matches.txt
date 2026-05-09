@@ -1,0 +1,272 @@
+docs\design\VISION.md:1: # 🌌 GRANITE: The Vision for v1.0 and Beyond
+docs\design\VISION.md:7: This document outlines the core philosophy, the technological roadmap to v1.0, and the sustainable scientific economy being built around this engine. This is a manifesto for the democratization of extreme astrophysics.
+docs\design\VISION.md:29: * **The Scenario Challenge Board:** For v1.0, I plan to establish a dedicated community platform. Users will propose impossibly complex configurations (e.g., N-body chaotic interactions, extreme mass-ratio inspirals). The community will collaboratively solve these challenges, tweaking models and pushing GRANITE's capabilities further.
+docs\design\VISION.md:56: This is not science fiction; it is an engineering roadmap. The foundation (v0.6.7) is already built, tested, and validated. As the project pushes toward GPU-porting (v0.7) and full community deployment (v1.0), the tracks for this new ecosystem are being laid.
+benchmarks\B2_eq\params.yaml:11: # for v0.6.7.x. Merger/ringdown validation planned for v0.8-v0.9
+benchmarks\B2_eq\params.yaml:61: # This will be formally revalidated in v0.7.
+docs\paper\granite_preprint_v067.tex:94: release v0.7.
+docs\paper\granite_preprint_v067.tex:113: been simulated and constitutes the v1.0 production target.
+docs\paper\granite_preprint_v067.tex:172: RK3 time loop; this integration is the primary development target for v0.7.
+docs\paper\granite_preprint_v067.tex:175: targeted for v0.7.
+docs\paper\granite_preprint_v067.tex:375: Coupling into the main SSP-RK3 loop is planned for v0.7; radiation back-reaction
+docs\paper\granite_preprint_v067.tex:395: simultaneously with the radiation sector in v0.7.
+docs\paper\granite_preprint_v067.tex:931: & Active & v0.7 \\[2pt]
+docs\paper\granite_preprint_v067.tex:936: & Active & v0.7 \\[2pt]
+docs\paper\granite_preprint_v067.tex:939: & Active & v0.7 \\[2pt]
+docs\paper\granite_preprint_v067.tex:942: & Known & v0.8 \\[2pt]
+docs\paper\granite_preprint_v067.tex:945: & Known & v0.7 \\[2pt]
+docs\paper\granite_preprint_v067.tex:952: & Known & v0.7 \\[2pt]
+docs\paper\granite_preprint_v067.tex:955: & Planned & v0.7 \\[2pt]
+docs\paper\granite_preprint_v067.tex:958: & Planned & v0.8+ \\[2pt]
+docs\paper\granite_preprint_v067.tex:962: & By design & v1.0 target \\
+docs\paper\granite_preprint_v067.tex:974: The coupling architecture is finalized; the v0.7 milestone will wire
+docs\paper\granite_preprint_v067.tex:995: Full reflux correction is the primary numerical infrastructure target for v0.7.
+docs\paper\granite_preprint_v067.tex:1006: the v1.0 milestone.
+docs\paper\granite_preprint_v067.tex:1063: $\to$ GPU porting (vast.ai H100, v0.7)
+docs\paper\granite_preprint_v067.tex:1064: $\to$ cluster production ($256$--$512^3$, v0.9--v1.0).
+docs\paper\granite_preprint_v067.tex:1305: \subsection{Known Limitations and v1.0 Coupling Vision}
+docs\paper\granite_preprint_v067.tex:1311: targeted for v0.7);
+docs\paper\granite_preprint_v067.tex:1318: The v1.0 coupling vision addresses limitation~(ii) directly: the
+docs\paper\granite_preprint_v067.tex:1373: insertion into the main loop, which is the primary focus of v0.7.
+docs\paper\granite_preprint_v067.tex:1378: release through the v1.0 production target.
+docs\paper\granite_preprint_v067.tex:1386: v0.6.7 & Q1 2026 & Current release: CCZ4+GRMHD+dynamic AMR, 92 tests, VORTEX Gold Master \\
+docs\paper\granite_preprint_v067.tex:1387: v0.7.0 & Q2 2026 & GPU CUDA kernels, M1+neutrino wired, \code{--resume} CLI, full reflux, GRMHD convergence tests \\
+docs\paper\granite_preprint_v067.tex:1388: v0.8.0 & Q3 2026 & Tabulated nuclear EOS + reaction network, macOS/Windows native \\
+docs\paper\granite_preprint_v067.tex:1389: v0.9.0 & Q4 2026 & Full SXS catalog validation (${\sim}60$ BBH configs), multi-group M1 \\
+docs\paper\granite_preprint_v067.tex:1390: v1.0.0 & Q1 2027 & B5\_star production run + publication, full community release \\
+docs\paper\granite_preprint_v067.tex:1422: implemented and unit-tested, with RK3 integration targeted for v0.7.
+VALIDATION_STATUS.md:2: **Version:** v0.6.7.2 · **Date:** July 2026
+VALIDATION_STATUS.md:11: | M1 radiation transport | ✅ | ✅ | ❌ | ❌ | v0.7 |
+VALIDATION_STATUS.md:12: | Neutrino transport | ✅ | ✅ | ❌ | ❌ | v0.7 |
+VALIDATION_STATUS.md:14: | Dynamic AMR regridding | Partial | ❌ | ❌ | ❌ | v0.7 blocker |
+VALIDATION_STATUS.md:16: | Checkpoint resume (--resume) | Partial | ❌ | ❌ | ❌ | v0.7 blocker |
+VALIDATION_STATUS.md:18: | Recoil velocity | ❌ (throws) | ❌ | ❌ | ❌ | v0.7+ |
+VALIDATION_STATUS.md:19: | Horizon finder | ✅ | ✅ | ❌ dead-code | ❌ | v0.7 |
+VALIDATION_STATUS.md:20: | Postprocess module | ✅ | ✅ | ❌ dead-code | ❌ | v0.7 |
+VALIDATION_STATUS.md:22: | SXS:BBH:3634 validation | ❌ | ❌ | ❌ | ❌ | v0.8–v0.9 |
+VALIDATION_STATUS.md:23: | B5_star scenario | Concept spec | ❌ | ❌ | ❌ | v1.0 flagship |
+VALIDATION_STATUS.md:28: The true trumpet lapse (~0.3) requires finest-level sampling. Fix: v0.7.
+docs\design\GENESIS_AND_ARCHITECTURE.md:259: In the v1.0 architecture, GRANITE's HDF5 checkpoint outputs will be distilled into kinematic data streams and ingested by [VORTEX ETERNITY](https://github.com/LiranOG/GRANITE-Astrophysics-Suite/tree/main/02_Kinematic_Engines/ENAE_8_Octad/VORTEX) as a high-fidelity 3D playback viewer — enabling real-time interactive exploration of full general-relativistic numerical relativity simulation data in any web browser, on any machine, with no installation required.
+docs\developer_guide\COMPARISON.md:35: | Tabulated nuclear EOS | ✅ | ✅ | 🔶 | ✅ | 🔶 (v0.8) |
+docs\developer_guide\COMPARISON.md:37: | M1 radiation transport | ✅ (GR1D/IllinoisGRMHD) | ❌ | ❌ | ❌ | 🔶 (v0.7) |
+docs\developer_guide\COMPARISON.md:38: | Neutrino leakage | ✅ | ❌ | ❌ | ❌ | 🔶 (v0.7) |
+docs\developer_guide\COMPARISON.md:39: | Multi-group radiation | ✅ (partial) | ❌ | ❌ | ❌ | 🔶 (v0.9) |
+docs\developer_guide\COMPARISON.md:46: | Binary BNS | ✅ | ✅ | 🔶 | ❌ | 🔶 (v0.8) |
+docs\developer_guide\COMPARISON.md:47: | N > 2 BH simultaneous merger | ❌ | ❌ | ❌ | ❌ | 🔶 (v0.9) |
+docs\developer_guide\COMPARISON.md:51: | GPU support | 🔶 (partial) | ❌ | 🔶 | ✅ | 🔶 (v0.7) |
+docs\developer_guide\COMPARISON.md:166: - v0.7: GPU porting (narrowing the AthenaK performance gap)
+docs\developer_guide\COMPARISON.md:167: - v0.8: Tabulated nuclear EOS (matching ET/GRChombo matter fidelity)
+docs\developer_guide\COMPARISON.md:168: - v0.9: SXS catalog validation (matching SpECTRE waveform accuracy for BBH)
+docs\developer_guide\COMPARISON.md:169: - v1.0: B5\_star production run (the scenario none of the above can simulate)
+docs\user_guide\BENCHMARKS.md:28: | GPU | NVIDIA GTX 1050 Ti (not used — FP64 GPU compute pending v0.7) |
+docs\user_guide\BENCHMARKS.md:169: > is correct. Full merger validation against the SXS catalog is a v0.8 target.
+docs\user_guide\BENCHMARKS.md:268: > **Interpretation:** The 96³ run shows a *higher* final ‖H‖₂ than the 64³ run at t=500M. This is consistent with the 96³ run having a larger ‖H‖₂ peak during the early gauge adjustment phase. Both runs show monotonic decay and zero NaN events — the stability criterion is satisfied in both cases. Formal convergence order testing requires runs at ×2 resolution ratios with identical parameters; this is planned for v0.7.
+docs\user_guide\BENCHMARKS.md:301: > GPU and HPC estimates are projections based on hardware FLOP ratios. Actual performance pending GPU kernel porting (v0.7 target).
+docs\user_guide\BENCHMARKS.md:345: *These benchmarks demonstrate CCZ4 stability; full merger validation is a v0.8 target.*
+docs\theory\index.rst:34: - Stub (v0.7 target)
+docs\theory\index.rst:37: - Stub (v0.7 target)
+docs\theory\index.rst:40: - Stub (v0.7 target)
+docs\theory\index.rst:43: - Stub (v0.7 target)
+docs\theory\index.rst:46: - Stub (v0.7 target)
+docs\user_guide\diagnostic_handbook.md:252: current AMR implementation and is tracked as a v0.7 development item.
+docs\user_guide\diagnostic_handbook.md:424: unaffected. See the v0.7 roadmap for the `alpha_center` diagnostic fix.
+wiki_staging\FAQ.md:66: **A:** The M1 modules are implemented and pass all unit tests. Wiring them into the RK3 loop requires careful coupling with the GRMHD source terms at each stage, and requires the checkpoint-restart system to work (so long radiation runs can be paused and resumed). Both of these are v0.7 blockers. Using M1 before checkpoint-restart is implemented would make any radiation run uninterruptible.
+wiki_staging\FAQ.md:78: **A:** ~2 TB RAM minimum, ~5×10⁶ CPU-hours or ~5×10⁵ GPU-hours. This is firmly Tier-0 supercomputer territory (NERSC, ARCHER2, Jülich, BSC). Current v0.6.5 development runs are at 128³ on a desktop (16 GB RAM). GPU porting (v0.7) and cluster validation (v0.8) must be completed first.
+docs\theory\grmhd.rst:5: **v0.7 TARGET STUB:** The implementation is fully functional within the engine; however, this theoretical documentation is currently a stub scheduled for completion in the v0.7 cycle.
+GRANITE_ANTIGRAVITY_PROMPTS.md:3: **Version:** v0.6.7.2 · **Date:** May 2026
+GRANITE_ANTIGRAVITY_PROMPTS.md:405: | `horizon_finder` built & unit-tested but NOT called from the main evolution loop — AH detection is dead-code at runtime | 🔄 | v0.7 |
+GRANITE_ANTIGRAVITY_PROMPTS.md:406: | `postprocess` module built and linked but NEVER invoked from the main loop | 🔄 | v0.7 |
+GRANITE_ANTIGRAVITY_PROMPTS.md:407: | `neutrino` transport built and unit-tested but NOT coupled into RK3 (same status as M1 radiation) | 🔄 | v0.7 |
+GRANITE_ANTIGRAVITY_PROMPTS.md:408: | `chi_blend_center` / `chi_blend_width` CCZ4 parameters exist in code but are not exposed in the YAML parser | 🔄 | v0.7 |
+GRANITE_ANTIGRAVITY_PROMPTS.md:423: "* Not yet independently reproduced. Formal validation planned for v0.8."
+GRANITE_ANTIGRAVITY_PROMPTS.md:457: # for v0.6.7.x. Merger/ringdown validation planned for v0.8-v0.9
+GRANITE_ANTIGRAVITY_PROMPTS.md:469: # This will be formally revalidated in v0.7.
+GRANITE_ANTIGRAVITY_PROMPTS.md:480: # Runtime-compatible B5_star configuration is planned for v1.0.
+GRANITE_ANTIGRAVITY_PROMPTS.md:677: - **Status:** Known, documented, not a physics bug. Fix targeted for v0.7.
+GRANITE_ANTIGRAVITY_PROMPTS.md:872: **Version:** v0.6.7.2 · **Date:** May 2026
+GRANITE_ANTIGRAVITY_PROMPTS.md:881: | M1 radiation transport | ✅ | ✅ | ❌ | ❌ | v0.7 |
+GRANITE_ANTIGRAVITY_PROMPTS.md:882: | Neutrino transport | ✅ | ✅ | ❌ | ❌ | v0.7 |
+GRANITE_ANTIGRAVITY_PROMPTS.md:884: | Dynamic AMR regridding | Partial | ❌ | ❌ | ❌ | v0.7 blocker |
+GRANITE_ANTIGRAVITY_PROMPTS.md:886: | Checkpoint resume (--resume) | Partial | ❌ | ❌ | ❌ | v0.7 blocker |
+GRANITE_ANTIGRAVITY_PROMPTS.md:888: | Recoil velocity | ❌ (throws) | ❌ | ❌ | ❌ | v0.7+ |
+GRANITE_ANTIGRAVITY_PROMPTS.md:889: | Horizon finder | ✅ | ✅ | ❌ dead-code | ❌ | v0.7 |
+GRANITE_ANTIGRAVITY_PROMPTS.md:890: | Postprocess module | ✅ | ✅ | ❌ dead-code | ❌ | v0.7 |
+GRANITE_ANTIGRAVITY_PROMPTS.md:892: | SXS:BBH:3634 validation | ❌ | ❌ | ❌ | ❌ | v0.8–v0.9 |
+GRANITE_ANTIGRAVITY_PROMPTS.md:893: | B5_star scenario | Concept spec | ❌ | ❌ | ❌ | v1.0 flagship |
+GRANITE_ANTIGRAVITY_PROMPTS.md:898: The true trumpet lapse (~0.3) requires finest-level sampling. Fix: v0.7.
+GRANITE_ANTIGRAVITY_PROMPTS.md:1074: Labels: documentation, v0.7-blocker
+GRANITE_ANTIGRAVITY_PROMPTS.md:1106: Labels: bug, diagnostics, v0.7-blocker
+wiki_staging\Developer-Guide.md:12: - **C++17 exclusively.** No C++20 until v1.0 (HPC cluster compiler compatibility).
+wiki_staging\Developer-Guide.md:167: | `GRANITE_ENABLE_CUDA` | OFF | GPU kernels (v0.7 roadmap) |
+wiki_staging\Parameter-Reference.md:564: puncture lapse is physically ~0.03. This is a known bug (v0.7 target fix).
+wiki_staging\Parameter-Reference.md:634: This is a Tier-1 blocker tracked for v0.7.
+wiki_staging\Parameter-Reference.md:645: VTK output is planned for visualization with VisIt/ParaView (v0.7).
+benchmarks\B5_star\params.yaml:6: # Runtime-compatible B5_star configuration is planned for v1.0.
+wiki_staging\VORTEX-Simulator.md:24: 13. [Roadmap: VORTEX v1.0](#13-roadmap-vortex-v10)
+wiki_staging\VORTEX-Simulator.md:70: TARGET STATE (v1.0)
+wiki_staging\VORTEX-Simulator.md:82: **The v1.0 integration pipeline:**
+wiki_staging\VORTEX-Simulator.md:579: ## 13. Roadmap: VORTEX v1.0
+docs\theory\initial_data.rst:5: **v0.7 TARGET STUB:** See ``src/initial_data/initial_data.cpp`` and the `Initial-Data wiki page <https://github.com/LiranOG/Granite-NR/wiki/Initial-Data>`_ for exhaustive implementation details. This documentation is a stub scheduled for completion in the v0.7 cycle.
+.github\ISSUE_TEMPLATE\feature_request.md:35: - Is this a v0.7 / v0.8 / v1.0 scope item? -->
+wiki_staging\Gravitational-Wave-Extraction.md:81: GW extraction infrastructure is implemented in `src/diagnostics/psi4_extraction.cpp` and `python/granite_analysis/gw.py`. Full activation in production runs is targeted for v0.7.
+CHANGELOG.md:15: ### Planned — v0.7
+CHANGELOG.md:157: - **Versioned roadmap table** — v0.6.5 → v1.0.0 with deliverables per version.
+docs\design\PERSONAL_NOTE.md:46: If you want to understand exactly *how* I plan to achieve this—the plans for the YAML revolution, the VORTEX real-time visualization, and the HPC Cloud Bridge economy—read the **[GRANITE v1.0 Vision & Manifesto](VISION.md)**.
+viz\README.md:26: **The v1.0 Architectural Roadmap (The Playback Viewer):**
+viz\README.md:27: While VORTEX currently solves its own PN approximations, its ultimate architectural destiny is to serve as the unified frontend for GRANITE. For the v1.0 release, the impossibly heavy PDE workloads (full CCZ4 spacetime evolution and GRMHD on AMR grids) will remain exclusively within the C++ backend. The Python toolchain (`python/granite_analysis/`) will distill GRANITE's massive HDF5 outputs into lightweight JSON files. VORTEX will then ingest these datasets, functioning as a hyper-accurate **3D Playback Dashboard**, rendering exact supercomputer trajectories and gravitational wave strains ($\Psi_4$) seamlessly in the browser.
+wiki_staging\Benchmarks-&-Validation.md:108: | binary_equal_mass | phase error < 0.01 rad vs. SXS:BBH:0001 | 🔶 Planned v0.7 |
+docs\theory\gw_extraction.rst:5: **v0.7 TARGET STUB:** The GW extraction infrastructure is fully implemented on the analysis side in ``python/granite_analysis/gw.py``, but production activation within the C++ engine is targeted for v0.7.
+wiki_staging\Scientific-Context.md:39: | **GRANITE** | All of the above in one framework | Under active development — v0.6.5 validated BBH; full multi-physics v0.7+ |
+docs\theory\amr.rst:5: **v0.7 TARGET STUB:** The AMR implementation is fully operational in ``src/amr/amr.cpp`` (722 lines); however, this theoretical documentation is a stub scheduled for completion in the v0.7 cycle.
+docs\theory\amr.rst:65: - **Dynamic Regridding:** Partially implemented (criteria evaluated, but block rebuild not yet triggered). Targeted for v0.7.
+wiki_staging\Documentation-Index-&-Master-Reference.md:97: | Roadmap | 5-row version roadmap table (v0.6.5 → v1.0.0) |
+wiki_staging\Documentation-Index-&-Master-Reference.md:99: | Versioning Policy | Explanation of why GitHub Releases are not used until v1.0.0; CHANGELOG.md is authoritative |
+wiki_staging\Documentation-Index-&-Master-Reference.md:129: The **canonical, authoritative engineering history** of GRANITE. By project policy (documented in README §Versioning Policy), all version history, phase documentation, and change logs are tracked exclusively here — not in GitHub Releases — until v1.0.0. This is the single source of truth for every bug fix, architectural decision, and milestone.
+wiki_staging\Documentation-Index-&-Master-Reference.md:152: - The CHANGELOG does not have a "## [Unreleased]" section tracking in-flight work for v0.7.
+wiki_staging\Documentation-Index-&-Master-Reference.md:296: | 24 | Roadmap (v0.7 → v1.0) | 4-row version table with deliverables; B5_star scaling path description |
+wiki_staging\Documentation-Index-&-Master-Reference.md:302: - **Section 10.4 (Phase Classification):** States phases are time-based "a known limitation" but does **not** cross-reference this to the Known Limitations table in README or provide the planned fix version. Should explicitly state: "Planned fix: v0.7 — replace with BH separation-based criterion."
+wiki_staging\Documentation-Index-&-Master-Reference.md:333: - **No formal convergence order table.** The ×2 resolution ratio runs (64³ vs 128³ for SP, and 64³ vs 96³ for BBH) cannot be used to extract a convergence order because 96³/64³ = 1.5, not 2.0. The text acknowledges this and defers to v0.7. A note explicitly stating which resolution pairs are needed (64³, 128³, 256³ at identical domain and parameters) would help contributors plan this.
+wiki_staging\Documentation-Index-&-Master-Reference.md:334: - **No GW waveform section.** Ψ₄ extraction infrastructure exists in the code but is not yet active in production runs. A placeholder section with "planned for v0.7" and the expected extraction radius table would make the document more forward-looking.
+wiki_staging\Documentation-Index-&-Master-Reference.md:529: - **GPU section is a placeholder.** The document likely mentions GPU deployment (vast.ai H100) but cannot provide instructions until GPU kernels are implemented in v0.7.
+wiki_staging\Documentation-Index-&-Master-Reference.md:975: **Content:** Documents the planned visualization scripts (`plot_constraints.py`, `plot_gw.py`, `plot_amr_hierarchy.py`) and their expected usage. These scripts are planned for v0.7 and are documented here as specifications.
+wiki_staging\Documentation-Index-&-Master-Reference.md:1078: | `[Unreleased]` section in `CHANGELOG.md` | v0.6.7.2 | Now tracks v0.7 planned items |
+wiki_staging\Documentation-Index-&-Master-Reference.md:1099: - `CHANGELOG.md` — v0.6.7.2 entry current; Unreleased section tracking v0.7 items
+wiki_staging\Simulation-Health-&-Debugging.md:93: > ⚠️ **Critical caveat:** `alpha_center` reads from AMR level 0 (the coarsest level) at approximately r ≈ 0.65M from the domain center. This is **not** the lapse at the puncture (r → 0). The values displayed are systematically too high. This is a known diagnostic bug targeted for v0.7.
+wiki_staging\Simulation-Health-&-Debugging.md:251: │       Not a bug — planned fix in v0.7.
+wiki_staging\Simulation-Health-&-Debugging.md:349: These limitations are confirmed in v0.6.5 and planned for fix in v0.7:
+wiki_staging\Simulation-Health-&-Debugging.md:353: | `alpha_center` reads from AMR level 0, not finest level near puncture | Displayed values (≈0.97) are NOT the puncture lapse (~0.03) | v0.7 |
+wiki_staging\Simulation-Health-&-Debugging.md:354: | Phase labels (Early/Mid/Late Inspiral) are time-based, not separation-based | Phase labels are not physics diagnostics | v0.7 |
+wiki_staging\Simulation-Health-&-Debugging.md:355: | AMR block count fixed at initialization | AMR level count shown in telemetry reflects initial setup, not dynamic refinement | v0.7 |
+wiki_staging\Simulation-Health-&-Debugging.md:356: | `loadCheckpoint()` not implemented | Checkpoint files are written but cannot be used to resume | v0.7 |
+wiki_staging\Simulation-Health-&-Debugging.md:357: | M1 radiation not wired into RK3 | Radiation physics completely inactive in all production runs | v0.7 |
+wiki_staging\HPC-Deployment.md:138: ## 8. GPU Roadmap (Post-v0.7)
+wiki_staging\HPC-Deployment.md:143: | v0.7 GPU kernels | vast.ai H100 SXM | 256³ GPU | ~50 M/s (projected) |
+wiki_staging\HPC-Deployment.md:144: | v0.8 production | Cluster H100 × 8 | 512³ GPU | ~400 M/s (projected) |
+wiki_staging\HPC-Deployment.md:145: | v1.0 B5_star | Tier-0 cluster | 12 AMR levels | Exascale-class |
+wiki_staging\HPC-Deployment.md:147: **Note:** The GTX 1050 Ti (development desktop) is NOT viable for FP64 GPU compute. GPU production runs target H100 SXM instances via vast.ai after GPU kernel porting is complete in v0.7.
+docs\design\DEVELOPMENT_JOURNAL.md:35: The fix was trivial — one string literal change — but the mismatch is worth documenting because it’s a category of error that’s easy to miss: the C++ binary and the Python orchestration layer are versioned independently, and there’s no automated check that keeps them in sync. I should add a CI check for this in v0.7.
+docs\design\DEVELOPMENT_JOURNAL.md:553: Successfully introduced and integrated **VORTEX**, a bespoke, high-performance WebGL N-Body visualization engine, into the GRANITE ecosystem (`viz/vortex_eternity/`). This addition marks a foundational architectural shift towards our v1.0 objective: fully decoupling the uncompromising C++ HPC backend from the interactive 3D rendering layer. VORTEX currently is still in development and not 100% finished, It serves as a standalone Post-Newtonian sandbox, setting the stage for its future role as the primary HDF5/JSON Playback Viewer for GRANITE's supercomputing outputs.
+docs\design\DEVELOPMENT_JOURNAL.md:675: - **`## ðŸ—ºï¸ Roadmap`:** New version-target tracker table spanning `v0.6.5` through `v1.0.0`:
+docs\design\DEVELOPMENT_JOURNAL.md:679: | **v0.6.5** | Q1 2026 | âœ… **Released** | BBH stable to t=500M, 4-level AMR, 92 tests, Python dashboard |
+docs\design\DEVELOPMENT_JOURNAL.md:680: | **v0.7.0** | Q2 2026 | ðŸ”„ In Progress | GPU CUDA kernels, checkpoint-restart, full dynamic AMR regrid, M1 wired into RK3 |
+docs\design\DEVELOPMENT_JOURNAL.md:681: | **v0.8.0** | Q3 2026 | ðŸ“‹ Planned | Tabulated nuclear EOS + reaction network |
+docs\design\DEVELOPMENT_JOURNAL.md:682: | **v0.9.0** | Q4 2026 | ðŸ“‹ Planned | Full SXS catalog validation (~60 BBH configs), multi-group M1 |
+docs\design\DEVELOPMENT_JOURNAL.md:683: | **v1.0.0** | Q1 2027 | ðŸŽ¯ Target | B5\_star production run + publication, full community release, native all-OS support |
+docs\design\DEVELOPMENT_JOURNAL.md:695: | `loadCheckpoint()` stub only | Long runs cannot resume | ðŸ”„ Active | v0.7 |
+docs\design\DEVELOPMENT_JOURNAL.md:696: | M1 radiation built but not wired into RK3 | Radiation inactive in production | ðŸ”„ Active | v0.7 |
+docs\design\DEVELOPMENT_JOURNAL.md:697: | Dynamic AMR regridding partial | Block count fixed at init | ðŸ”„ Active | v0.7 |
+docs\design\DEVELOPMENT_JOURNAL.md:698: | Phase labels are time-based, not separation-based | Approximate classification | ðŸ“‹ Known | v0.7 |
+docs\design\DEVELOPMENT_JOURNAL.md:699: | `alpha_center` reads AMR level 0, not finest | Misleading lapse diagnostic | ðŸ“‹ Known | v0.7 |
+docs\design\DEVELOPMENT_JOURNAL.md:701: | macOS / Windows native unsupported | Limits accessibility | ðŸ“‹ Planned | v0.8+ |
+docs\design\DEVELOPMENT_JOURNAL.md:919: frequency). All targeted v0.7.
+docs\design\DEVELOPMENT_JOURNAL.md:963: | **alpha_center** | Diagnostic reads AMR level 0 at râ‰ˆ0.65M, not finest level near puncture. Status: KNOWN BUT NOT YET FIXED — v0.7 target |
+docs\design\DEVELOPMENT_JOURNAL.md:1009: labels, AMR block count frozen, loadCheckpoint stub, M1 inactive). All v0.7.
+docs\design\DEVELOPMENT_JOURNAL.md:1026: planned v0.7, radiative_shock_tube âšª M1 not active).
+docs\design\DEVELOPMENT_JOURNAL.md:1067: - **Â§8 GPU Roadmap:** 4-row table (v0.6.5 current â†’ v0.7 vast.ai H100 â†’ v0.8 cluster
+docs\design\DEVELOPMENT_JOURNAL.md:1068: â†’ v1.0 Tier-0) with projected throughput. Note: GTX 1050 Ti NOT viable for FP64.
+docs\design\DEVELOPMENT_JOURNAL.md:1086: targeted for v0.7."
+docs\design\DEVELOPMENT_JOURNAL.md:1111: first (v0.7 blockers).
+docs\design\DEVELOPMENT_JOURNAL.md:1139: - **Version Table:** v0.6.5 âœ… Released â†’ v0.7 ðŸ”„ In Progress â†’ v0.8 ðŸ“‹ Planned â†’
+docs\design\DEVELOPMENT_JOURNAL.md:1140: v0.9 ðŸ“‹ Planned â†’ v1.0 ðŸŽ¯ Target Q1 2027.
+docs\design\DEVELOPMENT_JOURNAL.md:1141: - **Tier-1 Blockers for v0.7:** 3-row table (dynamic AMR regridding, loadCheckpoint,
+docs\design\DEVELOPMENT_JOURNAL.md:1145: - **B5_star Scaling Path:** 4-step ASCII ladder (v0.6.5 desktop â†’ v0.7 GPU â†’ v0.8
+docs\design\DEVELOPMENT_JOURNAL.md:1146: cluster â†’ v1.0 flagship).
+docs\design\DEVELOPMENT_JOURNAL.md:1216: cannot be tuned without recompiling. YAML wiring is a v0.7 item.
+docs\design\DEVELOPMENT_JOURNAL.md:1276: ### Known Issues Carried Forward to v0.7
+wiki_staging\Roadmap.md:12: | **v0.6.5** | Q1 2026 | ✅ **Released** | BBH stable t=500M; 4-level AMR; 92 tests; Python dashboard; B2_eq benchmark |
+wiki_staging\Roadmap.md:13: | **v0.6.7** | Q2 2026 | ✅ **Released** | 107 tests (20 suites); VORTEX Gold Master; identity purge; CI stabilization |
+wiki_staging\Roadmap.md:14: | **v0.6.7.2** | Q2 2026 | ✅ **Released** | `granite_analysis` package overhaul; CLI hardening; 25 broken links fixed; `docs` subcommand; Quick Start rewrite |
+wiki_staging\Roadmap.md:15: | **v0.7.0** | Q2 2026 | 🔄 In Progress | GPU CUDA kernels; checkpoint-restart; full dynamic AMR regrid; M1 wired into RK3 |
+wiki_staging\Roadmap.md:16: | **v0.8.0** | Q3 2026 | 📋 Planned | Tabulated nuclear EOS + reaction network; SXS BBH waveform validation |
+wiki_staging\Roadmap.md:17: | **v0.9.0** | Q4 2026 | 📋 Planned | Full SXS catalog validation (~60 BBH configs); multi-group M1 radiation; Python steering API |
+wiki_staging\Roadmap.md:18: | **v1.0.0** | Q1 2027 | 🎯 Target | B5_star production run + paper; full community release; all OS support |
+wiki_staging\Roadmap.md:22: ## Tier-1 Blockers for v0.7
+wiki_staging\Roadmap.md:24: These three items are confirmed blockers that must be resolved before v0.7 release:
+wiki_staging\Roadmap.md:34: ## GPU Porting Plan (v0.7)
+wiki_staging\Roadmap.md:53: v0.7:   GPU prototype (vast.ai H100, 256³)
+wiki_staging\Roadmap.md:55: v0.8:   Cluster production (NERSC/ARCHER2/Jülich, 512³)
+wiki_staging\Roadmap.md:57: v1.0:   Flagship production (~12 levels, ~2 TB RAM, ~5×10⁶ CPU-hours)
+wiki_staging\Roadmap.md:68: | loadCheckpoint() not implemented | v0.7 |
+wiki_staging\Roadmap.md:69: | M1 radiation not wired into RK3 | v0.7 |
+wiki_staging\Roadmap.md:70: | Dynamic AMR regridding partial | v0.7 |
+wiki_staging\Roadmap.md:71: | Phase labels time-based, not separation | v0.7 |
+wiki_staging\Roadmap.md:72: | alpha_center reads from AMR level 0 | v0.7 |
+wiki_staging\Roadmap.md:73: | macOS / Windows native unsupported | v0.8 |
+wiki_staging\Physics-Formulations.md:92: | Tabulated nuclear | `TabulatedEOS` with tri-linear interpolation in (ρ, T, Y_e) | Neutron star mergers (v0.8+) |
+wiki_staging\Physics-Formulations.md:117: > ⚠️ **Status:** The M1 module is implemented and tested but is **not called** in the main RK3 evolution loop in v0.6.5. Radiation physics is completely inactive. Planned for v0.7.
+README.md:24: > **Status: 🟢 v0.6.7.2 (active development)** — CCZ4 + full GRMHD + fully dynamic Berger-Oliger AMR, moving-puncture gauge, HDF5 checkpoint write, VORTEX Frontend. 107 unit tests across 20 test suites covering all physics modules: CCZ4, GRMHD, AMR, horizon finder, M1 radiation, HDF5 I/O, initial data, and grid kernels. `single_puncture` + `B2_eq` validated **stable** through t = 500 M (early inspiral phase; full merger run is a v0.8 target).
+README.md:36: > - **Merger runs are a v0.8 target.** The t=500M BBH benchmarks below reach *early inspiral only* — no merger has been observed. Full merger + SXS catalog validation is planned for v0.9.
+README.md:38: > - **`--resume` checkpoint restart** is not yet exposed at the CLI (`writeCheckpoint()` works; the `--resume` flag is a v0.7 target).
+README.md:86: - **HDF5 I/O & Checkpointing:** Fully parallel MPI-IO for grid snapshots and time-series diagnostics. `writeCheckpoint()` serialises the full AMR hierarchy — all grid blocks, spacetime variables, step count, and simulation time — into portable HDF5. `readCheckpoint()` is implemented; `--resume` CLI integration is in active development for v0.7.
+README.md:105: > *N>3 BH: Brill-Lindquist multi-BH initial data and 5-BH `B5_star` benchmark configuration exist; production run at research resolution (256³+) requires GPU porting (v0.7 target).*
+README.md:143: > **What these benchmarks do NOT yet prove:** The t=500M runs above reach *early inspiral phase only* (no merger observed). Merger-waveform validation against the SXS catalog is a **v0.8–v0.9 target**. See [Known Limitations](#-known-limitations-v067).
+README.md:378: | **v0.6.5** | Q1 2026 | ✅ **Released** | BBH stable to t=500M, 4-level AMR, 92 tests, Python dashboard |
+README.md:379: | **v0.6.7** | Q1 2026 | ✅ **Released** | VORTEX Gold Master, dynamic AMR fully wired, HDF5 checkpoint write |
+README.md:380: | **v0.7.0** | Q3 2026 | 🔄 In Progress | GPU CUDA kernels, `--resume` checkpoint restart CLI, M1 wired into RK3 loop |
+README.md:381: | **v0.8.0** | Q4 2026 | 📋 Planned | Tabulated nuclear EOS + reaction network |
+README.md:382: | **v0.9.0** | Q1 2027 | 📋 Planned | Full SXS catalog validation (~60 BBH configs), multi-group M1 |
+README.md:383: | **v1.0.0** | Q2 2027 | 🎯 Target | B5\_star production run + publication, full community release + full support across all native OS systems |
+README.md:395: | `writeCheckpoint()` fully implemented; `--resume` CLI flag not yet wired | Long runs cannot be resumed without code modification | 🔄 Active | v0.7 |
+README.md:396: | M1 radiation built but not wired into RK3 loop | Radiation not active in production runs | 🔄 Active | v0.7 |
+README.md:397: | `alpha_center` reads from AMR level 0, not finest level near puncture | Misleading lapse diagnostic | 📋 Known | v0.7 |
+README.md:399: | Native Windows unsupported; macOS Homebrew experimental (not CI-gated) | Limits CI coverage; macOS issues cannot be caught automatically | 📋 Tracked | v0.8+ |
+README.md:424: | `v0.7.0` | Q2 2026 | 🔄 Planned | GPU CUDA kernels, checkpoint-restart, full dynamic AMR, M1 wired into RK3 |
+README.md:425: | `v1.0.0` | Q1 2027 | 🎯 Target | B5_star production run, full community release, GitHub Releases activated |
+README.md:435: explicit `v0.7.0` target.
+README.md:437: By `v0.7.0`, the repository will be fully structured for community contribution —
+README.md:450: - **GitHub Releases** will be activated at `v1.0.0`, the first fully production-ready version of the engine.
+README.md:551: | Version targets, GPU porting plan, Tier-1 blockers for v0.7 | [Roadmap](https://github.com/LiranOG/Granite-NR/wiki/Roadmap) |
+README.md:567: > against known analytic solutions and comparison against the SXS catalog (v0.9 target).
+README.md:602: **v1.0 Coupling Vision:** GRANITE's HDF5 outputs will be distilled into kinematic streams and ingested by VORTEX as a high-fidelity 3D playback viewer, enabling real-time interactive exploration of full GR numerical relativity data.
+docs\user_guide\FAQ.md:24: A: GRANITE is currently validated for single moving-puncture (single Schwarzschild black hole) stability runs and equal-mass binary black hole inspiral using Two-Punctures/Bowen-York initial data. The physics modules for GRMHD, M1 radiation, and neutrino leakage are implemented and pass unit tests, but radiation is not yet wired into the main RK3 evolution loop (planned for v0.7). Neutron star simulations require tabulated EOS support, which is planned for v0.8. The flagship B5\_star multi-SMBH scenario is the long-term production target.
+docs\user_guide\FAQ.md:28: A: GRANITE uses 4th-order finite-difference spatial discretization and SSP-RK3 time integration, which are standard in the NR community. The constraint norms achieved in v0.6.7 BBH runs (‖H‖₂ decaying to ~10⁻⁵ over 500M) are consistent with published results from comparable resolution runs in other codes. Formal convergence-order testing against the SXS waveform catalog is planned for v0.9. For precision waveform generation at the LIGO/Virgo accuracy standard, SpECTRE remains the gold standard; GRANITE's strength is the breadth of multi-physics coupling, not (yet) spectral-level phase accuracy.
+docs\user_guide\FAQ.md:40: A: The GRMHD Valencia infrastructure and M1 radiation module are built with neutron star physics in mind. However, two components are missing for production BNS runs: (1) a tabulated nuclear EOS (planned v0.8) — current GRANITE uses an ideal-gas EOS with γ = 4/3 which is unphysical for nuclear matter, and (2) the M1 neutrino transport is not yet wired into the RK3 loop (planned v0.7). Once these are in place, BNS inspirals will be a primary validation target.
+docs\user_guide\FAQ.md:56: A: The core issue is the MPI + OpenMP + HDF5 dependency stack. On Linux, these are battle-tested with known performance characteristics. On Windows, the native compilers and MPI implementations have significantly different behavior, and the OpenMP thread affinity model differs from what GRANITE's performance tuning assumes. Supporting native Windows would require a separate testing and maintenance path that diverts bandwidth from physics development. WSL2 provides Linux-native performance on Windows hardware and is the recommended path. Native Windows support is planned for v0.8.
+docs\user_guide\FAQ.md:96: A: Use the following criteria: (1) ‖H‖₂ stable or decreasing over the run duration, (2) no NaN events, (3) CFL ≤ 0.25 globally, (4) `alpha_center` follows the expected lapse collapse → recovery trajectory, (5) AMR levels are refinig where expected (near punctures for BBH). If all five are satisfied, the simulation is healthy by the current standards. For publication-quality results, also require comparison against a SXS reference waveform — planned for v0.9.
+docs\user_guide\FAQ.md:136: A: Strong scaling has not yet been formally benchmarked beyond a single node. The target is ≥90% efficiency up to 10,000 cores for production-scale simulations. This will be measured and reported in v0.7 as part of the HPC readiness campaign.
+docs\user_guide\FAQ.md:176: A: GRANITE can extract Ψ₄ gravitational wave data in the same format used by SXS, and comparison against SXS catalog entries is the primary validation target for v0.9. The technical comparison infrastructure (fixed-frequency integration, extrapolation to null infinity) is implemented and tested. Actual quantitative comparison against specific SXS entries is planned as part of the v0.9 validation campaign.
+docs\user_guide\FAQ.md:190: VORTEX currently operates as an independent post-Newtonian sandbox. The v1.0
+.github\CONTRIBUTING.md:108: develop       ← integration branch for the next release (v0.7.0)
+.github\CONTRIBUTING.md:270: is not yet included (scheduled for v0.8).
+viz\vortex_eternity\README.md:35: 13. [Roadmap to v1.0](#-roadmap-to-v10)
+viz\vortex_eternity\README.md:300: ## ⚠️ Known Limitations (v0.7)
+viz\vortex_eternity\README.md:304: | $O(N^2)$ force computation | Frame rate degrades above ~30 bodies | Barnes-Hut / GPU BVH (v0.7) |
+viz\vortex_eternity\README.md:305: | PN approximation breaks down at $x > 0.1$ | Not suitable for plunge-phase waveforms | Full CCZ4 via GRANITE JSON playback (v1.0) |
+viz\vortex_eternity\README.md:306: | WebGL minimap uses Canvas 2D | Heatmap resolution scales with canvas size | WebGL fragment shader backend (v0.7) |
+viz\vortex_eternity\README.md:307: | Vertex shader Doppler uses CPU path | No GPU interpolation between frames | ShaderMaterial rewrite (v0.7) |
+viz\vortex_eternity\README.md:308: | MACRO-COSMOS mode + large body count | Heavy CPU/GPU load on low-end hardware | Instanced BVH + worker threads (v0.8) |
+viz\vortex_eternity\README.md:313: ## 🔮 Roadmap to v1.0
+viz\vortex_eternity\README.md:320: v0.7.0  ── Performance & Shader Upgrade
+viz\vortex_eternity\README.md:325: v0.8.0  ── GRANITE Integration Bridge
+viz\vortex_eternity\README.md:330: v1.0.0  ── Unified Visualization Dashboard
+wiki_staging\AMR-Design.md:106: | Dynamic regridding not fully implemented | AMR block count fixed at initialization | v0.7 |
+wiki_staging\AMR-Design.md:107: | Max levels = 4 for stable production runs | dx_finest limited by initial setup | v0.7 (with dynamic regrid) |
+wiki_staging\AMR-Design.md:108: | No adaptive timestep per level | CFL violation possible at finest level | v0.7 |
+wiki_staging\AMR-Design.md:109: | Regrid frequency not configurable | Regrid runs at fixed intervals | v0.7 |
+docs\theory\radiation.rst:5: **v0.7 TARGET STUB:** The M1 module is implemented in ``src/radiation/m1.cpp`` (416 lines) and passes numerical smoke tests (``tests/radiation/test_m1_diffusion.cpp``).
+docs\theory\radiation.rst:6: **Status:** Built and tested, but NOT formally wired into the main RK3 evolution loop. Full coupling is a primary v0.7 target.
+docs\theory\radiation.rst:57: > The M1 module remains structurally decoupled from the main time loop until two critical prerequisites are satisfied (both v0.7 roadmap targets):
+docs\developer_guide\DEVELOPER_GUIDE.md:44: 24. [Roadmap (v0.7 → v1.0)](#24-roadmap-v07--v10)
+docs\developer_guide\DEVELOPER_GUIDE.md:73: | Modern C++17 foundation | No C++20 until v1.0 (HPC cluster compatibility) |
+docs\developer_guide\DEVELOPER_GUIDE.md:115: │   │   └── params.yaml                 # Flagship: 5 SMBHs (10⁸ M☉) + 2 ultra-massive stars — v1.0 production target.
+docs\developer_guide\DEVELOPER_GUIDE.md:138: │   ├── 📄 VISION.md                    # Long-term roadmap: YAML revolution, VORTEX live telemetry, v1.0 goals.
+docs\developer_guide\DEVELOPER_GUIDE.md:222: │   │                                   # GR lapse/shift corrections, Eddington tensor. [RK3 coupling: v0.7]
+docs\developer_guide\DEVELOPER_GUIDE.md:225: │   │                                   # dYe/dt β-process rates. [RK3 coupling: v0.7]
+docs\developer_guide\DEVELOPER_GUIDE.md:290: │       └── README.md                   # VORTEX architecture, physics engine, and v1.0 coupling roadmap.
+docs\developer_guide\DEVELOPER_GUIDE.md:541: **Status (v0.6.7):** The M1 module is implemented and tested but not yet wired into the main RK3 evolution loop. It will be activated in v0.7.
+docs\developer_guide\DEVELOPER_GUIDE.md:806: Simulation phases are currently classified by time thresholds (a known limitation; separation-based classification is more physically accurate and is planned for v0.7):
+docs\developer_guide\DEVELOPER_GUIDE.md:848: `main.cpp` is pending implementation (v0.7 target).
+docs\developer_guide\DEVELOPER_GUIDE.md:908: | macOS | 🔶 Planned for v0.8+ |
+docs\developer_guide\DEVELOPER_GUIDE.md:909: | Windows native | 🔶 Planned for v0.8+ |
+docs\developer_guide\DEVELOPER_GUIDE.md:989: - **C++17** exclusively. No C++20 features until v1.0 (ensures compatibility with HPC cluster compilers as of 2026).
+docs\developer_guide\DEVELOPER_GUIDE.md:1261: - **NVIDIA Nsight** — GPU kernels (post v0.7)
+docs\developer_guide\DEVELOPER_GUIDE.md:1353: | GW waveform | SXS:BBH:0305 (standard) | 🔶 Planned for v0.7 |
+docs\developer_guide\DEVELOPER_GUIDE.md:1397: ## 24. Roadmap (v0.7 → v1.0)
+docs\developer_guide\DEVELOPER_GUIDE.md:1401: | **v0.7** | Q2 2026 | GPU prototype (CUDA CCZ4 + GRMHD kernels), checkpoint-restart, full dynamic AMR regridding, M1 wired into RK3 loop |
+docs\developer_guide\DEVELOPER_GUIDE.md:1402: | **v0.8** | Q3 2026 | Tabulated nuclear EOS + nuclear network, SXS BBH waveform validation suite |
+docs\developer_guide\DEVELOPER_GUIDE.md:1403: | **v0.9** | Q4 2026 | Full validation vs. Einstein Toolkit binaries, multi-group M1 radiation, Python API for real-time steering |
+docs\developer_guide\DEVELOPER_GUIDE.md:1404: | **v1.0** | Q1 2027 | Production-ready B5\_star publication + full community open release, full support to all native OS(windows\macOS) |
+docs\developer_guide\DEVELOPER_GUIDE.md:1408: 2. v0.7: GPU kernel porting complete → vast.ai H100 SXM instances (contingent on GPU porting)
+docs\developer_guide\DEVELOPER_GUIDE.md:1409: 3. v0.8–v0.9: 256³–512³ runs on cluster allocations
+docs\developer_guide\DEVELOPER_GUIDE.md:1410: 4. v1.0: Full B5\_star at 12 AMR levels (~2 TB RAM, ~5×10⁶ CPU-hours or ~5×10⁵ GPU-hours)
+wiki_staging\Known-Fixed-Bugs.md:262: | **Status** | Known but NOT YET FIXED — v0.7 target |

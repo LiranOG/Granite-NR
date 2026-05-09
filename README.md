@@ -377,10 +377,10 @@ GRANITE/
 |---|---|:---:|---|
 | **v0.6.5** | Q1 2026 | ✅ **Released** | BBH stable to t=500M, 4-level AMR, 92 tests, Python dashboard |
 | **v0.6.7** | Q1 2026 | ✅ **Released** | VORTEX Gold Master, dynamic AMR fully wired, HDF5 checkpoint write |
-| **v0.7.0** | Q3 2026 | 🔄 In Progress | GPU CUDA kernels, `--resume` checkpoint restart CLI, M1 wired into RK3 loop |
-| **v0.8.0** | Q4 2026 | 📋 Planned | Tabulated nuclear EOS + reaction network |
-| **v0.9.0** | Q1 2027 | 📋 Planned | Full SXS catalog validation (~60 BBH configs), multi-group M1 |
-| **v1.0.0** | Q2 2027 | 🎯 Target | B5\_star production run + publication, full community release + full support across all native OS systems |
+| **v0.7.0** | Q4 2026 | 🔄 In Progress | GPU CUDA kernels, `--resume` checkpoint restart CLI, M1 wired into RK3 loop |
+| **v0.8.0** | Q1 2027 | 📋 Planned | Tabulated nuclear EOS + reaction network |
+| **v0.9.0** | Q2 2027 | 📋 Planned | Full SXS catalog validation (~60 BBH configs), multi-group M1 |
+| **v1.0.0** | Q3 2027 | 🎯 Target | B5\_star production run + publication, full community release + full support across all native OS systems |
 
 **Scaling path to B5\_star:** Development (128³, desktop) → GPU porting (vast.ai H100) → cluster production (256³–512³) → flagship (12 AMR levels, ~2 TB RAM, ~5×10⁶ CPU-hours).
 
@@ -421,8 +421,8 @@ GRANITE uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html). During 
 | `v0.6.5.5` | 2026-04-11 | ✅ | `README.md` overhaul — benchmarks, roadmap, competitor matrix |
 | `v0.6.6` | 2026-04-12\15 | ✅ | VORTEX WebGL engine + Gold Master cinematic & analytical systems |
 | **`v0.6.7.2`** | **2026-04-27** | ✅ **Current** | **107 tests / 20 suites — 100% CI clean. Full repo seal.** |
-| `v0.7.0` | Q2 2026 | 🔄 Planned | GPU CUDA kernels, checkpoint-restart, full dynamic AMR, M1 wired into RK3 |
-| `v1.0.0` | Q1 2027 | 🎯 Target | B5_star production run, full community release, GitHub Releases activated |
+| `v0.7.0` | Q4 2026 | 🔄 Planned | GPU CUDA kernels, checkpoint-restart, full dynamic AMR, M1 wired into RK3 |
+| `v1.0.0` | Q3 2027 | 🎯 Target | B5_star production run, full community release, GitHub Releases activated |
 
 ### A Note on Solo Development & Community Readiness
 

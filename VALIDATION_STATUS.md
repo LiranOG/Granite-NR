@@ -1,5 +1,5 @@
 # GRANITE-NR — Validation Status
-**Version:** v0.6.7.2 · **Date:** July 2026
+**Version:** v0.6.7.2 · **Date:** May 2026
 
 "Wired into main loop" = the module is actually called during a production run.
 "Dead-code" = compiled and linked but never called at runtime.

@@ -68,3 +68,6 @@ Thumbs.db
 # Environment files
 .env
 .env.local
+
+# Wiki Staging
+wiki_staging/

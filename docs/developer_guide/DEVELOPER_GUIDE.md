@@ -1398,10 +1398,10 @@ GRANITE actively seeks partnerships with:
 
 | Version | Quarter | Key Deliverables |
 |---|---|---|
-| **v0.7** | Q2 2026 | GPU prototype (CUDA CCZ4 + GRMHD kernels), checkpoint-restart, full dynamic AMR regridding, M1 wired into RK3 loop |
-| **v0.8** | Q3 2026 | Tabulated nuclear EOS + nuclear network, SXS BBH waveform validation suite |
-| **v0.9** | Q4 2026 | Full validation vs. Einstein Toolkit binaries, multi-group M1 radiation, Python API for real-time steering |
-| **v1.0** | Q1 2027 | Production-ready B5\_star publication + full community open release, full support to all native OS(windows\macOS) |
+| **v0.7** | Q4 2026 | GPU prototype (CUDA CCZ4 + GRMHD kernels), checkpoint-restart, full dynamic AMR regridding, M1 wired into RK3 loop |
+| **v0.8** | Q1 2027 | Tabulated nuclear EOS + nuclear network, SXS BBH waveform validation suite |
+| **v0.9** | Q2 2027 | Full validation vs. Einstein Toolkit binaries, multi-group M1 radiation, Python API for real-time steering |
+| **v1.0** | Q3 2027 | Production-ready B5\_star publication + full community open release, full support to all native OS(windows\macOS) |
 
 **Scaling path to B5\_star:**
 1. v0.6.5: Development-scale runs (128³) on personal desktop (i5-8400, GTX 1050 Ti not viable for FP64)
