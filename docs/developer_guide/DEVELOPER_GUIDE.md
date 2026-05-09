@@ -4,8 +4,8 @@
 
 | Field | Value |
 |---|---|
-| **Current Development Version** | 0.6.7 (main branch) |
-| **Last Stable Version** | 0.6.5 — Stability & Benchmark Release |
+| **Current Development Version** | 0.6.8 (main branch) |
+| **Last Stable Version** | 0.6.8 — Architecture & Stability Release |
 | **Release Date (Stable)** | April 10, 2026 |
 | **Maintainer** | LiranOG (Founder & Lead Developer) |
 | **License** | GPL-3.0 (see `LICENSE`) |
@@ -152,9 +152,9 @@ GRANITE/
 │   ├── 📄 index.rst                    # Sphinx master documentation index.
 │   │
 │   ├── 📁 paper/                       # Technical preprint — in preparation for Physical Review D.
-│   │   ├── granite_preprint_v067.tex   # Full LaTeX source (1,709 lines): CCZ4/GRMHD/VORTEX formalism,
+│   │   ├── granite_preprint_v068.tex   # Full LaTeX source (1,709 lines): CCZ4/GRMHD/VORTEX formalism,
 │   │   │                               # validated benchmarks, known limitations, B5_star scenario.
-│   │   ├── granite_preprint_v067.pdf   # Compiled PDF — current draft, freely distributable.
+│   │   ├── granite_preprint_v068.pdf   # Compiled PDF — current draft, freely distributable.
 │   │   └── 📁 figures/                 # All 13 publication-quality figures (300 dpi PDF, real devlog data).
 │   │       ├── fig1_single_puncture.pdf      # SP ‖H‖₂ + lapse, 3 resolutions, ×84.8 reduction annotation.
 │   │       ├── fig2_binary_bbh.pdf           # BBH ‖H‖₂ + lapse, real data points + monotonic decay.
@@ -177,6 +177,9 @@ GRANITE/
 │       └── installation.rst            # End-user installation tutorial (Sphinx source).
 │
 ├── 📁 include/granite/                 # Public C++ interface headers — indexed by subsystem.
+│   ├── cli_parser.hpp                  # CLI argument parsing (--benchmark, --resume flags).
+│   ├── simulation_setup.hpp            # YAML → SimulationParams, initial data + AMR hierarchy setup.
+│   ├── evolution_loop.hpp              # SSP-RK3 time loop, Sommerfeld BCs, diagnostics, checkpoint I/O.
 │   ├── 📁 core/
 │   │   ├── grid.hpp                    # GridBlock: field-major 3-D data structure, ghost zones, MPI buffers.
 │   │   └── types.hpp                   # Type aliases (Real, DIM), physical constants, variable enumerations.
@@ -200,10 +203,12 @@ GRANITE/
 │   └── 📁 postprocess/
 │       └── postprocess.hpp             # Psi4Extractor: NP Ψ₄ on extraction spheres, GW strain, recoil kick.
 │
-├── 📁 src/                             # C++17 physics kernels and engine entry point (~8,918 lines total).
-│   ├── main.cpp                        # Engine entry point: YAML load, AMR init, SSP-RK3 time loop (1,231 ln).
-│   │                                   # NaN forensics, Sommerfeld BCs, puncture tracking, diagnostics output.
+├── 📁 src/                             # C++17 physics kernels and modular engine entry point.
+│   ├── main.cpp                        # Thin entry point (68 ln): MPI/PETSc init → parseArgs → setup → run → teardown.
 │   ├── 📁 core/
+│   │   ├── cli_parser.cpp              # CLI argument parsing: --benchmark, --resume, version banner.
+│   │   ├── simulation_setup.cpp        # YAML loading, SimulationParams, initial data + AMR hierarchy construction.
+│   │   ├── evolution_loop.cpp          # SSP-RK3 loop, ghost zones, Sommerfeld BCs, floors, diagnostics, checkpoint.
 │   │   └── grid.cpp                    # GridBlock implementation: packBoundary/unpackBoundary MPI buffers (115 ln).
 │   ├── 📁 spacetime/
 │   │   └── ccz4.cpp                    # CCZ4 RHS: full conformal Ricci tensor, physical Laplacian of lapse,   (1,158 ln)
@@ -236,8 +241,8 @@ GRANITE/
 │       └── postprocess.cpp             # Ψ₄ GW extraction: NP tetrad, spin-weighted harmonics (ℓ≤4),              (649 ln)
 │                                       # fixed-frequency strain integration, radiated energy/momentum.
 │
-├── 📁 tests/                           # 92-test GoogleTest suite — 100% pass rate on GCC-12 and Clang-18.
-│   ├── CMakeLists.txt                  # CTest integration for all 10 test files.
+├── 📁 tests/                           # 107-test GoogleTest suite (105 passed, 2 skipped) on GCC-12 and Clang-18.
+│   ├── CMakeLists.txt                  # CTest integration for all 14 test files.
 │   ├── 📁 core/
 │   │   ├── test_types.cpp              # TypesTest (7): symIdx, variable counts, physical constants, units.
 │   │   └── test_grid.cpp               # GridBlockTest (13) + BufferTest (5) + FlatLayoutTest (4) — 22 total.
@@ -250,9 +255,17 @@ GRANITE/
 │   │   ├── test_grmhd_gr.cpp           # GRMHDGRTest (5): HLLE in curved metric, MP5 reconstruction.
 │   │   └── test_tabulated_eos.cpp      # IdealGasLimitTest (5) + ThermodynamicsTest (5) +
 │   │                                   # InterpolationTest (5) + BetaEquilibriumTest (5) — 20 total.
-│   └── 📁 initial_data/
-│       ├── test_brill_lindquist.cpp    # BrillLindquistTest (5): single/binary/5-BH conformal factor.
-│       └── test_polytrope.cpp          # PolytropeTest (7): Lane-Emden, TOV solver, density/pressure monotonicity.
+│   ├── 📁 initial_data/
+│   │   ├── test_brill_lindquist.cpp    # BrillLindquistTest (5): single/binary/5-BH conformal factor.
+│   │   └── test_polytrope.cpp          # PolytropeTest (7): Lane-Emden, TOV solver, density/pressure monotonicity.
+│   ├── 📁 amr/
+│   │   └── test_amr_basic.cpp          # AMRSmokeTest (5): hierarchy construction, prolongation, restriction.
+│   ├── 📁 horizon/
+│   │   └── test_schwarzschild_horizon.cpp # SchwarzschildHorizonTest (3): finder convergence, mass consistency.
+│   ├── 📁 io/
+│   │   └── test_hdf5_roundtrip.cpp     # HDF5RoundtripTest (3): constant/linear field, file existence.
+│   └── 📁 radiation/
+│       └── test_m1_diffusion.cpp       # M1SmokeTest (4): Eddington thin/thick limits, bounded closure.
 │
 ├── 📁 python/                          # Installable Python analysis package (pip install -e .).
 │   └── 📁 granite_analysis/
@@ -538,7 +551,7 @@ Q_ν = −κ_a (E − E_eq)   [absorption / emission]
 R_ν = (source term in electron fraction Y_e evolution)
 ```
 
-**Status (v0.6.7):** The M1 module is implemented and tested but not yet wired into the main RK3 evolution loop. It will be activated in v0.7.
+**Status (v0.6.8):** The M1 module is implemented and tested but not yet wired into the main RK3 evolution loop. It will be activated in v0.7.
 
 ---
 
@@ -719,9 +732,9 @@ Ghost zone filling order within the RK3 loop:
 2. Fill from coarser level via prolongation
 3. Apply boundary conditions (outermost ghosts)
 
-### 8.5 Dynamic Regridding (v0.6.7 Status)
+### 8.5 Dynamic Regridding (v0.6.8 Status)
 
-Dynamic regridding is **fully implemented** in v0.6.7. Gradient-based and 
+Dynamic regridding is **fully implemented** in v0.6.8. Gradient-based and 
 puncture-tracking triggers fire per step via `AMRHierarchy::subcycle()`, 
 with iterative union-merge box aggregation and live regridding integrated 
 into the main RK3 loop.

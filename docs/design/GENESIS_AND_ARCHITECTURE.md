@@ -142,11 +142,14 @@ For any module in the GRANITE engine, you should be able to trace a direct prove
 ```
 Granite/                            ← You are here
 ├── src/
+│   ├── main.cpp                    ← Thin entry point (68 ln): init → parse → setup → run → teardown
+│   ├── core/                       ← cli_parser, simulation_setup, evolution_loop, grid
 │   ├── spacetime/                  ← CCZ4 evolution, gauge, moving punctures
-│   ├── matter/                     ← GRMHD + HRSC, EOS tables, con2prim
+│   ├── grmhd/                      ← GRMHD + HRSC, EOS tables, con2prim
 │   ├── radiation/                  ← Grey M1, neutrino leakage
 │   ├── amr/                        ← Block-structured AMR + subcycling
-│   ├── diagnostics/                ← ψ₄ extraction, AH finder, constraint monitor
+│   ├── horizon/                    ← Apparent horizon finder
+│   ├── postprocess/                ← Ψ₄ extraction, GW strain, recoil kick
 │   └── io/                         ← HDF5, checkpointing
 ├── include/granite/                ← Public headers
 ├── tests/                          ← Test suite (107 tests / 20 suites, 105 passed, 2 skipped)
@@ -191,9 +194,9 @@ GRANITE-Astrophysics-Suite/         ← The Genesis Archive
 | Analytical Framework | Central Equation | Engine Module | Engine Location |
 |---------------------|-----------------|---------------|-----------------|
 | **[NRCF](https://github.com/LiranOG/GRANITE-Astrophysics-Suite/blob/main/01_Theoretical_Limit/ENAE_7_Septad/NRCF_Radial_Collapse_Framework.md)** | $s_N = \frac{1}{4}\sum\csc(\pi k/N)$ | Initial data (polygon BH placement) | `src/initial_data/` |
-| **[PRISM](https://github.com/LiranOG/GRANITE-Astrophysics-Suite/blob/main/01_Theoretical_Limit/ENAE_7_Septad/PRISM_Polyhedral_Radial_Infall.md)** | $E_{\text{GW}} = \frac{1}{210}\frac{M_{\text{ring}}^2 M_{\text{eff}}^{5/2}}{M_{\text{tot}}^{7/2}}c^2$ | GW extraction ($\psi_4$ diagnostic) | `src/diagnostics/` |
+| **[PRISM](https://github.com/LiranOG/GRANITE-Astrophysics-Suite/blob/main/01_Theoretical_Limit/ENAE_7_Septad/PRISM_Polyhedral_Radial_Infall.md)** | $E_{\text{GW}} = \frac{1}{210}\frac{M_{\text{ring}}^2 M_{\text{eff}}^{5/2}}{M_{\text{tot}}^{7/2}}c^2$ | GW extraction ($\psi_4$ diagnostic) | `src/postprocess/` |
 | **[SYNAPSE](https://github.com/LiranOG/GRANITE-Astrophysics-Suite/blob/main/01_Theoretical_Limit/ENAE_7_Septad/SYNAPSE_Phase_Space_Estimator.md)** | $\varepsilon_k = \varepsilon_0 \cdot 4\eta_k \cdot f_{\text{spin}}$ | Benchmark validation targets | `tests/` |
-| **[AUE](https://github.com/LiranOG/GRANITE-Astrophysics-Suite/blob/main/01_Theoretical_Limit/ENAE_7_Septad/AUE_Astrophysical_Ultimate_Estimator.md)** | Systematic failure audit | All physics modules | `src/spacetime/`, `src/matter/`, `src/radiation/` |
+| **[AUE](https://github.com/LiranOG/GRANITE-Astrophysics-Suite/blob/main/01_Theoretical_Limit/ENAE_7_Septad/AUE_Astrophysical_Ultimate_Estimator.md)** | Systematic failure audit | All physics modules | `src/spacetime/`, `src/grmhd/`, `src/radiation/` |
 | **[NEXUS](https://github.com/LiranOG/GRANITE-Astrophysics-Suite/blob/main/01_Theoretical_Limit/ENAE_8_Octad/NEXUS_Neutron_Star_Extreme_Scenario.md)** | 4-phase cascade | Multi-physics coupling | `src/matter/` + `src/radiation/` |
 | **[Engine Spec](https://github.com/LiranOG/GRANITE-Astrophysics-Suite/blob/main/01_Theoretical_Limit/Engine_Specification/GRANITE_Engine_Specification.md)** | CCZ4 + GRMHD + M1 + AMR | Complete architecture | Entire `src/` tree |
 
