@@ -21,7 +21,7 @@
 
 </div>
 
-> **Status: 🟢 v0.6.8 (active development)** — CCZ4 + full GRMHD + fully dynamic Berger-Oliger AMR, moving-puncture gauge, HDF5 checkpoint write, VORTEX Frontend. 107 unit tests across 20 test suites covering all physics modules: CCZ4, GRMHD, AMR, horizon finder, M1 radiation, HDF5 I/O, initial data, and grid kernels. `single_puncture` + `B2_eq` validated **stable** through t = 500 M (early inspiral phase; full merger run is a v0.8 target).
+> **Status: 🟢 v0.6.7.2 (active development)** — CCZ4 + full GRMHD + fully dynamic Berger-Oliger AMR, moving-puncture gauge, HDF5 checkpoint write, VORTEX Frontend. 107 unit tests across 20 test suites covering all physics modules: CCZ4, GRMHD, AMR, horizon finder, M1 radiation, HDF5 I/O, initial data, and grid kernels. `single_puncture` + `B2_eq` validated **stable** through t = 500 M (early inspiral phase; full merger run is a v0.8 target).
 
 GRANITE is a high-performance, next-generation numerical relativity and General-Relativistic Magnetohydrodynamics (GRMHD) engine.
 Designed from the ground up to model extreme astrophysical events — such as the inspiral and merger of multiple Supermassive Black Holes (SMBHs) interacting with dense stellar environments and accretion discs — GRANITE brings state-of-the-art multi-scale physics into a cohesive, open-source framework.
@@ -41,7 +41,7 @@ Designed from the ground up to model extreme astrophysical events — such as th
 > - **Unit tests cover all major physics modules** (107 tests across 20 suites). Only `postprocess` lacks dedicated unit tests.
 > - **Native Windows** unsupported; use WSL2. **macOS** is experimentally supported via Homebrew (community-tested, not CI-gated).
 >
-> See [Known Limitations](#-known-limitations-v067) for the full table.
+> See [Known Limitations](#️-known-limitations-v067) for the full table.
 
 ## 📖 Table of Contents
 
@@ -57,7 +57,7 @@ Designed from the ground up to model extreme astrophysical events — such as th
   - [Step 6 — Run a Full Simulation](#step-6--run-a-full-simulation)
 - [📁 Repository Structure](#-repository-structure)
 - [🗺️ Roadmap](#️-roadmap)
-- [⚠️ Known Limitations](#-known-limitations-v067)
+- [⚠️ Known Limitations](#️-known-limitations-v067)
 - [📋 Versioning Policy](#-versioning-policy-pre-100)
 - [🤝 Open for Collaboration](#-open-for-collaboration)
 - [🛠️ Contributing](#%EF%B8%8F-contributing)
@@ -89,11 +89,11 @@ validated at 4 levels.
 
 ## ⚖️ How GRANITE Compares
 
-The table below shows the current implementation status of GRANITE v0.6.8 relative to other open‑source NR codes. Combining all of these capabilities in a single, validated framework is a long‑term goal; the present version is verified for single‑BH and binary‑BH inspiral.
+The table below shows the current implementation status of GRANITE v0.6.7.2 relative to other open‑source NR codes. Combining all of these capabilities in a single, validated framework is a long‑term goal; the present version is verified for single‑BH and binary‑BH inspiral.
 
 ### Summary Comparison
 
-| Capability | Einstein Toolkit | GRChombo | SpECTRE | AthenaK | **GRANITE v0.6.8** |
+| Capability | Einstein Toolkit | GRChombo | SpECTRE | AthenaK | **GRANITE v0.6.7.2** |
 |---|:---:|:---:|:---:|:---:|:---:|
 | CCZ4 formulation | ✅ | ✅ | ✅ | ❌ | ✅ |
 | Full GRMHD (Valencia) | ✅ | ✅ | 🔶 | ✅ | ✅ |
@@ -103,6 +103,15 @@ The table below shows the current implementation status of GRANITE v0.6.8 relati
 | Open license | LGPL | ✅ MIT | ✅ MIT | ✅ BSD | ✅ GPL-3.0 |
 
 > *N>3 BH: Brill-Lindquist multi-BH initial data and 5-BH `B5_star` benchmark configuration exist; production run at research resolution (256³+) requires GPU porting (v0.7 target).*
+
+> *Dynamic AMR marked 🔶 for GRANITE: the Berger–Oliger subcycling hierarchy
+> is implemented and integrated into the production RK3 loop with live
+> per-step regridding and puncture-tracking spheres. However, three known
+> limitations remain: (1) the reflux correction operator at coarse–fine
+> interfaces is a stub — computed but not applied; (2) AMR prolongation is
+> trilinear (2nd-order) only; (3) production benchmarks are validated at
+> 4 refinement levels, not the 12-level target required for B5\_star.
+> Full ✅ status is the v0.8 target.*
 
 *(Table abridged. See the full feature matrix below.)*
 
@@ -124,6 +133,8 @@ The table below shows the current implementation status of GRANITE v0.6.8 relati
 
 All results are from **production runs on a single desktop workstation** (Intel i5-8400, 6-core, 16 GB DDR4, Linux/WSL2). Every number below is from real simulation logs and is fully reproducible by cloning this repository.
 
+> - **Hardware note:** The three-resolution gauge-wave convergence test, the `{1,2,3,6}`-thread scaling extension to 128³, and the matched BBH convergence series targeting SXS:BBH:3634 have **not yet been executed** — access to the second development machine (i5-12600KF) is temporarily unavailable. These are v0.7 deliverables; once hardware is restored, all runs will be completed and results published here.
+
 ### Single Moving Puncture — Schwarzschild Stability
 
 | Resolution | AMR Levels | dx finest | ‖H‖₂ t=0 | ‖H‖₂ final | Reduction | t\_final | NaN events |
@@ -138,9 +149,50 @@ All results are from **production runs on a single desktop workstation** (Intel 
 | 64³ | 4 | 0.781 M | 8.226 × 10⁻⁴ | **1.341 × 10⁻⁵** | **×61.3** | 98.9 min | 0.084 M/s | 0 |
 | 96³ | 4 | 0.521 M | 2.385 × 10⁻³ | **3.538 × 10⁻⁵** | **×67.4** | 496 min | 0.017 M/s | 0 |
 
-> **What ‖H‖₂ reduction means:** The Hamiltonian constraint measures how accurately the evolved spacetime satisfies Einstein's equations. A monotonically *decreasing* ‖H‖₂ over 500 M of simulated time is a necessary (but not sufficient) indicator of **numerical stability and correct constraint damping**.
+---
+
+### Constraint Violation Reduction
+
+> **Figure 1:** Normalized ‖H‖₂ decay demonstrated from devlog telemetry —
+> single puncture 64³ (×84.8 reduction) and equal-mass BBH 64³ (×61.3 reduction)
+> over 500 M of evolution. Zero NaN events recorded in both runs.
+
+<p align="center">
+  <img src="docs/paper/figures/fig3_constraint_comparison.png"
+       width="700"
+       alt="Normalized Hamiltonian constraint decay: ×84.8 (SP) and ×61.3 (BBH) over 500M"/>
+</p>
+
+---
+
+### OpenMP Thread Scaling
+
+> **Figure 2:** Parallel speedup and efficiency on Intel i5-12600KF (6 P-cores, WSL2).
+> Physics output is bit-for-bit identical across all thread counts.
+> Extension to 128³ base grid pending hardware restoration (v0.7 target).
+
+<p align="center">
+  <img src="docs/paper/figures/fig4_scaling.png"
+       width="680"
+       alt="OpenMP parallel speedup and efficiency: 1.68× at 6 threads (i5-12600KF, WSL2)"/>
+</p>
+
+---
+
+### BBH Comprehensive Diagnostics
+
+> **Figure 3:** Four-panel BBH evolution from devlog telemetry —
+> ‖H‖₂ decay, central lapse α, AMR block count, and throughput (M/s) over 500 M.
+
+<p align="center">
+  <img src="docs/paper/figures/fig9_bbh_comprehensive.png"
+       width="700"
+       alt="BBH evolution: constraint decay, lapse, AMR blocks, and throughput over 500M"/>
+</p>
+
+> - **What ‖H‖₂ reduction means:** The Hamiltonian constraint measures how accurately the evolved spacetime satisfies Einstein's equations. A monotonically *decreasing* ‖H‖₂ over 500 M of simulated time is a necessary (but not sufficient) indicator of **numerical stability and correct constraint damping**.
 >
-> **What these benchmarks do NOT yet prove:** The t=500M runs above reach *early inspiral phase only* (no merger observed). Merger-waveform validation against the SXS catalog is a **v0.8–v0.9 target**. See [Known Limitations](#-known-limitations-v067).
+> - **What these benchmarks do NOT yet prove:** The t=500M runs above reach *early inspiral phase only* (no merger observed). Merger-waveform validation against the SXS catalog is a **v0.8–v0.9 target**. See [Known Limitations](#️-known-limitations-v067).
 >
 > 📄 Raw telemetry, step-by-step logs, and extended resolution tables: [`docs/user_guide/BENCHMARKS.md`](./docs/user_guide/BENCHMARKS.md)
 
@@ -148,15 +200,8 @@ All results are from **production runs on a single desktop workstation** (Intel 
 
 ## 🚀 Quick Start Guide
 
-> [!WARNING]
-> **v0.6.8 — Active Stabilization in Progress**
->
-> A recent structural reorganisation of the `scripts/` directory introduced several integration issues that are currently being triaged and resolved. Some CLI workflows, Python analysis tools, and virtual environment setup steps may temporarily behave unexpectedly until the patch is complete. All core physics (C++ engine, unit tests, simulation runs) is unaffected — 105/107 tests pass (2 skipped: horizon finder on coarse 16³ grid).
->
-> Fixes are being pushed continuously. If something doesn't work as documented, check [`CHANGELOG.md`](./CHANGELOG.md) for the latest patch status or open an [issue](https://github.com/LiranOG/Granite-NR/issues).
-
 > [!TIP]
-> **Stable baseline for first-time users:** The current `main` branch is under active v0.6.8 restructuring, including CLI cleanup, Python tooling migration, documentation synchronization, and benchmark-schema updates. If you prefer a known-good first-run workflow without debugging current `main`-branch integration changes, use the `v0.6.5` tag as the recommended stable baseline.
+> **Stable baseline for first-time users:** The current `main` branch is under active v0.6.7.x restructuring, including CLI cleanup, Python tooling migration, documentation synchronization, and benchmark-schema updates. If you prefer a known-good first-run workflow without debugging current `main`-branch integration changes, use the `v0.6.5` tag as the recommended stable baseline.
 > 
 > Download the ZIP archive from the `v0.6.5` tag, extract it inside WSL/Linux, and follow the commands documented in that tagged version. For live simulation monitoring, use the legacy `sim_tracker.py` workflow included with `v0.6.5`, which was the most stable telemetry path for that release.
 > ```bash
@@ -166,6 +211,13 @@ All results are from **production runs on a single desktop workstation** (Intel 
 >3. Extract the ZIP inside WSL/Linux.
 >4. Follow the build/run commands included in the tagged version.
 >5. Use the legacy `sim_tracker.py` workflow for live telemetry.
+
+> [!WARNING]
+> **v0.6.7.2 — Active Stabilization in Progress**
+>
+> A recent structural reorganisation of the `scripts/` directory introduced several integration issues that are currently being triaged and resolved. Some CLI workflows, Python analysis tools, and virtual environment setup steps may temporarily behave unexpectedly until the patch is complete. All core physics (C++ engine, unit tests, simulation runs) is unaffected — 107/107 tests pass clean.
+>
+> Fixes are being pushed continuously. If something doesn't work as documented, check [`CHANGELOG.md`](./CHANGELOG.md) for the latest patch status or open an [issue](https://github.com/LiranOG/Granite-NR/issues).
 
 ### Step 1 — Clone the Repository
 ```bash
@@ -185,16 +237,14 @@ cd Granite-NR
 > [!NOTE]
 > Native Windows builds via PowerShell or Conda are **not supported**. Use WSL2.
  
-**Prerequisites for WSL/Linux:**
 ```bash
-sudo apt update && sudo apt install -y cmake build-essential libhdf5-dev libopenmpi-dev yaml-cpp
+sudo apt update && sudo apt install -y build-essential cmake libhdf5-dev libopenmpi-dev libyaml-cpp-dev
 python3 scripts/run_granite.py build
 ```
  
 #### 🐧 Linux — Ubuntu / Debian
-**Prerequisites for WSL/Linux:**
 ```bash
-sudo apt update && sudo apt install -y cmake build-essential libhdf5-dev libopenmpi-dev yaml-cpp
+sudo apt update && sudo apt install -y build-essential cmake libhdf5-dev libopenmpi-dev libyaml-cpp-dev
 python3 scripts/run_granite.py build
 ```
  
@@ -241,7 +291,7 @@ python3 scripts/health_check.py
 build/bin/granite_tests
 # or: cd build && ctest --output-on-failure && cd ..
 ```
-Expected: `[  PASSED  ] 105 tests.` with `[  SKIPPED ] 2 tests.` (20 suites — CCZ4, GRMHD, AMR, horizon, M1, HDF5 I/O)
+Expected: `[  PASSED  ] 107 tests.` (20 suites — CCZ4, GRMHD, AMR, horizon, M1, HDF5 I/O)
  
 #### Python analysis suite
 ```bash
@@ -353,7 +403,7 @@ The generated script automatically pipes the engine output through
 ## 📁 Repository Structure
 
 ```text
-GRANITE/
+GRANITE-NR/
 ├── benchmarks/          # Simulation presets (YAML + expected output).
 ├── containers/          # Dockerfile + Singularity/Apptainer for HPC.
 ├── docs/                # Technical documentation, preprint, and paper figures.
@@ -377,18 +427,18 @@ GRANITE/
 
 | Version | Target | Status | Key Deliverables |
 |---|---|:---:|---|
-| **v0.6.5** | Q2 2026 | ✅ **Released** | BBH stable to t=500M, 4-level AMR, 92 tests, Python dashboard |
-| **v0.6.7** | Q2 2026 | ✅ **Released** | VORTEX Gold Master, dynamic AMR fully wired, HDF5 checkpoint write |
-| **v0.7.0** | Q4 2026 | 🔄 In Progress | GPU CUDA kernels, `--resume` checkpoint restart CLI, M1 wired into RK3 loop |
-| **v0.8.0** | Q1 2027 | 📋 Planned | Tabulated nuclear EOS + reaction network |
-| **v0.9.0** | Q2 2027 | 📋 Planned | Full SXS catalog validation (~60 BBH configs), multi-group M1 |
-| **v1.0.0** | Q3 2027 | 🎯 Target | B5\_star production run + publication, full community release + full support across all native OS systems |
+| **v0.6.5** | Q1 2026 | ✅ **Released** | BBH stable to t=500M, 4-level AMR, 92 tests, Python dashboard |
+| **v0.6.7** | Q1 2026 | ✅ **Released** | VORTEX Gold Master, dynamic AMR fully wired, HDF5 checkpoint write |
+| **v0.7.0** | Q2 2026 | 🔄 In Progress | GPU CUDA kernels, `--resume` checkpoint restart CLI, M1 wired into RK3 loop |
+| **v0.8.0** | Q3 2026 | 📋 Planned | Tabulated nuclear EOS + reaction network |
+| **v0.9.0** | Q4 2026 | 📋 Planned | Full SXS catalog validation (~60 BBH configs), multi-group M1 |
+| **v1.0.0** | Q1 2027 | 🎯 Target | B5\_star production run + publication, full community release + full support across all native OS systems |
 
 **Scaling path to B5\_star:** Development (128³, desktop) → GPU porting (vast.ai H100) → cluster production (256³–512³) → flagship (12 AMR levels, ~2 TB RAM, ~5×10⁶ CPU-hours).
 
 ---
 
-## ⚠️ Known Limitations (v0.6.8)
+## ⚠️ Known Limitations (v0.6.7)
 
 Scientific integrity demands transparency. These limitations are known, documented, and actively addressed.
 
@@ -397,6 +447,7 @@ Scientific integrity demands transparency. These limitations are known, document
 | `writeCheckpoint()` fully implemented; `--resume` CLI flag not yet wired | Long runs cannot be resumed without code modification | 🔄 Active | v0.7 |
 | M1 radiation built but not wired into RK3 loop | Radiation not active in production runs | 🔄 Active | v0.7 |
 | `alpha_center` reads from AMR level 0, not finest level near puncture | Misleading lapse diagnostic | 📋 Known | v0.7 |
+| Three-resolution gauge-wave convergence, 128³ thread-scaling, and matched BBH convergence runs not yet executed | Formal 4th-order convergence order undemonstrated; SXS:BBH:3634 validation pending | 📋 Known | v0.7 |
 | GTX 1050 Ti not viable for FP64 GPU compute | GPU path requires H100-class hardware | 📋 Known | Post GPU porting |
 | Native Windows unsupported; macOS Homebrew experimental (not CI-gated) | Limits CI coverage; macOS issues cannot be caught automatically | 📋 Tracked | v0.8+ |
 | Tangential BY momenta required for inspiral p_t ≈ ±0.0954 per BH (quasi-circular, d = 10 M) | Zero momenta → head-on, not inspiral | 📝 Documented | User parameter |
@@ -421,10 +472,10 @@ GRANITE uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html). During 
 | `v0.6.5` | 2026-04-07 | ✅ | Tactical reset — stable baseline, 92 tests, 8-layer stability guard |
 | `v0.6.5.4` | 2026-04-10 | ✅ | GitHub Wiki launch — 17 technical pages, ~18,000 words |
 | `v0.6.5.5` | 2026-04-11 | ✅ | `README.md` overhaul — benchmarks, roadmap, competitor matrix |
-| `v0.6.6` | 2026-04-12\15 | ✅ | VORTEX WebGL engine + Gold Master cinematic & analytical systems |
-| **`v0.6.8`** | **2026-05-09** | 🟢 **Current** | **Architecture & Stability Release — 4-sprint audit remediation.** |
-| `v0.7.0` | Q4 2026 | 🔄 Planned | GPU CUDA kernels, checkpoint-restart, full dynamic AMR, M1 wired into RK3 |
-| `v1.0.0` | Q3 2027 | 🎯 Target | B5_star production run, full community release, GitHub Releases activated |
+| `v0.6.6` | 2026-04-12—15 | ✅ | VORTEX WebGL engine + Gold Master cinematic & analytical systems |
+| **`v0.6.7.2`** | **2026-04-27** | ✅ **Current** | **107 tests / 20 suites — 100% CI clean. Full repo seal.** |
+| `v0.7.0` | Q2 2026 | 🔄 Planned | GPU CUDA kernels, checkpoint-restart, full dynamic AMR, M1 wired into RK3 |
+| `v1.0.0` | Q1 2027 | 🎯 Target | B5_star production run, full community release, GitHub Releases activated |
 
 ### A Note on Solo Development & Community Readiness
 
@@ -503,25 +554,16 @@ No contribution requires understanding the whole codebase. The modules are delib
 ---
 ## 📚 Documentation
 
-> 📋 **Docs sync in progress:** GRANITE-NR completed a repository restructuring
-> in v0.6.8 that reorganized the `docs/` tree and renamed the repository from
-> `Granite` to `Granite-NR`. Some documentation paths, Wiki pages, and older
-> links may temporarily be inconsistent with the current codebase. The root
-> `README.md`, `docs/getting_started/Installation.md`, and the YAML files under
-> `benchmarks/` are the current source of truth while the Wiki and long-form docs
-> are being brought into alignment. I am working through these inconsistencies as
-> part of the active v0.6.8 stabilization pass.
-
 | Document | Description |
 |---|---|
-| [`docs/developer_guide/DEVELOPER_GUIDE.md`](./docs/developer_guide/DEVELOPER_GUIDE.md) | **Complete Developer Reference** — architecture, all 22 CCZ4 variables, physics formulations, data structures, coding standards, testing workflow, and HPC guidelines. |
-| [`docs/user_guide/BENCHMARKS.md`](./docs/user_guide/BENCHMARKS.md) | **Full Benchmark Report** — raw telemetry tables, constraint norm time series, resolution convergence, and hardware profiles for all production runs. |
+| [`docs/DEVELOPER_GUIDE.md`](./docs/developer_guide/DEVELOPER_GUIDE.md) | **Complete Developer Reference** — architecture, all 22 CCZ4 variables, physics formulations, data structures, coding standards, testing workflow, and HPC guidelines. |
+| [`docs/BENCHMARKS.md`](./docs/user_guide/BENCHMARKS.md) | **Full Benchmark Report** — raw telemetry tables, constraint norm time series, resolution convergence, and hardware profiles for all production runs. |
 | [`docs/SCIENCE.md`](./docs/theory/SCIENCE.md) | **Science & Physics Reference** — governing equations, B5\_star scenario, GRANITE's place in the NR landscape, and multi-messenger astrophysics context. |
 | [`docs/developer_guide/COMPARISON.md`](./docs/developer_guide/COMPARISON.md) | **Code Comparison** — source-cited, per-feature comparison against Einstein Toolkit, GRChombo, SpECTRE, and AthenaK. |
 | [`docs/FAQ.md`](./docs/user_guide/FAQ.md) | **Frequently Asked Questions** — science, engineering, HPC, and contribution questions answered in depth. |
 | [`docs/v0.6.5_master_dictionary.md`](./docs/developer_guide/v0.6.5_master_dictionary.md) | **Exhaustive Technical Reference** — every CLI flag, YAML parameter, C++ constant, CMake option, and all Stability Patch forensic records. |
-| [`docs/user_guide/diagnostic_handbook.md`](./docs/user_guide/diagnostic_handbook.md) | **Diagnostic Handbook** — lapse lifecycle, ‖H‖₂ interpretation, NaN forensics, and the Health Check Checklist. |
-| [`docs/getting_started/Installation.md`](./docs/getting_started/Installation.md) | **Complete Installation Guide** — per-terminal dependency setup, troubleshooting Q&A, and build verification. |
+| [`docs/diagnostic_handbook.md`](./docs/user_guide/diagnostic_handbook.md) | **Diagnostic Handbook** — lapse lifecycle, ‖H‖₂ interpretation, NaN forensics, and the Health Check Checklist. |
+| [`docs/INSTALL.md`](./docs/getting_started/Installation.md) | **Complete Installation Guide** — per-terminal dependency setup, troubleshooting Q&A, and build verification. |
 | [`docs/paper/granite_preprint_v067.tex`](./docs/paper/granite_preprint_v067.tex) | **Technical Paper (Draft)** — Full formalism, CCZ4/GRMHD/VORTEX description, and validated benchmarks. In preparation for *Physical Review D*. ([compiled PDF](./docs/paper/granite_preprint_v067.pdf)) |
 
 > **Documentation status:** The repository has recently undergone a structural update affecting CLI workflows, Python tooling, documentation paths, benchmark configuration, and Wiki organization. Some older Wiki pages or documentation links may temporarily be inconsistent with the current repository layout. The root `README.md`, `docs/getting_started/Installation.md`, and runnable YAML files under `benchmarks/` are currently treated as the most reliable references while the Wiki and long-form docs are being synchronized. I am actively working through these inconsistencies and documenting fixes as they land.
@@ -617,7 +659,7 @@ If you use GRANITE in academic research, teaching, or scientific software, pleas
   title     = {{GRANITE}: General-Relativistic Adaptive N-body Integrated
                Tool for Extreme Astrophysics},
   year      = {2026},
-  version   = {v0.6.8},
+  version   = {v0.6.7.2},
   url       = {https://github.com/LiranOG/Granite-NR},
   note      = {CCZ4 + GRMHD + AMR engine for multi-body black hole merger simulations}
 }
