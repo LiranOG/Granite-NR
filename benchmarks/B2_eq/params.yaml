@@ -3,8 +3,13 @@
 #
 # Reference: Baiotti & Rezzolla (2017), Campanelli et al. (2006)
 #
-# This configuration targets ~8 orbits + merger + ringdown for an
-# equal-mass, non-spinning binary BH system (M_ADM = 2M_sun).
+# Benchmark: B2_eq — Equal-mass non-spinning BBH early-inspiral stability test
+#
+# STATUS v0.6.7.x:
+# Used for early-inspiral and long-term stability validation through t=500M.
+# No completed merger, ringdown, or waveform-grade SXS validation is claimed
+# for v0.6.7.x. Merger/ringdown validation planned for v0.8-v0.9
+# against SXS:BBH:3634 (equal mass, zero spin, e=0.0003, 9.6 orbits).
 #
 # Key design choices:
 #   - Domain ±200M: extraction at r=100M, outer boundary at r≈346M
@@ -26,6 +31,10 @@ grid:
   domain_lo: [-200.0, -200.0, -200.0]
   domain_hi: [ 200.0,  200.0,  200.0]
 
+# AMR parameters: stored here for documentation and future runtime use.
+# Parsing of amr.max_levels, amr.refine_threshold, amr.regrid_interval,
+# and amr.buffer_cells is implemented in v0.6.7.x. Verify with:
+# python3 scripts/audit_params_schema.py
 amr:
   max_levels: 6             # 6 levels: dx = 1.5625, 0.781, 0.391, 0.195, 0.098, 0.049M
   refine_threshold: 0.1     # refine where |grad(chi)| > threshold
@@ -45,6 +54,11 @@ ccz4:
   eta: 1.0                  # Gamma-driver damping: eta = 1/M_ADM = 1/(2*1.0)
                              # eta too large: over-damped, slow trumpet formation
                              # eta too small: under-damped, gauge oscillations
+  # WARNING: This value is under active review.
+  # Parameter Reference recommends ko_sigma <= 0.1 for single-puncture stability.
+  # BBH runs with ko_sigma: 0.35 have been observed to cause BHs to drift apart
+  # rather than inspiral, consistent with over-dissipation of gauge dynamics.
+  # This will be formally revalidated in v0.7.
   ko_sigma: 0.35            # KO dissipation: damps grid-scale noise
                              # 0.35 is standard; >0.5 destroys physical gradients
 
