@@ -31,7 +31,7 @@ jobs:
       - name: Verify version.txt consistency
         run: |
           VERSION_TXT=$(cat version.txt | tr -d '[:space:]')
-          CMAKE_VER=$(grep -oE "project\(granite VERSION [0-9.]+\)" CMakeLists.txt | grep -oE "[0-9.]+")
+          CMAKE_VER=$(grep -A 2 -i "project(GRANITE" CMakeLists.txt | grep -iE "VERSION" | grep -oE "[0-9.]+")
           if [ "$VERSION_TXT" != "$CMAKE_VER" ]; then
             echo "Version mismatch: version.txt ($VERSION_TXT) vs CMakeLists.txt ($CMAKE_VER)"
             exit 1
