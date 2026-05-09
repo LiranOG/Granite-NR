@@ -41,7 +41,7 @@ Designed from the ground up to model extreme astrophysical events — such as th
 > - **Unit tests cover all major physics modules** (107 tests across 20 suites). Only `postprocess` lacks dedicated unit tests.
 > - **Native Windows** unsupported; use WSL2. **macOS** is experimentally supported via Homebrew (community-tested, not CI-gated).
 >
-> See [Known Limitations](#-known-limitations-v068) for the full table.
+> See [Known Limitations](#%EF%B8%8F-known-limitations-v068) for the full table.
 
 ## 📖 Table of Contents
 
@@ -57,7 +57,7 @@ Designed from the ground up to model extreme astrophysical events — such as th
   - [Step 6 — Run a Full Simulation](#step-6--run-a-full-simulation)
 - [📁 Repository Structure](#-repository-structure)
 - [🗺️ Roadmap](#️-roadmap)
-- [⚠️ Known Limitations](#-known-limitations-v068)
+- [⚠️ Known Limitations](#%EF%B8%8F-known-limitations-v068)
 - [📋 Versioning Policy](#-versioning-policy-pre-100)
 - [🤝 Open for Collaboration](#-open-for-collaboration)
 - [🛠️ Contributing](#%EF%B8%8F-contributing)
