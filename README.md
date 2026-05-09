@@ -375,8 +375,8 @@ GRANITE/
 
 | Version | Target | Status | Key Deliverables |
 |---|---|:---:|---|
-| **v0.6.5** | Q1 2026 | ✅ **Released** | BBH stable to t=500M, 4-level AMR, 92 tests, Python dashboard |
-| **v0.6.7** | Q1 2026 | ✅ **Released** | VORTEX Gold Master, dynamic AMR fully wired, HDF5 checkpoint write |
+| **v0.6.5** | Q2 2026 | ✅ **Released** | BBH stable to t=500M, 4-level AMR, 92 tests, Python dashboard |
+| **v0.6.7** | Q2 2026 | ✅ **Released** | VORTEX Gold Master, dynamic AMR fully wired, HDF5 checkpoint write |
 | **v0.7.0** | Q4 2026 | 🔄 In Progress | GPU CUDA kernels, `--resume` checkpoint restart CLI, M1 wired into RK3 loop |
 | **v0.8.0** | Q1 2027 | 📋 Planned | Tabulated nuclear EOS + reaction network |
 | **v0.9.0** | Q2 2027 | 📋 Planned | Full SXS catalog validation (~60 BBH configs), multi-group M1 |

@@ -676,7 +676,7 @@ Completely rebuilt `README.md` from its v0.6.5 baseline. The restructure adds a 
 
   | Version | Target | Status | Key Deliverables |
   |---|---|:---:|---|
-  | **v0.6.5** | Q1 2026 | âœ… **Released** | BBH stable to t=500M, 4-level AMR, 92 tests, Python dashboard |
+  | **v0.6.5** | Q2 2026 | âœ… **Released** | BBH stable to t=500M, 4-level AMR, 92 tests, Python dashboard |
   | **v0.7.0** | Q4 2026 | ðŸ”„ In Progress | GPU CUDA kernels, checkpoint-restart, full dynamic AMR regrid, M1 wired into RK3 |
   | **v0.8.0** | Q1 2027 | ðŸ“‹ Planned | Tabulated nuclear EOS + reaction network |
   | **v0.9.0** | Q2 2027 | ðŸ“‹ Planned | Full SXS catalog validation (~60 BBH configs), multi-group M1 |
