@@ -2,7 +2,7 @@
 Status: Pending — output files to be added after benchmark runs complete.
 
 ## Reproduction command
-python3 scripts/run_granite.py run benchmarks/single_puncture/params.yaml
+python3 scripts/run_granite.py run --benchmark single_puncture
 
 ## Expected outputs (to be populated)
 - params.yaml — exact input file used

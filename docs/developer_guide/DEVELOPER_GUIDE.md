@@ -955,13 +955,13 @@ If the bootstrap script is not used, install manually:
 
 ```bash
 # Standard builds
-python3 scripts/run_granite.py build --release          # Optimized (-O3 -march=native)
-python3 scripts/run_granite.py build --debug            # Full symbols + ASan + UBSan
-python3 scripts/run_granite.py build --tests            # Build + run 92-test suite
+python3 scripts/run_granite.py build                    # Release build (default, -O3 -march=native)
+python3 scripts/run_granite.py build --build-type Debug # Full symbols + ASan + UBSan
+python3 scripts/run_granite.py test                     # Run 107-test suite via CTest
 
 # Code quality
 python3 scripts/run_granite.py format                   # clang-format + cmake-format
-python3 scripts/run_granite.py health_check             # Pre-simulation validator
+python3 scripts/health_check.py                         # Pre-simulation validator
 
 # Direct CMake (alternative)
 cmake -B build -DCMAKE_BUILD_TYPE=Release -DGRANITE_ENABLE_MPI=ON
@@ -1106,7 +1106,7 @@ TEST(NewFeatureSuite, ConvergenceOrder) {
 Before opening any pull request:
 
 ```
-[ ] Full test suite passes in Release mode: python3 scripts/run_granite.py build --tests
+[ ] Full test suite passes in Release mode: python3 scripts/run_granite.py test
 [ ] health_check.py passes: python3 scripts/health_check.py
 [ ] Dev pipeline passes in <5 minutes: python3 scripts/run_granite.py dev
 [ ] granite_analysis package imports cleanly: python3 -m granite_analysis.cli.dev_benchmark --help

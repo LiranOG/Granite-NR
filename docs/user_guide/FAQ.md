@@ -57,7 +57,7 @@ A: The core issue is the MPI + OpenMP + HDF5 dependency stack. On Linux, these a
 
 **Q: My build fails with a HDF5 linking error. What should I do?**
 
-A: The most common cause is a mismatch between the HDF5 version used for compilation and the one detected by CMake. Ensure you install the parallel HDF5 variant: `sudo apt install libhdf5-openmpi-dev` (not `libhdf5-dev`, which is the serial version). Then rebuild from scratch: `rm -rf build/ && python3 scripts/run_granite.py build --release`. See [`docs/INSTALL.md`](../getting_started/Installation.md) for the full troubleshooting Q&A.
+A: The most common cause is a mismatch between the HDF5 version used for compilation and the one detected by CMake. Ensure you install the parallel HDF5 variant: `sudo apt install libhdf5-openmpi-dev` (not `libhdf5-dev`, which is the serial version). Then rebuild from scratch: `rm -rf build/ && python3 scripts/run_granite.py build`. See [`docs/INSTALL.md`](../getting_started/Installation.md) for the full troubleshooting Q&A.
 
 **Q: The health check reports fewer OpenMP threads than my CPU has cores. What's wrong?**
 

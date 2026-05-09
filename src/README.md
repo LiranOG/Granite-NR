@@ -38,5 +38,5 @@ src/
 ```
 
 > [!IMPORTANT]
-> **Compilation Rules:** Do not invoke `cmake` manually from this directory. Always use the top-level build orchestrator: `python3 scripts/run_granite.py build --release`. 
+> **Compilation Rules:** Do not invoke `cmake` manually from this directory. Always use the top-level build orchestrator: `python3 scripts/run_granite.py build`. 
 > All new public C++ functions added here MUST include Doxygen `@brief` headers.
