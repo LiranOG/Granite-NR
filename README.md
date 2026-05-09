@@ -156,7 +156,7 @@ All results are from **production runs on a single desktop workstation** (Intel 
 > Fixes are being pushed continuously. If something doesn't work as documented, check [`CHANGELOG.md`](./CHANGELOG.md) for the latest patch status or open an [issue](https://github.com/LiranOG/Granite-NR/issues).
 
 > [!TIP]
-> **Stable baseline for first-time users:** The current `main` branch is under active v0.6.7.x restructuring, including CLI cleanup, Python tooling migration, documentation synchronization, and benchmark-schema updates. If you prefer a known-good first-run workflow without debugging current `main`-branch integration changes, use the `v0.6.5` tag as the recommended stable baseline.
+> **Stable baseline for first-time users:** The current `main` branch is under active v0.6.8 restructuring, including CLI cleanup, Python tooling migration, documentation synchronization, and benchmark-schema updates. If you prefer a known-good first-run workflow without debugging current `main`-branch integration changes, use the `v0.6.5` tag as the recommended stable baseline.
 > 
 > Download the ZIP archive from the `v0.6.5` tag, extract it inside WSL/Linux, and follow the commands documented in that tagged version. For live simulation monitoring, use the legacy `sim_tracker.py` workflow included with `v0.6.5`, which was the most stable telemetry path for that release.
 > ```bash
@@ -386,7 +386,7 @@ GRANITE/
 
 ---
 
-## ⚠️ Known Limitations (v0.6.7)
+## ⚠️ Known Limitations (v0.6.8)
 
 Scientific integrity demands transparency. These limitations are known, documented, and actively addressed.
 
@@ -420,7 +420,8 @@ GRANITE uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html). During 
 | `v0.6.5.4` | 2026-04-10 | ✅ | GitHub Wiki launch — 17 technical pages, ~18,000 words |
 | `v0.6.5.5` | 2026-04-11 | ✅ | `README.md` overhaul — benchmarks, roadmap, competitor matrix |
 | `v0.6.6` | 2026-04-12\15 | ✅ | VORTEX WebGL engine + Gold Master cinematic & analytical systems |
-| **`v0.6.7.2`** | **2026-04-27** | ✅ **Current** | **107 tests / 20 suites — 100% CI clean. Full repo seal.** |
+| `v0.6.7.2` | 2026-04-27 | ✅ | 107 tests / 20 suites — 100% CI clean. Full repo seal. |
+| **`v0.6.8`** | **2026-05-09** | ✅ **Current** | **Architecture & Stability Release — 4-sprint audit remediation.** |
 | `v0.7.0` | Q4 2026 | 🔄 Planned | GPU CUDA kernels, checkpoint-restart, full dynamic AMR, M1 wired into RK3 |
 | `v1.0.0` | Q3 2027 | 🎯 Target | B5_star production run, full community release, GitHub Releases activated |
 
@@ -508,7 +509,7 @@ No contribution requires understanding the whole codebase. The modules are delib
 > `README.md`, `docs/getting_started/Installation.md`, and the YAML files under
 > `benchmarks/` are the current source of truth while the Wiki and long-form docs
 > are being brought into alignment. I am working through these inconsistencies as
-> part of the active v0.6.7.x stabilization pass.
+> part of the active v0.6.8 stabilization pass.
 
 | Document | Description |
 |---|---|
