@@ -1,0 +1,44 @@
+name: Docs & Schema Audit
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Stale Link Check (grep)
+        run: |
+          if git grep -E "github\.com/LiranOG/Granite([^-\w]|$)" README.md docs .github benchmarks scripts viz CHANGELOG.md CITATION.cff pyproject.toml CMakeLists.txt; then
+            echo "Stale links found!"
+            exit 1
+          else
+            echo "No stale links found."
+          fi
+
+      - name: Run audit_links.py
+        run: python3 scripts/audit_links.py
+
+      - name: Run audit_params_schema.py
+        run: python3 scripts/audit_params_schema.py
+
+      - name: Verify version.txt consistency
+        run: |
+          VERSION_TXT=$(cat version.txt | tr -d '[:space:]')
+          CMAKE_VER=$(grep -oE "project\(granite VERSION [0-9.]+\)" CMakeLists.txt | grep -oE "[0-9.]+")
+          if [ "$VERSION_TXT" != "$CMAKE_VER" ]; then
+            echo "Version mismatch: version.txt ($VERSION_TXT) vs CMakeLists.txt ($CMAKE_VER)"
+            exit 1
+          fi
+          echo "Versions match ($VERSION_TXT)."

@@ -13,6 +13,7 @@ Any contradiction between sources must be resolved in this order:
   grid, time, ccz4, io, initial_data, black_holes, amr
 
 ## Known drift areas (resolved in v0.6.7.2 stabilization pass)
+- Pacing: All roadmap milestones have been shifted +2 months due to solo-developer constraints.
 - Wiki Parameter Reference shows older conceptual schema keys
   (simulation, domain, dissipation, time_integration, boundary, diagnostics)
   that are not parsed at runtime.

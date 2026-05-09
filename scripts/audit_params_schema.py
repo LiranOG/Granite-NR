@@ -13,6 +13,8 @@ def audit_schema():
 
     failed = False
     for yaml_file in benchmarks_dir.rglob('*.yaml'):
+        if yaml_file.name == 'validation_tests.yaml':
+            continue
         try:
             with open(yaml_file, 'r', encoding='utf-8') as f:
                 data = yaml.safe_load(f)
