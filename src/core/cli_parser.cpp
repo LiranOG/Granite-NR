@@ -20,7 +20,7 @@ namespace granite {
 
 // Fallback if not set by CMake target_compile_definitions
 #ifndef GRANITE_VERSION_STR
-#define GRANITE_VERSION_STR "0.6.7.2"
+#define GRANITE_VERSION_STR "0.6.8"
 #endif
 
 void printBanner() {
