@@ -41,7 +41,7 @@ Designed from the ground up to model extreme astrophysical events — such as th
 > - **Unit tests cover all major physics modules** (107 tests across 20 suites). Only `postprocess` lacks dedicated unit tests.
 > - **Native Windows** unsupported; use WSL2. **macOS** is experimentally supported via Homebrew (community-tested, not CI-gated).
 >
-> See [Known Limitations](#️-known-limitations-v067) for the full table.
+> See [Known Limitations](#-known-limitations-v067) for the full table.
 
 ## 📖 Table of Contents
 
@@ -57,7 +57,7 @@ Designed from the ground up to model extreme astrophysical events — such as th
   - [Step 6 — Run a Full Simulation](#step-6--run-a-full-simulation)
 - [📁 Repository Structure](#-repository-structure)
 - [🗺️ Roadmap](#️-roadmap)
-- [⚠️ Known Limitations](#️-known-limitations-v067)
+- [⚠️ Known Limitations](#-known-limitations-v067)
 - [📋 Versioning Policy](#-versioning-policy-pre-100)
 - [🤝 Open for Collaboration](#-open-for-collaboration)
 - [🛠️ Contributing](#%EF%B8%8F-contributing)
@@ -140,7 +140,7 @@ All results are from **production runs on a single desktop workstation** (Intel 
 
 > **What ‖H‖₂ reduction means:** The Hamiltonian constraint measures how accurately the evolved spacetime satisfies Einstein's equations. A monotonically *decreasing* ‖H‖₂ over 500 M of simulated time is a necessary (but not sufficient) indicator of **numerical stability and correct constraint damping**.
 >
-> **What these benchmarks do NOT yet prove:** The t=500M runs above reach *early inspiral phase only* (no merger observed). Merger-waveform validation against the SXS catalog is a **v0.8–v0.9 target**. See [Known Limitations](#️-known-limitations-v067).
+> **What these benchmarks do NOT yet prove:** The t=500M runs above reach *early inspiral phase only* (no merger observed). Merger-waveform validation against the SXS catalog is a **v0.8–v0.9 target**. See [Known Limitations](#-known-limitations-v067).
 >
 > 📄 Raw telemetry, step-by-step logs, and extended resolution tables: [`docs/user_guide/BENCHMARKS.md`](./docs/user_guide/BENCHMARKS.md)
 
@@ -503,14 +503,14 @@ No contribution requires understanding the whole codebase. The modules are delib
 
 | Document | Description |
 |---|---|
-| [`docs/DEVELOPER_GUIDE.md`](./docs/developer_guide/DEVELOPER_GUIDE.md) | **Complete Developer Reference** — architecture, all 22 CCZ4 variables, physics formulations, data structures, coding standards, testing workflow, and HPC guidelines. |
-| [`docs/BENCHMARKS.md`](./docs/user_guide/BENCHMARKS.md) | **Full Benchmark Report** — raw telemetry tables, constraint norm time series, resolution convergence, and hardware profiles for all production runs. |
+| [`docs/developer_guide/DEVELOPER_GUIDE.md`](./docs/developer_guide/DEVELOPER_GUIDE.md) | **Complete Developer Reference** — architecture, all 22 CCZ4 variables, physics formulations, data structures, coding standards, testing workflow, and HPC guidelines. |
+| [`docs/user_guide/BENCHMARKS.md`](./docs/user_guide/BENCHMARKS.md) | **Full Benchmark Report** — raw telemetry tables, constraint norm time series, resolution convergence, and hardware profiles for all production runs. |
 | [`docs/SCIENCE.md`](./docs/theory/SCIENCE.md) | **Science & Physics Reference** — governing equations, B5\_star scenario, GRANITE's place in the NR landscape, and multi-messenger astrophysics context. |
 | [`docs/developer_guide/COMPARISON.md`](./docs/developer_guide/COMPARISON.md) | **Code Comparison** — source-cited, per-feature comparison against Einstein Toolkit, GRChombo, SpECTRE, and AthenaK. |
 | [`docs/FAQ.md`](./docs/user_guide/FAQ.md) | **Frequently Asked Questions** — science, engineering, HPC, and contribution questions answered in depth. |
 | [`docs/v0.6.5_master_dictionary.md`](./docs/developer_guide/v0.6.5_master_dictionary.md) | **Exhaustive Technical Reference** — every CLI flag, YAML parameter, C++ constant, CMake option, and all Stability Patch forensic records. |
-| [`docs/diagnostic_handbook.md`](./docs/user_guide/diagnostic_handbook.md) | **Diagnostic Handbook** — lapse lifecycle, ‖H‖₂ interpretation, NaN forensics, and the Health Check Checklist. |
-| [`docs/INSTALL.md`](./docs/getting_started/Installation.md) | **Complete Installation Guide** — per-terminal dependency setup, troubleshooting Q&A, and build verification. |
+| [`docs/user_guide/diagnostic_handbook.md`](./docs/user_guide/diagnostic_handbook.md) | **Diagnostic Handbook** — lapse lifecycle, ‖H‖₂ interpretation, NaN forensics, and the Health Check Checklist. |
+| [`docs/getting_started/Installation.md`](./docs/getting_started/Installation.md) | **Complete Installation Guide** — per-terminal dependency setup, troubleshooting Q&A, and build verification. |
 | [`docs/paper/granite_preprint_v067.tex`](./docs/paper/granite_preprint_v067.tex) | **Technical Paper (Draft)** — Full formalism, CCZ4/GRMHD/VORTEX description, and validated benchmarks. In preparation for *Physical Review D*. ([compiled PDF](./docs/paper/granite_preprint_v067.pdf)) |
 
 > **Documentation status:** The repository has recently undergone a structural update affecting CLI workflows, Python tooling, documentation paths, benchmark configuration, and Wiki organization. Some older Wiki pages or documentation links may temporarily be inconsistent with the current repository layout. The root `README.md`, `docs/getting_started/Installation.md`, and runnable YAML files under `benchmarks/` are currently treated as the most reliable references while the Wiki and long-form docs are being synchronized. I am actively working through these inconsistencies and documenting fixes as they land.
