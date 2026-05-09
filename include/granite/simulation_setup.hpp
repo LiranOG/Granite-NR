@@ -44,6 +44,15 @@ struct BlockBundle {
     std::vector<Real> S_scratch;
     bool scratch_allocated = false;
 
+    // Rule-of-Five: explicitly default move ops to prevent raw-pointer (st)
+    // corruption; delete copy ops since unique_ptr members are non-copyable.
+    BlockBundle() = default;
+    ~BlockBundle() = default;
+    BlockBundle(BlockBundle&&) noexcept = default;
+    BlockBundle& operator=(BlockBundle&&) noexcept = default;
+    BlockBundle(const BlockBundle&) = delete;
+    BlockBundle& operator=(const BlockBundle&) = delete;
+
     void allocateScratch(std::size_t total_size);
     void clearScratch();
 };

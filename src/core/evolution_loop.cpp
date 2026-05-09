@@ -1,6 +1,18 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright (C) 2026 Liran M. Schwartz
 
+/**
+ * @file evolution_loop.cpp
+ * @brief SSP-RK3 time integration loop with Sommerfeld BCs and diagnostic I/O.
+ *
+ * Implements the main evolution driver (runEvolutionLoop) and the
+ * SSP-RK3 time integrator (TimeIntegrator::sspRK3Step) with ghost-zone
+ * synchronization, Sommerfeld radiative boundary conditions, algebraic
+ * constraint enforcement, and NaN monitoring.
+ *
+ * @copyright 2026 Liran M. Schwartz
+ * @license GPL-3.0-or-later
+ */
 #include "granite/evolution_loop.hpp"
 
 #include <algorithm>
@@ -15,9 +27,9 @@
 
 namespace granite {
 
-class TimeIntegrator {
-public:
-    static void sspRK3Step(std::vector<BlockBundle*>& bundles,
+namespace TimeIntegrator {
+
+    inline void sspRK3Step(std::vector<BlockBundle*>& bundles,
                            std::vector<BlockBundle>& active_bundles,
                            const std::unordered_map<int, size_t>& id_to_index,
                            const spacetime::CCZ4Evolution& ccz4,
@@ -582,7 +594,7 @@ public:
         syncGhostZones(false);
         applyOuterBC(false);
     }
-};
+} // namespace TimeIntegrator
 
 void runEvolutionLoop(SimulationContext& ctx) {
     auto& params = ctx.params;

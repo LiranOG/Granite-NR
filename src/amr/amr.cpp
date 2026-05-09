@@ -610,19 +610,9 @@ void AMRHierarchy::restrict_data(const GridBlock& fine, GridBlock& coarse) const
 
                         Real restrict_val = sum / (ratio * ratio * ratio);
 
-                        // Refluxing logic
-                        // Only applied to conserved GRMHD variables to preserve total mass/energy
-                        if (var == static_cast<int>(HydroVar::D) ||
-                            var == static_cast<int>(HydroVar::TAU) ||
-                            var == static_cast<int>(HydroVar::SX) ||
-                            var == static_cast<int>(HydroVar::SY) ||
-                            var == static_cast<int>(HydroVar::SZ)) {
-
-                            // Flux correction conservatively maps fine grid fluxes
-                            // back iteratively. F_fine = sum(F_fine_faces)
-                            // Reflux = dt/dx * (F_coarse - F_fine)
-                            // Here we inject the properly restricted val + reflux ghost
-                        }
+                        // TODO(v0.7): implement conservative reflux correction
+                        // for GRMHD conserved variables (D, TAU, S_i) at
+                        // coarse-fine interfaces. See Berger & Colella (1989).
 
                         coarse.data(var, ci, cj, ck) = restrict_val;
                     }

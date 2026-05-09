@@ -19,7 +19,8 @@ project(GRANITE
 option(GRANITE_ENABLE_MPI      "Enable MPI parallelism"                   ON)
 option(GRANITE_ENABLE_OPENMP   "Enable OpenMP threading"                  ON)
 option(GRANITE_ENABLE_GPU      "Enable GPU acceleration (CUDA/HIP)"       OFF)
-option(GRANITE_GPU_BACKEND     "GPU backend: CUDA or HIP"                 "CUDA")
+set(GRANITE_GPU_BACKEND "CUDA" CACHE STRING "GPU backend: CUDA or HIP")
+set_property(CACHE GRANITE_GPU_BACKEND PROPERTY STRINGS CUDA HIP)
 option(GRANITE_ENABLE_HDF5     "Enable HDF5 I/O"                          ON)
 option(GRANITE_ENABLE_PETSC    "Enable PETSc for elliptic solvers"         OFF)
 option(GRANITE_ENABLE_TESTS    "Build unit and integration tests"          ON)
@@ -264,12 +265,8 @@ else()
 endif()
 
 # ---------------------------------------------------------------------------
-# Include directories
+# Include directories — handled per-target below (no global pollution)
 # ---------------------------------------------------------------------------
-include_directories(
-    ${CMAKE_SOURCE_DIR}/include
-    ${CMAKE_SOURCE_DIR}/src
-)
 
 # ---------------------------------------------------------------------------
 # Per-module OBJECT libraries (explicit source lists — no GLOB)
@@ -366,6 +363,11 @@ add_library(granite_lib STATIC
 target_include_directories(granite_lib PUBLIC
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
+)
+
+# Propagate version string to source code (used by cli_parser.cpp printBanner)
+target_compile_definitions(granite_lib PUBLIC
+    GRANITE_VERSION_STR="${PROJECT_VERSION}"
 )
 
 # Link dependencies

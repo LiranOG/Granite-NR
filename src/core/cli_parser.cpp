@@ -18,9 +18,14 @@
 
 namespace granite {
 
+// Fallback if not set by CMake target_compile_definitions
+#ifndef GRANITE_VERSION_STR
+#define GRANITE_VERSION_STR "0.6.7.2"
+#endif
+
 void printBanner() {
     std::cout << "================================================================\n";
-    std::cout << " GRANITE v" << "0.6.7.2" << "\n";
+    std::cout << " GRANITE v" << GRANITE_VERSION_STR << "\n";
     std::cout << " General-Relativistic Adaptive N-body Integrated Tool\n";
     std::cout << " for Extreme Astrophysics\n";
     std::cout << "================================================================\n\n";
@@ -92,6 +97,16 @@ ParsedConfig parseConfig(int argc, char* argv[]) {
                     cfg.gauge_wave_amplitude = id["amplitude"].as<Real>();
                 if (id["wavelength"])
                     cfg.gauge_wave_wavelength = id["wavelength"].as<Real>();
+            }
+            // --- Parse AMR parameters ---
+            if (config["amr"]) {
+                auto amr = config["amr"];
+                if (amr["max_levels"])
+                    cfg.params.max_levels = amr["max_levels"].as<int>();
+                if (amr["refinement_ratio"])
+                    cfg.params.refinement_ratio = amr["refinement_ratio"].as<int>();
+                if (amr["regrid_interval"])
+                    cfg.params.regrid_interval = amr["regrid_interval"].as<int>();
             }
             // --- Parse black holes ---
             if (config["black_holes"] && config["black_holes"].IsSequence()) {

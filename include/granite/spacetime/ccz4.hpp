@@ -46,7 +46,7 @@ struct CCZ4Params {
  * Usage:
  * @code
  *   CCZ4Evolution ccz4(params);
- *   ccz4.computeRHS(grid, rhs_grid, matter_source);
+ *   ccz4.computeRHS(grid, rhs_grid, rho_matter, Si_matter, Sij_matter, S_trace);
  * @endcode
  */
 class CCZ4Evolution {
