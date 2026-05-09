@@ -610,16 +610,14 @@ StellarInitialData::StellarProfile StellarInitialData::solveTOV(const StarParams
         profile.mass.push_back(m);
 
         // RK4 integration of the TOV system
-        auto tov_rhs = [&](Real r_val, Real p_val, Real m_val)
-            -> std::pair<Real, Real> {
+        auto tov_rhs = [&](Real r_val, Real p_val, Real m_val) -> std::pair<Real, Real> {
             Real rho_val = std::pow(std::max(p_val / K_poly, 0.0), 1.0 / Gamma);
             Real schw = r_val - 2.0 * G * m_val / c2;
             Real denom_val = r_val * schw;
             if (std::abs(denom_val) < 1.0e-30 || schw <= 0.0)
                 return {0.0, 0.0};
             Real dp = -(rho_val + p_val / c2) *
-                       (m_val + 4.0 * constants::PI * r_val * r_val * r_val * p_val / c2) *
-                       G / denom_val;
+                (m_val + 4.0 * constants::PI * r_val * r_val * r_val * p_val / c2) * G / denom_val;
             Real dm = 4.0 * constants::PI * rho_val * r_val * r_val;
             return {dp, dm};
         };

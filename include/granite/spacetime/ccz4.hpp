@@ -115,11 +115,16 @@ private:
     /// Shared geometric computation: Christoffel symbols + conformal & chi Ricci tensor.
     /// Called by both computeRHS and computeConstraints to eliminate code duplication.
     /// Outputs: chris[3][6], Rt[6], Rchi[6] (conformal Ricci and chi-contribution).
-    void computeChristoffelAndRicci(const GridBlock& grid, int i, int j, int k,
-                                    const Real gt[6], const Real gtu[6],
+    void computeChristoffelAndRicci(const GridBlock& grid,
+                                    int i,
+                                    int j,
+                                    int k,
+                                    const Real gt[6],
+                                    const Real gtu[6],
                                     Real chi,
                                     Real chris[3][6],
-                                    Real Rt[6], Real Rchi[6]) const;
+                                    Real Rt[6],
+                                    Real Rchi[6]) const;
 };
 
 // ===========================================================================

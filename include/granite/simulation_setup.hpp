@@ -97,12 +97,8 @@ struct SimulationContext {
                       Real dt_in,
                       int initial_ncells_in,
                       const SimulationParams& params_in)
-        : ccz4(std::move(ccz4_in)),
-          grmhd(std::move(grmhd_in)),
-          hierarchy(std::move(hierarchy_in)),
-          writer(std::move(writer_in)),
-          dt(dt_in),
-          initial_ncells(initial_ncells_in),
+        : ccz4(std::move(ccz4_in)), grmhd(std::move(grmhd_in)), hierarchy(std::move(hierarchy_in)),
+          writer(std::move(writer_in)), dt(dt_in), initial_ncells(initial_ncells_in),
           params(params_in) {}
 
     /// Synchronize active_bundles with the current AMR hierarchy state.
