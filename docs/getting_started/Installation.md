@@ -287,7 +287,7 @@ python scripts/health_check.py
 ```
 *(On WSL2/macOS/Ubuntu use `python3`)*
 
-### Step 2 — Unit Test Suite (107 tests)
+### Step 2 — Unit Test Suite (107 tests, 105 passed, 2 skipped)
 
 ```bash
 # Option A — run directly from the project root (recommended)

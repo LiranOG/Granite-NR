@@ -149,7 +149,7 @@ Granite/                            ← You are here
 │   ├── diagnostics/                ← ψ₄ extraction, AH finder, constraint monitor
 │   └── io/                         ← HDF5, checkpointing
 ├── include/granite/                ← Public headers
-├── tests/                          ← Benchmark suite (92 tests, 100% pass)
+├── tests/                          ← Test suite (107 tests / 20 suites, 105 passed, 2 skipped)
 ├── docs/
 │   └── GENESIS_AND_ARCHITECTURE.md ← This document
 ├── README.md                       ← Project overview
@@ -279,7 +279,7 @@ github.com/LiranOG/Granite-NR                       (This Repository)
 ──────────────────────────────────────────────────
 Contains:  C++20 production engine (CCZ4, GRMHD, M1, AMR)
 Role:      Numerical validation engine — implements the physics derived in the Suite
-Version:   v0.6.8 · 92 tests · 100% pass rate
+Version:   v0.6.8 · 107 tests / 20 suites · 105 passed, 2 skipped
 License:   GPL-3.0
 
 github.com/LiranOG/GRANITE-Astrophysics-Suite    (The Genesis Archive)

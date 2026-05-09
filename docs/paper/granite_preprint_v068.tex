@@ -663,9 +663,9 @@ line counts for v0.6.8, reflecting the full physics scope of the engine.
 \end{table}
 
 \paragraph{Test suite.}
-The GoogleTest~v1.14 suite contains 92 tests organized into 16 test suites
+The GoogleTest~v1.14 suite contains 107 tests organized into 20 test suites
 across 10 test files (Table~\ref{tab:tests}).
-All 92 tests pass on GCC~12 and Clang~18 in both Debug and Release
+105 of 107 tests pass on GCC~12 and Clang~18 in both Debug and Release (2 skipped: horizon finder geometric accuracy requires >16\textsuperscript{3} resolution)
 configurations.
 The test suite covers: CCZ4 RHS correctness on flat spacetime and gauge-wave
 initial data, KO dissipation bounds, selective advection upwinding, GRMHD
@@ -1383,7 +1383,7 @@ release through the v1.0 production target.
 \begin{ruledtabular}
 \begin{tabular}{llp{4.5cm}}
   Version & Target & Key deliverables \\ \hline
-  v0.6.8 & Q2 2026 & Current release: CCZ4+GRMHD+dynamic AMR, 92 tests, VORTEX Gold Master \\
+  v0.6.8 & Q2 2026 & Current release: CCZ4+GRMHD+dynamic AMR, 107 tests (20 suites), VORTEX Gold Master \\
   v0.7.0 & Q4 2026 & GPU CUDA kernels, M1+neutrino wired, \code{--resume} CLI, full reflux, GRMHD convergence tests \\
   v0.8.0 & Q1 2027 & Tabulated nuclear EOS + reaction network, macOS/Windows native \\
   v0.9.0 & Q2 2027 & Full SXS catalog validation (${\sim}60$ BBH configs), multi-group M1 \\

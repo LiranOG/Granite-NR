@@ -1,7 +1,7 @@
 # GRANITE – Quality Assurance & Testing (tests/)
 
 > [!NOTE]
-> **Welcome to the Testing Arena.** This directory contains the complete suite of Google Test (gtest) unit and integration tests that physically enforce the mathematical correctness of the GRANITE engine. All 107 tests across 20 test suites compile and pass with **zero errors and zero warnings**.
+> **Welcome to the Testing Arena.** This directory contains the complete suite of Google Test (gtest) unit and integration tests that physically enforce the mathematical correctness of the GRANITE engine. All 107 tests across 20 test suites compile and run with **zero errors and zero warnings**. 105 pass, 2 are skipped (horizon finder geometric accuracy tests require higher than 16³ resolution).
 
 ## Directory Overview
 
@@ -59,4 +59,4 @@ tests/
 | GaugeWaveTest | `test_gauge_wave.cpp` | 4 |
 
 > [!IMPORTANT]
-> **Test Execution:** The master test suite consists of **107 passing tests** across **20 test suites** covering all major physics modules. Run them locally via `python3 scripts/run_granite.py test` or directly with `build/bin/granite_tests`. All tests compile with zero warnings under both GCC-12 and Clang-18.
+> **Test Execution:** The master test suite consists of **107 tests** (105 passed, 2 skipped) across **20 test suites** covering all major physics modules. Run them locally via `python3 scripts/run_granite.py test` or directly with `build/bin/granite_tests`. All tests compile with zero warnings under both GCC-12 and Clang-18.
