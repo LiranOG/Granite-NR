@@ -104,7 +104,7 @@ The table below shows the current implementation status of GRANITE v0.6.8 relati
 
 > *N>3 BH: Brill-Lindquist multi-BH initial data and 5-BH `B5_star` benchmark configuration exist; production run at research resolution (256³+) requires GPU porting (v0.7 target).*
 
-> > *Dynamic AMR marked 🔶 for GRANITE: the Berger–Oliger subcycling hierarchy
+> *Dynamic AMR marked 🔶 for GRANITE: the Berger–Oliger subcycling hierarchy
 > is implemented and integrated into the production RK3 loop with live
 > per-step regridding and puncture-tracking spheres. However, three known
 > limitations remain: (1) the reflux correction operator at coarse–fine
