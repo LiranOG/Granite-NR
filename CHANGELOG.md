@@ -21,6 +21,33 @@ and the project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.
 
 ---
 
+## [v0.6.8] — 2026-05-09
+
+### Summary
+
+Final stabilization pass concluding the architectural overhaul of the repository and documentation. Decomposed the monolithic `src/main.cpp` into a modular core, eliminated `GLOB_RECURSE` from the build system, sanitized all stale repository links to `Granite-NR`, eliminated CLI "ghost flags", and aligned the historical timeline. The codebase is now fully synchronized with the 11-module architectural layout described in the comprehensive Wiki.
+
+### Architecture — Modular Core & Build System
+- **`src/main.cpp` Decomposed:** Extracted CLI parsing (`cli_parser.cpp`/`.hpp`), YAML configuration and object instantiation (`simulation_setup.cpp`/`.hpp`), and the core RK3 time-integration loop (`evolution_loop.cpp`/`.hpp`). `src/main.cpp` is now a minimal wrapper.
+- **`CMakeLists.txt` Explicit Targets:** Eliminated all 10 instances of `file(GLOB_RECURSE)`. Replaced with explicit `add_library(... OBJECT ...)` targets (`granite_core`, `granite_spacetime`, `granite_grmhd`, `granite_radiation`, `granite_amr`, etc.), linked together via `$<TARGET_OBJECTS:...>`.
+
+### Added
+- **`AGENTS.md` and `docs/SOURCE_OF_TRUTH.md`:** Established permanent governance rules and a definitive registry mapping the new modular parsers.
+- **`validation/` Directory Structure:** Established the reproducibility artifact structure for `v0.6.8/single_puncture_64` and `v0.6.8/B2_eq_64` benchmarks with placeholder READMEs.
+
+### Fixed
+- **Stale Links Sanity Pass:** Globally replaced stale `github.com/LiranOG/Granite` slugs with `github.com/LiranOG/Granite-NR` across 15+ documentation files, `CMakeLists.txt`, `CITATION.cff`, and `pyproject.toml`.
+- **"Ghost Flags" & CLI Parity:** Eliminated nonexistent CLI flags (`--release`, `--debug`, `--tests`, `health_check`) from `DEVELOPER_GUIDE.md`, `FAQ.md`, `src/README.md`, validation scripts, and the Wiki. Corrected the documentation to use the actual `--build-type` and `test` subcommands.
+- **Broken Markdown Anchors:** Repaired the "Known Limitations" anchor link in `README.md` and fixed broken relative paths pointing to `Installation.md`.
+- **Stale Directory References:** Deprecated references to non-existent `src/diagnostics/` and `src/matter/` directories across the ROOT and Wiki, mapping them accurately to `src/postprocess/`, `src/horizon/`, and `src/grmhd/`.
+
+### Changed
+- **Historical Roadmap Realignment:** Recalibrated the repository's future timeline to reflect a "Solo-Dev Stability" schedule (v1.0 in Q3 2027) and aligned all completed v0.6.x milestones accurately to Q2 2026.
+- **Version Bump:** Propagated `v0.6.8` version string across `CMakeLists.txt`, `src/main.cpp`, `pyproject.toml`, `CITATION.cff`, `version.txt`, and validation readmes.
+- **Documentation Sync Banner:** Added a documentation synchronization notice to the GitHub Wiki `Home.md` and updated the `README.md` test counts to reflect the current 105/107 baseline.
+
+---
+
 ## [v0.6.7.2] — 2026-04-30
 
 ### Summary

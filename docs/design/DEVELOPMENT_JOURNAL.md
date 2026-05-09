@@ -16,6 +16,59 @@
 
 ---
 
+## [v0.6.8] — Architecture Finalization, Build System Refactor & DX Audit (2026-05-09)
+
+### Overview
+
+This marks the conclusion of the v0.6.x stabilization era. What started as a documentation pass quickly revealed deeper structural debt: `src/main.cpp` was a 1,275-line monolith doing everything from YAML parsing to CLI handling to RK3 integration, our CMake build system relied on implicit `GLOB_RECURSE` which broke incremental builds, and our documentation contained dozens of "ghost flags" that no longer existed in the CLI.
+
+I addressed all of these. The result is a strictly modular engine. The C++ backend now mirrors the exact 11-module layout documented in the Wiki, the CMake targets are explicit, and a new user cloning the repository will find that every single documented command flag actually works exactly as described. 
+
+---
+
+### 1. The Monolith Decomposition (`src/main.cpp`)
+
+`src/main.cpp` was originally 1,275 lines. It parsed `cxxopts`, loaded `params.yaml`, instantiated the AMR hierarchy, CCZ4, and GRMHD, and ran the entire time integration loop. Any change to the CLI meant recompiling the physics kernel. 
+
+I broke this into three distinct, single-responsibility components under `src/core/`:
+- **`cli_parser.cpp`/`.hpp`**: Strict `cxxopts` isolation.
+- **`simulation_setup.cpp`/`.hpp`**: `SimulationContext` construction, YAML ingestion, and component wiring.
+- **`evolution_loop.cpp`/`.hpp`**: The RK3 core, diagnostics triggering, and I/O.
+
+`src/main.cpp` is now a minimal wrapper under 100 lines that just chains these three functions together. This is a massive win for maintainability.
+
+---
+
+### 2. Eliminating `GLOB_RECURSE`
+
+CMake's `file(GLOB_RECURSE)` is notorious for hiding missing dependencies and breaking incremental builds, especially when adding new files without re-running CMake. 
+
+I stripped all 10 instances of `GLOB_RECURSE` from `CMakeLists.txt`. I introduced explicit module-based OBJECT libraries: `granite_core`, `granite_spacetime`, `granite_grmhd`, `granite_radiation`, and `granite_amr`. These are now aggregated cleanly into the final `granite_lib` static library using generator expressions (`$<TARGET_OBJECTS:granite_core>`). This makes the build system strictly deterministic and maps exactly to the folder structure.
+
+---
+
+### 3. The "Ghost Flag" DX Audit
+
+A critical UX issue was discovered: the Wiki and ROOT documentation were hallucinating CLI flags that either never existed or were deprecated. 
+- `--release`, `--debug`, and `--tests` were being recommended, but the actual entry point `run_granite.py` requires `build --build-type Release` and the `test` subcommand.
+- `health_check` was documented as a subcommand but was actually a standalone script.
+- Positional benchmark arguments in the validation READMEs were incorrectly formatted (e.g., passing the YAML path directly instead of using the `--benchmark` flag).
+
+I performed a surgical 17-point "ghost flag" elimination across the entire repository and the cloned Wiki, ensuring 100% parity between the documentation and the actual engine API.
+
+---
+
+### 4. Governance & Repository Clean-Up
+
+- **Stale Links**: Replaced all remaining instances of the old `LiranOG/Granite` slug with `LiranOG/Granite-NR` across 15+ files, `CITATION.cff`, and `pyproject.toml`.
+- **Historical Realignment**: Our future roadmap and past milestones were out of sync. I wrote an automated sweep to correctly peg all v0.6.x releases to Q2 2026, and extended our target v1.0 release to Q3 2027 to reflect a realistic "Solo-Dev Stability" schedule.
+- **Governance**: Added `AGENTS.md` and `docs/SOURCE_OF_TRUTH.md` to establish a definitive baseline for the repository structure.
+- **Test Integrity**: Corrected the active test baseline in the README to 105/107 (accounting for the 2 skipped `SchwarzschildHorizonTest` convergence scenarios on the 16³ grid).
+
+This release seals the v0.6.x architectural foundation. We are now clear to begin the v0.7.x GPU porting efforts.
+
+---
+
 ## [v0.6.7.2] — `granite_analysis` Package Overhaul, CLI Hardening & Documentation Integrity Sweep (2026-04-30)
 
 ### Overview
