@@ -34,42 +34,30 @@ HDF5Writer::HDF5Writer(const IOParams& params) : params_(params) {
 
 HDF5Writer::~HDF5Writer() = default;
 
-void HDF5Writer::writeBlock(const GridBlock& block,
-                            const std::vector<std::string>& var_names,
-                            const std::string& filename) const {
+// Internal: write a single block into an already-opened HDF5 file handle.
+void HDF5Writer::writeBlockIntoFile(hid_t file_id,
+                                    const GridBlock& block,
+                                    const std::vector<std::string>& var_names) const {
 #ifdef GRANITE_USE_HDF5
-    // Open file (create if new, append if existing)
-    hid_t plist_id = H5Pcreate(H5P_FILE_ACCESS);
-#ifdef GRANITE_USE_MPI
-#if defined(H5_HAVE_PARALLEL)
-    if (params_.parallel_hdf5) {
-        H5Pset_fapl_mpio(plist_id, MPI_COMM_WORLD, MPI_INFO_NULL);
-    }
-#endif // H5_HAVE_PARALLEL
-#endif // GRANITE_USE_MPI
-
-    hid_t file_id = H5Fcreate(filename.c_str(), H5F_ACC_TRUNC, H5P_DEFAULT, plist_id);
-    H5Pclose(plist_id);
-
-    if (file_id < 0) {
-        std::cerr << "ERROR: Failed to create HDF5 file: " << filename << "\n";
-        return;
-    }
-
     // Write grid metadata as attributes
     std::string level_name = "level_" + std::to_string(block.getLevel());
     std::string block_name = "block_" + std::to_string(block.getId());
 
     // HDF5 cannot create nested groups in one call — create parent first.
-    hid_t level_group_id =
-        H5Gcreate2(file_id, level_name.c_str(), H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT);
+    // Suppress errors for group-open attempt (group may or may not exist).
+    H5E_auto2_t old_func;
+    void* old_client_data;
+    H5Eget_auto2(H5E_DEFAULT, &old_func, &old_client_data);
+    H5Eset_auto2(H5E_DEFAULT, NULL, NULL);
+    hid_t level_group_id = H5Gopen2(file_id, level_name.c_str(), H5P_DEFAULT);
+    H5Eset_auto2(H5E_DEFAULT, old_func, old_client_data);
+
     if (level_group_id < 0) {
-        // Level group may already exist in an append scenario — try opening it.
-        level_group_id = H5Gopen2(file_id, level_name.c_str(), H5P_DEFAULT);
+        level_group_id =
+            H5Gcreate2(file_id, level_name.c_str(), H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT);
     }
     if (level_group_id < 0) {
         std::cerr << "ERROR: Failed to create/open HDF5 group: " << level_name << "\n";
-        H5Fclose(file_id);
         return;
     }
 
@@ -148,6 +136,43 @@ void HDF5Writer::writeBlock(const GridBlock& block,
 
     H5Gclose(group_id);
     H5Gclose(level_group_id);
+#endif
+}
+
+void HDF5Writer::writeBlock(const GridBlock& block,
+                            const std::vector<std::string>& var_names,
+                            const std::string& filename) const {
+#ifdef GRANITE_USE_HDF5
+    // Open file: try to open existing first (H5F_ACC_RDWR), fall back to create (H5F_ACC_TRUNC)
+    hid_t plist_id = H5Pcreate(H5P_FILE_ACCESS);
+#ifdef GRANITE_USE_MPI
+#if defined(H5_HAVE_PARALLEL)
+    if (params_.parallel_hdf5) {
+        H5Pset_fapl_mpio(plist_id, MPI_COMM_WORLD, MPI_INFO_NULL);
+    }
+#endif // H5_HAVE_PARALLEL
+#endif // GRANITE_USE_MPI
+
+    // Suppress HDF5 errors for the open attempt (file may not exist yet)
+    H5E_auto2_t old_func;
+    void* old_client_data;
+    H5Eget_auto2(H5E_DEFAULT, &old_func, &old_client_data);
+    H5Eset_auto2(H5E_DEFAULT, NULL, NULL);
+    hid_t file_id = H5Fopen(filename.c_str(), H5F_ACC_RDWR, plist_id);
+    H5Eset_auto2(H5E_DEFAULT, old_func, old_client_data);
+
+    if (file_id < 0) {
+        // File does not exist — create it
+        file_id = H5Fcreate(filename.c_str(), H5F_ACC_TRUNC, H5P_DEFAULT, plist_id);
+    }
+    H5Pclose(plist_id);
+
+    if (file_id < 0) {
+        std::cerr << "ERROR: Failed to create/open HDF5 file: " << filename << "\n";
+        return;
+    }
+
+    writeBlockIntoFile(file_id, block, var_names);
     H5Fclose(file_id);
 #else
     std::cerr << "WARNING: HDF5 not available. No data written.\n";
@@ -158,12 +183,35 @@ void HDF5Writer::writeTimestep(const std::vector<const GridBlock*>& blocks,
                                const std::vector<std::string>& var_names,
                                int step,
                                Real time) const {
+#ifdef GRANITE_USE_HDF5
     std::ostringstream ss;
     ss << params_.output_dir << "/output_" << std::setfill('0') << std::setw(6) << step << ".h5";
 
-    for (const auto* block : blocks) {
-        writeBlock(*block, var_names, ss.str());
+    // Open the file ONCE for the entire timestep — all blocks go into this file.
+    hid_t plist_id = H5Pcreate(H5P_FILE_ACCESS);
+#ifdef GRANITE_USE_MPI
+#if defined(H5_HAVE_PARALLEL)
+    if (params_.parallel_hdf5) {
+        H5Pset_fapl_mpio(plist_id, MPI_COMM_WORLD, MPI_INFO_NULL);
     }
+#endif
+#endif
+    hid_t file_id = H5Fcreate(ss.str().c_str(), H5F_ACC_TRUNC, H5P_DEFAULT, plist_id);
+    H5Pclose(plist_id);
+
+    if (file_id < 0) {
+        std::cerr << "ERROR: Failed to create HDF5 timestep file: " << ss.str() << "\n";
+        return;
+    }
+
+    for (const auto* block : blocks) {
+        writeBlockIntoFile(file_id, *block, var_names);
+    }
+
+    H5Fclose(file_id);
+#else
+    std::cerr << "WARNING: HDF5 not available. No data written.\n";
+#endif
 }
 
 void HDF5Writer::writeCheckpoint(const std::vector<const GridBlock*>& blocks,

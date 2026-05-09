@@ -69,44 +69,46 @@ void SimulationContext::syncBlocks() {
             BlockBundle bundle;
             bundle.id = b->getId();
             bundle.st = b;
+            // Use actual block dimensions — child AMR blocks may differ from root params.ncells
+            const auto nc = b->numCells();
             bundle.hydro = std::make_unique<GridBlock>(b->getId(),
                                                        b->getLevel(),
-                                                       params.ncells,
+                                                       nc,
                                                        b->lowerCorner(),
                                                        b->upperCorner(),
                                                        b->getNumGhost(),
                                                        NUM_HYDRO_VARS);
             bundle.prim = std::make_unique<GridBlock>(b->getId(),
                                                       b->getLevel(),
-                                                      params.ncells,
+                                                      nc,
                                                       b->lowerCorner(),
                                                       b->upperCorner(),
                                                       b->getNumGhost(),
                                                       NUM_PRIMITIVE_VARS);
             bundle.st_rhs = std::make_unique<GridBlock>(b->getId(),
                                                         b->getLevel(),
-                                                        params.ncells,
+                                                        nc,
                                                         b->lowerCorner(),
                                                         b->upperCorner(),
                                                         b->getNumGhost(),
                                                         NUM_SPACETIME_VARS);
             bundle.hydro_rhs = std::make_unique<GridBlock>(b->getId(),
                                                            b->getLevel(),
-                                                           params.ncells,
+                                                           nc,
                                                            b->lowerCorner(),
                                                            b->upperCorner(),
                                                            b->getNumGhost(),
                                                            NUM_HYDRO_VARS);
             bundle.st_stage = std::make_unique<GridBlock>(b->getId(),
                                                           b->getLevel(),
-                                                          params.ncells,
+                                                          nc,
                                                           b->lowerCorner(),
                                                           b->upperCorner(),
                                                           b->getNumGhost(),
                                                           NUM_SPACETIME_VARS);
             bundle.hydro_stage = std::make_unique<GridBlock>(b->getId(),
                                                              b->getLevel(),
-                                                             params.ncells,
+                                                             nc,
                                                              b->lowerCorner(),
                                                              b->upperCorner(),
                                                              b->getNumGhost(),

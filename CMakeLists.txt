@@ -68,7 +68,7 @@ if(MSVC)
     set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} /LTCG")
 else()
     set(CMAKE_CXX_FLAGS_DEBUG         "-g -O0 -DGRANITE_DEBUG")
-    set(CMAKE_CXX_FLAGS_RELEASE       "-O3 -DNDEBUG -march=native -ffast-math")
+    set(CMAKE_CXX_FLAGS_RELEASE       "-O3 -DNDEBUG -march=native -fno-math-errno -fno-trapping-math")
     set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g -DNDEBUG")
 endif()
 

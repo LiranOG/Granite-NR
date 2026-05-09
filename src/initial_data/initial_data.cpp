@@ -609,17 +609,28 @@ StellarInitialData::StellarProfile StellarInitialData::solveTOV(const StarParams
         profile.eps.push_back(eps);
         profile.mass.push_back(m);
 
-        // TOV equations (in CGS)
-        Real Schwarzschild_term = r - 2.0 * G * m / c2;
-        Real denom = r * Schwarzschild_term;
-        if (std::abs(denom) < 1.0e-30 || Schwarzschild_term <= 0.0)
-            break;
+        // RK4 integration of the TOV system
+        auto tov_rhs = [&](Real r_val, Real p_val, Real m_val)
+            -> std::pair<Real, Real> {
+            Real rho_val = std::pow(std::max(p_val / K_poly, 0.0), 1.0 / Gamma);
+            Real schw = r_val - 2.0 * G * m_val / c2;
+            Real denom_val = r_val * schw;
+            if (std::abs(denom_val) < 1.0e-30 || schw <= 0.0)
+                return {0.0, 0.0};
+            Real dp = -(rho_val + p_val / c2) *
+                       (m_val + 4.0 * constants::PI * r_val * r_val * r_val * p_val / c2) *
+                       G / denom_val;
+            Real dm = 4.0 * constants::PI * rho_val * r_val * r_val;
+            return {dp, dm};
+        };
 
-        Real dp_dr = -(rho + p / c2) * (m + 4.0 * constants::PI * r * r * r * p / c2) * G / denom;
-        Real dm_dr = 4.0 * constants::PI * rho * r * r;
+        auto [k1p, k1m] = tov_rhs(r, p, m);
+        auto [k2p, k2m] = tov_rhs(r + 0.5 * dr, p + 0.5 * dr * k1p, m + 0.5 * dr * k1m);
+        auto [k3p, k3m] = tov_rhs(r + 0.5 * dr, p + 0.5 * dr * k2p, m + 0.5 * dr * k2m);
+        auto [k4p, k4m] = tov_rhs(r + dr, p + dr * k3p, m + dr * k3m);
 
-        p += dp_dr * dr;
-        m += dm_dr * dr;
+        p += dr * (k1p + 2.0 * k2p + 2.0 * k3p + k4p) / 6.0;
+        m += dr * (k1m + 2.0 * k2m + 2.0 * k3m + k4m) / 6.0;
 
         if (p < 0.0 || p < 1.0e-10 * p0)
             break;
@@ -813,9 +824,9 @@ void TwoPuncturesBBH::generate(GridBlock& grid) const {
     std::vector<Real> A2(nx * ny * nz, 0.0);
 
 #pragma omp parallel for
-    for (int k = 0; k < nz; ++k) {
-        for (int j = 0; j < ny; ++j) {
-            for (int i = 0; i < nx; ++i) {
+    for (int k = nghost; k < nz - nghost; ++k) {
+        for (int j = nghost; j < ny - nghost; ++j) {
+            for (int i = nghost; i < nx - nghost; ++i) {
                 int flat =
                     i + nx * (j + ny * k); // Custom flat indexing compatible with granite loops
                 Real axx = grid.data(static_cast<int>(SpacetimeVar::A_XX), i, j, k);
@@ -877,9 +888,13 @@ void TwoPuncturesBBH::generate(GridBlock& grid) const {
         }
 
 #pragma omp parallel for
-        for (int i = 0; i < nx * ny * nz; ++i) {
-            u[i] = u_new[i]; // Asymptotic u->0 is enforced via inactive ghost cells
-                             // 0.0
+        for (int k = nghost; k < nz - nghost; ++k) {
+            for (int j = nghost; j < ny - nghost; ++j) {
+                for (int i = nghost; i < nx - nghost; ++i) {
+                    int flat = i + nx * (j + ny * k);
+                    u[flat] = u_new[flat]; // Ghost cells remain 0 — enforces u→0 Dirichlet BC
+                }
+            }
         }
 
         if (max_res < tol)

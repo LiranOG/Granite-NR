@@ -13,6 +13,7 @@
 #include "granite/core/grid.hpp"
 #include "granite/core/types.hpp"
 
+#include <cstdint>
 #include <string>
 #include <vector>
 
@@ -70,6 +71,13 @@ public:
 
 private:
     IOParams params_;
+
+    /// Write a single block into an already-opened HDF5 file handle (internal helper).
+    /// The first parameter is hid_t (HDF5 file handle), declared as int64_t to avoid
+    /// requiring hdf5.h in this header.
+    void writeBlockIntoFile(int64_t file_id,
+                            const GridBlock& block,
+                            const std::vector<std::string>& var_names) const;
 };
 
 /**
