@@ -1,0 +1,39 @@
+Bootstrap: docker
+From: ubuntu:24.04
+
+%labels
+    Author LiranOG
+    Version 0.6.7
+    Description GRANITE NR Code — HPC Container
+
+%post
+    apt-get update && apt-get install -y --no-install-recommends \
+        build-essential cmake ninja-build git g++-13 \
+        libopenmpi-dev openmpi-bin libhdf5-openmpi-dev \
+        python3 python3-pip python3-numpy python3-scipy python3-h5py \
+    && rm -rf /var/lib/apt/lists/*
+
+    pip3 install --break-system-packages matplotlib
+
+%files
+    . /granite
+
+%post
+    cd /granite && \
+    cmake -B /build -G Ninja \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_COMPILER=g++-13 \
+        -DGRANITE_ENABLE_MPI=ON \
+        -DGRANITE_ENABLE_GPU=OFF \
+        -DGRANITE_ENABLE_TESTS=ON && \
+    cmake --build /build -j$(nproc)
+
+%environment
+    export PATH=/build/bin:$PATH
+    export LD_LIBRARY_PATH=/build/lib:$LD_LIBRARY_PATH
+
+%runscript
+    exec granite_main "$@"
+
+%test
+    cd /build && ctest --output-on-failure --timeout 120

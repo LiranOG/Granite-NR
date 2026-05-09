@@ -1,0 +1,70 @@
+# ============================================================
+# GRANITE .gitignore
+# ============================================================
+
+# Build artifacts
+build/
+cmake-build-*/
+bin/
+*.o
+*.obj
+*.so
+*.dylib
+*.dll
+*.a
+*.lib
+compile_commands.json
+
+# CMake cache & generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+CTestTestfile.cmake
+Makefile
+_deps/
+
+# IDE configurations
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.vcxproj.user
+*.swp
+*.swo
+*~
+
+# Simulation runtime outputs (auto-generated, not source-controlled)
+dev_logs/
+output/
+runs/
+jobs/
+*.h5
+*.dat
+gw_extraction.dat
+timeseries.h5
+*.log
+*.sbatch
+cppcheck_output.txt
+coverage.info
+coverage/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+*.egg-info/
+dist/
+venv/
+.venv/
+env/
+
+# OS junk
+.DS_Store
+Thumbs.db
+._*
+
+# Environment files
+.env
+.env.local

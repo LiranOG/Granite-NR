@@ -1,0 +1,70 @@
+# =============================================================================
+# .codecov.yml — Codecov configuration for GRANITE
+#
+# Documentation: https://docs.codecov.com/docs/codecovyml-reference
+#
+# To validate this file locally:
+#   curl -X POST --data-binary @.codecov.yml https://codecov.io/validate
+# =============================================================================
+
+# ---------------------------------------------------------------------------
+# Coverage thresholds
+# ---------------------------------------------------------------------------
+coverage:
+  # Absolute coverage target for the project.
+  # Codecov will report "success" when measured coverage meets or exceeds
+  # this value.
+  precision: 2         # decimal places shown in the UI and PR comments
+  round: down          # round down to be conservative
+  range: "70...100"    # colour scale: red at 70 %, green at 100 %
+
+  status:
+    # ── Project-level gate ─────────────────────────────────────────────────
+    # The entire project must achieve at least the 'target' coverage.
+    # The 'threshold' is the maximum allowed drop from the BASE commit before
+    # the status check turns red (i.e. a PR may not regress coverage by more
+    # than 2 percentage points).
+    project:
+      default:
+        target: 80%       # minimum acceptable total coverage
+        threshold: 2%     # allow at most 2 % regression on a PR
+
+    # ── Patch-level gate ───────────────────────────────────────────────────
+    # Lines added or changed in this PR (the "patch") must have at least
+    # this much coverage.  This prevents new, untested code from being merged.
+    patch:
+      default:
+        target: 75%       # newly changed lines must be 75 % covered
+        threshold: 5%     # allow a 5 % miss tolerance on the patch
+
+# ---------------------------------------------------------------------------
+# Files / paths to ignore
+# ---------------------------------------------------------------------------
+ignore:
+  - "tests/**"            # test harness itself is not production code
+  - "benchmarks/**"       # YAML + shell benchmarks, not C++ source
+  - "scripts/**"          # Python tooling scripts
+  - "python/**"           # Python analysis package (covered separately)
+  - "docs/**"             # Documentation sources
+  - "viz/**"              # Visualisation helpers
+  - "containers/**"       # Docker / Singularity definitions
+  - "src/main.cpp"        # Engine entry-point (thin wrapper, tested via integration)
+
+# ---------------------------------------------------------------------------
+# Comment behaviour on pull requests
+# ---------------------------------------------------------------------------
+comment:
+  layout: "reach,diff,flags,files"   # sections shown in the PR comment
+  behavior: default                  # update the comment on each new push
+  require_changes: true              # only comment if coverage changed
+
+# ---------------------------------------------------------------------------
+# Flags — allows separate reporting for different test suites
+# (mirrors the `flags:` field in the codecov-action upload step)
+# ---------------------------------------------------------------------------
+flags:
+  unittests:
+    paths:
+      - src/
+      - include/
+    carryforward: true     # carry forward coverage if this flag is not uploaded

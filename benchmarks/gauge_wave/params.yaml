@@ -1,0 +1,35 @@
+# ===========================================================================
+# GRANITE Benchmark: gauge_wave — Linear gauge wave propagation
+# Reference: Alcubierre et al. 2004 (apples-with-apples tests)
+# ===========================================================================
+# This is the simplest CCZ4 stability test:
+# A sinusoidal wave in the lapse α propagates across a periodic grid.
+# The constraint H should remain ~0 to machine precision for all time.
+# ===========================================================================
+
+grid:
+  ncells: [64, 64, 64]
+  domain_lo: [-0.5, -0.5, -0.5]
+  domain_hi: [ 0.5,  0.5,  0.5]
+  ghost_cells: 4
+
+time:
+  cfl: 0.25
+  t_final: 100.0
+  max_steps: 1000000
+
+ccz4:
+  kappa1: 0.02
+  kappa2: 0.0
+  eta: 2.0
+  ko_sigma: 0.1
+
+initial_data:
+  type: gauge_wave          # Sets α = 1 + A*sin(2π x/L), flat metric
+  amplitude: 0.1            # Wave amplitude A (keep < 0.3 for stability)
+  wavelength: 1.0           # Wave length L (= domain size)
+
+io:
+  output_dir: output/gauge_wave
+  output_interval: 10
+  checkpoint_interval: 500

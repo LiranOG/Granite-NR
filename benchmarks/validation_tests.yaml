@@ -1,0 +1,169 @@
+# ===========================================================================
+# GRANITE Validation Test Suite — Machine-Readable Definitions
+#
+# Each entry defines a validation test with expected outcomes,
+# tolerances, and convergence requirements.
+# ===========================================================================
+
+tests:
+  # -- Spacetime sector --
+
+  - name: gauge_wave
+    category: spacetime
+    description: >
+      Sinusoidal gauge wave propagating in x. Tests CCZ4 stability
+      and convergence. Apples-with-Apples standard test.
+    initial_data:
+      type: gauge_wave
+      amplitude: 0.01
+      wavelength: 1.0
+      direction: x
+    grid:
+      domain: [0, 1, 0, 0.125, 0, 0.125]
+      ncells: [64, 8, 8]
+      ghost_cells: 4
+    evolution:
+      t_final: 1000.0   # 1000 crossing times
+      cfl: 0.25
+    pass_criteria:
+      max_amplitude_drift: 1.0e-6
+      convergence_order: 4.0
+      convergence_tolerance: 0.3  # |Q - 4| < 0.3
+    resolutions: [32, 48, 64, 96]
+
+  - name: robust_stability
+    category: spacetime
+    description: >
+      Random perturbation on flat spacetime. Must remain stable
+      for 10^5 M without exponential growth.
+    initial_data:
+      type: flat_plus_noise
+      noise_amplitude: 1.0e-10
+    grid:
+      domain: [-10, 10, -10, 10, -10, 10]
+      ncells: [32, 32, 32]
+    evolution:
+      t_final: 100000.0
+    pass_criteria:
+      max_growth_factor: 10.0  # Perturbation may grow 10x but not exponentially
+
+  - name: single_puncture
+    category: spacetime
+    description: >
+      Single Schwarzschild BH (puncture data). Must remain stable
+      for 10^4 M with horizon mass drift < 10^{-4}.
+    initial_data:
+      type: brill_lindquist
+      black_holes:
+        - mass: 1.0
+          position: [0, 0, 0]
+    grid:
+      domain: [-50, 50, -50, 50, -50, 50]
+      ncells: [64, 64, 64]
+      amr_levels: 5
+    evolution:
+      t_final: 10000.0
+    pass_criteria:
+      horizon_mass_drift: 1.0e-4
+      constraint_l2_max: 1.0e-6
+
+  - name: binary_equal_mass
+    category: spacetime
+    description: >
+      Equal-mass, non-spinning binary BH at separation d=10M.
+      Compare waveform to SXS catalog.
+    initial_data:
+      type: bowen_york
+      black_holes:
+        - mass: 0.5
+          position: [5, 0, 0]
+          momentum: [0, 0.089, 0]
+        - mass: 0.5
+          position: [-5, 0, 0]
+          momentum: [0, -0.089, 0]
+    grid:
+      domain: [-200, 200, -200, 200, -200, 200]
+      ncells: [64, 64, 64]
+      amr_levels: 8
+    evolution:
+      t_final: 2000.0
+    pass_criteria:
+      phase_error_l2m2: 0.01  # radians over 8 orbits
+      convergence_order: 4.0
+    reference: "SXS:BBH:0001"
+
+  # -- GRMHD sector --
+
+  - name: balsara_1
+    category: grmhd
+    description: >
+      Balsara shock tube test 1 — fast rarefaction, slow compound,
+      contact discontinuity, slow shock, fast rarefaction.
+    initial_data:
+      type: shock_tube
+      left_state: {rho: 1.0, p: 1.0, vx: 0, vy: 0, vz: 0, Bx: 0.75, By: 1.0, Bz: 0}
+      right_state: {rho: 0.125, p: 0.1, vx: 0, vy: 0, vz: 0, Bx: 0.75, By: -1.0, Bz: 0}
+    grid:
+      domain: [0, 1]
+      ncells: [400]
+    pass_criteria:
+      l1_error: 1.0e-3
+
+  - name: magnetic_rotor
+    category: grmhd
+    description: >
+      2D magnetized rotor problem. Tests strong MHD shocks and
+      divergence-free evolution.
+    initial_data:
+      type: magnetic_rotor
+    grid:
+      domain: [-0.5, 0.5, -0.5, 0.5]
+      ncells: [200, 200]
+    pass_criteria:
+      div_B_max: 1.0e-14  # Machine precision
+
+  - name: bh_torus
+    category: grmhd
+    description: >
+      Kerr BH (a=0.9) + magnetized FM torus. Reproduce MRI growth
+      rate, accretion rate, and jet power.
+    initial_data:
+      type: fm_torus
+      bh_mass: 1.0
+      bh_spin: 0.9
+      torus_inner_radius: 6.0
+      torus_max_density_radius: 12.0
+      magnetic_field: poloidal
+      plasma_beta: 100.0
+    grid:
+      domain: [-100, 100, -100, 100, -100, 100]
+      ncells: [128, 128, 128]
+      amr_levels: 3
+    evolution:
+      t_final: 10000.0
+    pass_criteria:
+      mri_growth_rate_error: 0.05  # Within 5% of linear theory
+      accretion_rate_ratio: [0.8, 1.2]  # Within 20% of BHAC/HARM
+
+  # -- Radiation sector --
+
+  - name: radiative_shock_tube
+    category: radiation
+    description: >
+      Mach 3 radiation-dominated shock. Tests M1 closure in both
+      streaming and diffusion limits.
+    initial_data:
+      type: radiative_shock
+      mach_number: 3.0
+    pass_criteria:
+      l2_error_vs_analytic: 0.02  # 2%
+
+  - name: diffusion_limit
+    category: radiation
+    description: >
+      Optically thick slab with known diffusion coefficient.
+    initial_data:
+      type: diffusion_slab
+      optical_depth: 100.0
+    pass_criteria:
+      diffusion_coefficient_error: 0.01  # 1%

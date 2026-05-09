@@ -1,0 +1,68 @@
+# ===========================================================================
+# GRANITE Benchmark: B2_eq — Equal-mass non-spinning binary BH merger
+#
+# Reference: Baiotti & Rezzolla (2017), Campanelli et al. (2006)
+#
+# This configuration targets ~8 orbits + merger + ringdown for an
+# equal-mass, non-spinning binary BH system (M_ADM = 2M_sun).
+#
+# Key design choices:
+#   - Domain ±200M: extraction at r=100M, outer boundary at r≈346M
+#     (diagonal). Gauge wave at v=sqrt(2) takes t≈245M to reach boundary,
+#     well past merger at t≈150-200M.
+#   - dx=1.5625M (coarse): with 6 AMR levels, finest dx=0.0244M
+#     gives ~41 cells per M at the puncture. Sufficient for 4th-order FD.
+#   - CFL=0.25: with dx_fine=0.0244M, dt_fine=0.006M. The shift
+#     speed |beta|<1 at the finest level gives advection CFL < 0.25.
+#   - ko_sigma=0.35: damps gauge transients without destroying the
+#     conformal factor gradient (tested: 0.4 over-damps near puncture).
+#   - eta=1.0/M_ADM: for M_ADM=2, eta=1.0 gives the standard
+#     Campanelli (2006) Gamma-driver with proper mass scaling.
+#   - kappa1=0.02: standard CCZ4 constraint damping (Alic+ 2012).
+# ===========================================================================
+
+grid:
+  ncells: [64, 64, 64]          # Reduces base memory footprint from ~12 GB to ~200 MB (desktop-safe resolution)
+  domain_lo: [-200.0, -200.0, -200.0]
+  domain_hi: [ 200.0,  200.0,  200.0]
+
+amr:
+  max_levels: 6             # 6 levels: dx = 1.5625, 0.781, 0.391, 0.195, 0.098, 0.049M
+  refine_threshold: 0.1     # refine where |grad(chi)| > threshold
+  regrid_interval: 16       # regrid every 16 coarse steps
+  buffer_cells: 4           # buffer zones around tagged cells
+
+time:
+  cfl: 0.25                 # Applied to dx_finest (engine auto-scales to finest level).
+                             # With 6 levels, ratio=2: dx_finest=dx_coarse/2^5=0.049M
+                             # => dt_global = 0.25 * 0.049 = 0.0122M (strict CFL safety)
+  t_final: 500.0            # ~8 orbits (T_orb~55M at d=10M) + merger + 100M ringdown
+  max_steps: 100000000
+
+ccz4:
+  kappa1: 0.02              # CCZ4 constraint damping (Alic+ 2012 standard)
+  kappa2: 0.0               # kappa2=0: simplest constraint-damping variant
+  eta: 1.0                  # Gamma-driver damping: eta = 1/M_ADM = 1/(2*1.0)
+                             # eta too large: over-damped, slow trumpet formation
+                             # eta too small: under-damped, gauge oscillations
+  ko_sigma: 0.35            # KO dissipation: damps grid-scale noise
+                             # 0.35 is standard; >0.5 destroys physical gradients
+
+initial_data:
+  type: two_punctures          # Bowen-York puncture data with elliptic solve
+
+black_holes:
+  - mass: 1.0
+    position: [5.0, 0.0, 0.0]     # d = 10M separation (center of mass at origin)
+    momentum: [0.0, 0.0954, 0.0]   # quasi-circular orbit: P_y ~ 0.0954 (Pfeiffer+ 2007)
+    spin:     [0.0, 0.0, 0.0]
+  - mass: 1.0
+    position: [-5.0, 0.0, 0.0]
+    momentum: [0.0, -0.0954, 0.0]  # equal and opposite
+    spin:     [0.0, 0.0, 0.0]
+
+io:
+  output_dir: output/B2_eq
+  output_interval: 2       # every 10 steps = ~3.9M between outputs
+  checkpoint_interval: 500  # checkpoint every ~195M
+  gw_extraction_radii: [50.0, 75.0, 100.0]  # Psi4 extraction spheres

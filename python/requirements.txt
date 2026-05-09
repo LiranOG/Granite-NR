@@ -1,0 +1,12 @@
+# GRANITE Python Analysis Suite — Core Dependencies
+# For development install (recommended), use from the repo root:
+#   pip install -e .[dev]
+#
+# This file provides a flat requirements list for environments
+# that do not support PEP 517 editable installs (e.g. some CI images).
+
+numpy>=1.24
+scipy>=1.10
+h5py>=3.8
+matplotlib>=3.7
+rich>=13.0.0

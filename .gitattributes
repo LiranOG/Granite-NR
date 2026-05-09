@@ -1,0 +1,14 @@
+# Enforce C++ dominance in Linguist statistics
+*.cpp linguist-language=C++
+*.hpp linguist-language=C++
+*.h linguist-language=C++
+
+# Exclude from stats but KEEP visible in PRs and Commit Diffs
+scripts/** linguist-detectable=false
+viz/** linguist-detectable=false
+*.ipynb linguist-detectable=false
+
+# Explicitly mark documentation directories and files
+docs/** linguist-documentation
+*.md linguist-documentation
+*.rst linguist-documentation

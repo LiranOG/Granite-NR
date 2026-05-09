@@ -1,0 +1,10 @@
+# GRANITE CODEOWNERS
+#
+# All files are owned by the sole author.
+# GitHub will automatically request a review from @LiranOG on every PR.
+#
+# When contributors join, per-subsystem ownership can be added here, e.g.:
+#   src/radiation/  @radiation-reviewer
+#   src/amr/        @amr-reviewer
+
+* @LiranOG

@@ -1,0 +1,199 @@
+name: GRANITE CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ============================================================
+  # Build & Unit Tests (CPU only)
+  # ============================================================
+  build-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [gcc-12, clang-18]
+        build_type: [Debug, Release]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install -y \
+            cmake ninja-build \
+            libopenmpi-dev openmpi-bin \
+            libhdf5-mpi-dev libhdf5-dev \
+            libomp-dev \
+            ${{ matrix.compiler == 'gcc-12' && 'g++-12' || 'clang-18' }}
+
+      - name: Configure
+        run: |
+          if [ "${{ matrix.compiler }}" = "gcc-12" ]; then
+            export CC=gcc-12 CXX=g++-12
+          else
+            export CC=clang-18 CXX=clang++-18
+          fi
+          cmake -B build -G Ninja \
+            -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
+            -DGRANITE_ENABLE_MPI=ON \
+            -DGRANITE_ENABLE_GPU=OFF \
+            -DGRANITE_ENABLE_TESTS=ON
+
+      - name: Build
+        run: cmake --build build -j$(nproc)
+
+      - name: Run tests
+        run: cd build && ctest --output-on-failure --timeout 120
+
+  # ============================================================
+  # Code Coverage (GCC + lcov → Codecov)
+  # Runs on pushes to main and on every pull request targeting main.
+  # ============================================================
+  coverage:
+    runs-on: ubuntu-latest
+    # Only upload coverage on main-branch pushes or PRs targeting main
+    if: |
+      github.ref == 'refs/heads/main' ||
+      github.event_name == 'pull_request'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Install build tools, GCC-12, and lcov in one pass to keep the
+      # layer cache compact.
+      - name: Install dependencies (build + coverage tools)
+        run: |
+          sudo apt-get update && sudo apt-get install -y \
+            cmake ninja-build \
+            g++-12 \
+            libopenmpi-dev openmpi-bin \
+            libhdf5-mpi-dev libhdf5-dev \
+            libomp-dev \
+            lcov
+
+      # Configure with:
+      #   -DENABLE_COVERAGE=ON   → injects --coverage into C/CXX/linker flags
+      #   -DCMAKE_BUILD_TYPE=Debug → O0 + debug info; required for accurate lcov data
+      - name: Configure (coverage build)
+        env:
+          CC: gcc-12
+          CXX: g++-12
+        run: |
+          cmake -B build -G Ninja \
+            -DCMAKE_BUILD_TYPE=Debug \
+            -DENABLE_COVERAGE=ON \
+            -DGRANITE_ENABLE_MPI=ON \
+            -DGRANITE_ENABLE_GPU=OFF \
+            -DGRANITE_ENABLE_TESTS=ON
+
+      # Build everything first so granite_tests exists before the
+      # `coverage` target tries to invoke it.
+      - name: Build (all targets)
+        run: cmake --build build -j$(nproc)
+
+      # The custom `coverage` CMake target will:
+      #   1. lcov --zerocounters
+      #   2. Run granite_tests
+      #   3. lcov --capture  → coverage.info
+      #   4. lcov --remove   (strip /usr/*, _deps/*, googletest/*)
+      #   5. genhtml         → build/coverage/index.html
+      - name: Generate coverage report
+        run: cmake --build build --target coverage
+
+      # Upload coverage.info (produced in the build directory) to Codecov.
+      # The CODECOV_TOKEN secret is set in the repository settings:
+      #   Settings → Secrets and variables → Actions → New repository secret
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: build/coverage.info
+          flags: unittests
+          name: GRANITE-coverage
+          fail_ci_if_error: true
+          verbose: true
+
+  # ============================================================
+  # Code formatting check
+  # ============================================================
+  formatting:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install clang-format
+        run: sudo apt-get update && sudo apt-get install -y clang-format-18
+
+      - name: Apply clang-format
+        run: |
+          find src include tests -name '*.cpp' -o -name '*.hpp' | \
+            xargs clang-format-18 -i
+          echo "clang-format applied."
+
+      - name: Commit formatting fixes (if any)
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git config --global user.name "github-actions[bot]"
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git add -A
+            git commit -m "style: auto-apply clang-format-18 [skip ci]"
+            git push
+            echo "Formatting fixes pushed."
+          else
+            echo "All files already formatted correctly."
+          fi
+
+  # ============================================================
+  # Static analysis
+  # ============================================================
+  static-analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake cppcheck libopenmpi-dev libhdf5-mpi-dev
+
+      - name: Run cppcheck
+        run: |
+          cppcheck --enable=error \
+            --suppress=missingIncludeSystem \
+            --max-ctu-depth=0 \
+            --std=c++17 \
+            --error-exitcode=1 \
+            -I include/ src/ 2>&1 | tee cppcheck_output.txt
+          # Fail only on actual errors
+          if grep -q "\[error\]" cppcheck_output.txt; then
+            echo "ERROR: cppcheck found errors"
+            exit 1
+          fi
+
+  # ============================================================
+  # Documentation build
+  # ============================================================
+  docs:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Sphinx
+        run: pip install sphinx breathe sphinx-rtd-theme sphinxcontrib-bibtex
+
+      - name: Build docs
+        run: cd docs && make html
