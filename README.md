@@ -55,6 +55,7 @@ Designed from the ground up to model extreme astrophysical events — such as th
   - [Step 4 — Run the Unit Tests](#step-4--run-the-unit-tests)
   - [Step 5 — Run the Developer Benchmark](#step-5--run-the-developer-benchmark)
   - [Step 6 — Run a Full Simulation](#step-6--run-a-full-simulation)
+  - [Step 7 — HPC / SLURM Deployment](#step-7--hpc--slurm-deployment)
 - [📁 Repository Structure](#-repository-structure)
 - [🗺️ Roadmap](#️-roadmap)
 - [⚠️ Known Limitations](#%EF%B8%8F-known-limitations-v068)
