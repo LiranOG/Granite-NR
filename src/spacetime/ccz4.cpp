@@ -226,23 +226,161 @@ Real CCZ4Evolution::d2(
 }
 
 // ===========================================================================
+// Shared Christoffel + Ricci computation (used by both RHS and constraints)
+// ===========================================================================
+
+void CCZ4Evolution::computeChristoffelAndRicci(const GridBlock& grid, int i, int j, int k,
+                                               const Real gt[6], const Real gtu[6],
+                                               Real chi,
+                                               Real chris[3][6],
+                                               Real Rt[6], Real Rchi[6]) const {
+    // First derivatives of conformal metric and chi
+    Real d_gt[6][3];
+    Real d_chi[3];
+    for (int d = 0; d < DIM; ++d) {
+        d_chi[d] = d1(grid, iCHI, d, i, j, k);
+        d_gt[XX][d] = d1(grid, iGXX, d, i, j, k);
+        d_gt[XY][d] = d1(grid, iGXY, d, i, j, k);
+        d_gt[XZ][d] = d1(grid, iGXZ, d, i, j, k);
+        d_gt[YY][d] = d1(grid, iGYY, d, i, j, k);
+        d_gt[YZ][d] = d1(grid, iGYZ, d, i, j, k);
+        d_gt[ZZ][d] = d1(grid, iGZZ, d, i, j, k);
+    }
+
+    // Second derivatives of conformal metric and chi
+    Real dd_gt[6][3][3];
+    Real dd_chi[3][3];
+    for (int a = 0; a < DIM; ++a) {
+        for (int b = a; b < DIM; ++b) {
+            dd_chi[a][b] = d2(grid, iCHI, a, b, i, j, k);
+            dd_chi[b][a] = dd_chi[a][b];
+            dd_gt[XX][a][b] = d2(grid, iGXX, a, b, i, j, k);
+            dd_gt[XY][a][b] = d2(grid, iGXY, a, b, i, j, k);
+            dd_gt[XZ][a][b] = d2(grid, iGXZ, a, b, i, j, k);
+            dd_gt[YY][a][b] = d2(grid, iGYY, a, b, i, j, k);
+            dd_gt[YZ][a][b] = d2(grid, iGYZ, a, b, i, j, k);
+            dd_gt[ZZ][a][b] = d2(grid, iGZZ, a, b, i, j, k);
+            dd_gt[XX][b][a] = dd_gt[XX][a][b];
+            dd_gt[XY][b][a] = dd_gt[XY][a][b];
+            dd_gt[XZ][b][a] = dd_gt[XZ][a][b];
+            dd_gt[YY][b][a] = dd_gt[YY][a][b];
+            dd_gt[YZ][b][a] = dd_gt[YZ][a][b];
+            dd_gt[ZZ][b][a] = dd_gt[ZZ][a][b];
+        }
+    }
+
+    // Christoffel symbols: Γ̃^i_{jk}
+    for (int ii = 0; ii < 3; ++ii) {
+        for (int jj = 0; jj < 3; ++jj) {
+            for (int kk = jj; kk < 3; ++kk) {
+                Real val = 0.0;
+                for (int ll = 0; ll < 3; ++ll) {
+                    int il = symIdx(ii, ll);
+                    Real gtu_il = gtu[il];
+                    int lk = symIdx(ll, kk);
+                    int lj = symIdx(ll, jj);
+                    int jk_c = symIdx(jj, kk);
+                    val += 0.5 * gtu_il * (d_gt[lk][jj] + d_gt[lj][kk] - d_gt[jk_c][ll]);
+                }
+                chris[ii][symIdx(jj, kk)] = val;
+            }
+        }
+    }
+
+    // Conformal Γ̃^i and d_Ghat
+    Real Ghat[3] = {grid.data(iGHX, i, j, k), grid.data(iGHY, i, j, k), grid.data(iGHZ, i, j, k)};
+    Real d_Ghat[3][3];
+    for (int d = 0; d < DIM; ++d) {
+        d_Ghat[0][d] = d1(grid, iGHX, d, i, j, k);
+        d_Ghat[1][d] = d1(grid, iGHY, d, i, j, k);
+        d_Ghat[2][d] = d1(grid, iGHZ, d, i, j, k);
+    }
+
+    // Ricci tensor: R̃_{ij} and R^χ_{ij}
+    for (int ii = 0; ii < 3; ++ii) {
+        for (int jj = ii; jj < 3; ++jj) {
+            int ij = symIdx(ii, jj);
+            Real R_ij = 0.0;
+
+            // Term 1
+            for (int l = 0; l < 3; ++l)
+                for (int m = 0; m < 3; ++m)
+                    R_ij += -0.5 * gtu[symIdx(l, m)] * dd_gt[ij][l][m];
+
+            // Term 2
+            for (int idx = 0; idx < 3; ++idx) {
+                R_ij += 0.5 * (gt[symIdx(idx, ii)] * d_Ghat[idx][jj] +
+                               gt[symIdx(idx, jj)] * d_Ghat[idx][ii]);
+            }
+
+            // Term 3
+            for (int idx = 0; idx < 3; ++idx) {
+                Real G_ijk = 0.0;
+                for (int m = 0; m < 3; ++m)
+                    G_ijk += gt[symIdx(idx, m)] * chris[m][ij];
+                R_ij += Ghat[idx] * G_ijk;
+            }
+
+            // Terms 4-5
+            for (int l = 0; l < 3; ++l) {
+                for (int m = 0; m < 3; ++m) {
+                    Real gtu_lm = gtu[symIdx(l, m)];
+                    for (int idx = 0; idx < 3; ++idx) {
+                        Real Gam_jkm = 0.0, Gam_ikm = 0.0;
+                        for (int n = 0; n < 3; ++n) {
+                            Gam_jkm += gt[symIdx(idx, n)] * chris[n][symIdx(jj, m)];
+                            Gam_ikm += gt[symIdx(idx, n)] * chris[n][symIdx(ii, m)];
+                        }
+                        R_ij += gtu_lm * (chris[idx][symIdx(l, ii)] * Gam_jkm +
+                                          chris[idx][symIdx(l, jj)] * Gam_ikm);
+                        Real Gam_kij = 0.0;
+                        for (int n = 0; n < 3; ++n)
+                            Gam_kij += gt[symIdx(idx, n)] * chris[n][symIdx(ii, jj)];
+                        R_ij -= gtu_lm * chris[idx][symIdx(l, m)] * Gam_kij;
+                    }
+                }
+            }
+            Rt[ij] = R_ij;
+
+            // Chi contribution (Baumgarte-Shapiro eq. 3.68)
+            Real D_i_D_j_chi = dd_chi[ii][jj];
+            for (int idx = 0; idx < 3; ++idx)
+                D_i_D_j_chi -= chris[idx][ij] * d_chi[idx];
+
+            Real D_k_D_k_chi = 0.0;
+            Real d_chi_sq = 0.0;
+            for (int l = 0; l < 3; ++l) {
+                for (int m = 0; m < 3; ++m) {
+                    Real gtu_lm = gtu[symIdx(l, m)];
+                    Real D_l_D_m_chi = dd_chi[l][m];
+                    for (int idx = 0; idx < 3; ++idx)
+                        D_l_D_m_chi -= chris[idx][symIdx(l, m)] * d_chi[idx];
+                    D_k_D_k_chi += gtu_lm * D_l_D_m_chi;
+                    d_chi_sq += gtu_lm * d_chi[l] * d_chi[m];
+                }
+            }
+
+            Real term1 = (0.5 / (chi + 1e-30)) * (D_i_D_j_chi + gt[ij] * D_k_D_k_chi);
+            Real term2 = (0.25 / ((chi * chi) + 1e-30)) *
+                (d_chi[ii] * d_chi[jj] - 3.0 * gt[ij] * d_chi_sq);
+            Rchi[ij] = term1 - term2;
+        }
+    }
+}
+
+// ===========================================================================
 // RHS computation (vacuum overload)
 // ===========================================================================
 
 void CCZ4Evolution::computeRHSVacuum(const GridBlock& grid, GridBlock& rhs) const {
-    // Fix: Pre-allocate static vectors to avoid dynamic allocation per call
-    static thread_local std::vector<Real> zero_rho;
-    static thread_local std::vector<std::array<Real, DIM>> zero_Si;
-    static thread_local std::vector<std::array<Real, SYM_TENSOR_COMPS>> zero_Sij;
-    static thread_local std::vector<Real> zero_S;
-
-    std::size_t N = grid.totalSize();
-    if (zero_rho.size() < N) {
-        zero_rho.assign(N, 0.0);
-        zero_Si.assign(N, {0.0, 0.0, 0.0});
-        zero_Sij.assign(N, {0, 0, 0, 0, 0, 0});
-        zero_S.assign(N, 0.0);
-    }
+    // Allocate zero-filled matter sources on the stack scope.
+    // These are freed when the function returns — no thread_local leak
+    // from multi-level AMR blocks of varying sizes.
+    const std::size_t N = grid.totalSize();
+    std::vector<Real> zero_rho(N, 0.0);
+    std::vector<std::array<Real, DIM>> zero_Si(N, {0.0, 0.0, 0.0});
+    std::vector<std::array<Real, SYM_TENSOR_COMPS>> zero_Sij(N, {0, 0, 0, 0, 0, 0});
+    std::vector<Real> zero_S(N, 0.0);
 
     computeRHS(grid, rhs, zero_rho, zero_Si, zero_Sij, zero_S);
 }
@@ -991,15 +1129,18 @@ void CCZ4Evolution::computeConstraints(const GridBlock& grid,
                                (gt[XY] * gt[XZ] - gt[XX] * gt[YZ]) * inv_det,
                                (gt[XX] * gt[YY] - gt[XY] * gt[XY]) * inv_det};
 
-                // Use 4th-order member FD stencils (consistent with evolution)
-                // Capture 'this' pointer for member function access
-                auto d1_4th = [&](int var, int d_idx) -> Real {
-                    return this->d1(grid, var, d_idx, i, j, k);
-                };
-                auto d2_4th = [&](int var, int d1_idx, int d2_idx) -> Real {
-                    return this->d2(grid, var, d1_idx, d2_idx, i, j, k);
-                };
+                // Use shared helper for Christoffel + Ricci (eliminates ~120 lines of duplication)
+                Real chris[3][6];
+                Real Rt[6] = {};
+                Real Rchi[6] = {};
+                computeChristoffelAndRicci(grid, i, j, k, gt, gtu, chi, chris, Rt, Rchi);
 
+                // d_chi needed for momentum constraint below
+                Real d_chi[3];
+                for (int d = 0; d < 3; ++d)
+                    d_chi[d] = d1(grid, iCHI, d, i, j, k);
+
+                // Ã_{ij} Ã^{ij} contraction
                 Real AtAt = 0.0;
                 for (int ii = 0; ii < 3; ++ii) {
                     for (int jj = 0; jj < 3; ++jj) {
@@ -1009,111 +1150,6 @@ void CCZ4Evolution::computeConstraints(const GridBlock& grid,
                                     At[symIdx(ii, jj)] * At[symIdx(kk, ll)];
                             }
                         }
-                    }
-                }
-
-                const int gt_vars[6] = {iGXX, iGXY, iGXZ, iGYY, iGYZ, iGZZ};
-                Real d_gt[6][3];
-                Real dd_gt[6][3][3];
-                for (int v = 0; v < 6; ++v) {
-                    for (int d = 0; d < 3; ++d) {
-                        d_gt[v][d] = d1_4th(gt_vars[v], d);
-                        for (int d2_idx = d; d2_idx < 3; ++d2_idx) {
-                            dd_gt[v][d][d2_idx] = d2_4th(gt_vars[v], d, d2_idx);
-                            dd_gt[v][d2_idx][d] = dd_gt[v][d][d2_idx];
-                        }
-                    }
-                }
-                Real d_chi[3];
-                Real dd_chi[3][3];
-                for (int d = 0; d < 3; ++d) {
-                    d_chi[d] = d1_4th(iCHI, d);
-                    for (int d2_idx = d; d2_idx < 3; ++d2_idx) {
-                        dd_chi[d][d2_idx] = d2_4th(iCHI, d, d2_idx);
-                        dd_chi[d2_idx][d] = dd_chi[d][d2_idx];
-                    }
-                }
-
-                Real chris[3][6];
-                for (int kk = 0; kk < 3; ++kk) {
-                    for (int ii = 0; ii < 3; ++ii) {
-                        for (int jj = ii; jj < 3; ++jj) {
-                            Real sum = 0.0;
-                            for (int m = 0; m < 3; ++m) {
-                                sum += 0.5 * gtu[symIdx(kk, m)] *
-                                    (d_gt[symIdx(m, ii)][jj] + d_gt[symIdx(m, jj)][ii] -
-                                     d_gt[symIdx(ii, jj)][m]);
-                            }
-                            chris[kk][symIdx(ii, jj)] = sum;
-                        }
-                    }
-                }
-
-                Real d_Ghat[3][3] = {0};
-                Real Ghat[3] = {
-                    grid.data(iGHX, i, j, k), grid.data(iGHY, i, j, k), grid.data(iGHZ, i, j, k)};
-                for (int d = 0; d < 3; ++d) {
-                    d_Ghat[0][d] = d1_4th(iGHX, d);
-                    d_Ghat[1][d] = d1_4th(iGHY, d);
-                    d_Ghat[2][d] = d1_4th(iGHZ, d);
-                }
-
-                Real Rt[6] = {0};
-                Real Rchi[6] = {0};
-                for (int ii = 0; ii < 3; ++ii) {
-                    for (int jj = ii; jj < 3; ++jj) {
-                        int ij = symIdx(ii, jj);
-                        Real R_ij = 0.0;
-                        for (int l = 0; l < 3; ++l) {
-                            for (int m = 0; m < 3; ++m)
-                                R_ij += -0.5 * gtu[symIdx(l, m)] * dd_gt[ij][l][m];
-                        }
-                        for (int kk = 0; kk < 3; ++kk) {
-                            R_ij += 0.5 *
-                                (gt[symIdx(kk, ii)] * d_Ghat[kk][jj] +
-                                 gt[symIdx(kk, jj)] * d_Ghat[kk][ii]);
-                            Real G_ijk = 0.0;
-                            for (int m = 0; m < 3; ++m)
-                                G_ijk += gt[symIdx(kk, m)] * chris[m][ij];
-                            R_ij += Ghat[kk] * G_ijk;
-                        }
-                        for (int l = 0; l < 3; ++l) {
-                            for (int m = 0; m < 3; ++m) {
-                                Real gtu_lm = gtu[symIdx(l, m)];
-                                for (int kk = 0; kk < 3; ++kk) {
-                                    Real Gam_jkm = 0.0, Gam_ikm = 0.0, Gam_kij = 0.0;
-                                    for (int n = 0; n < 3; ++n) {
-                                        Gam_jkm += gt[symIdx(kk, n)] * chris[n][symIdx(jj, m)];
-                                        Gam_ikm += gt[symIdx(kk, n)] * chris[n][symIdx(ii, m)];
-                                        Gam_kij += gt[symIdx(kk, n)] * chris[n][symIdx(ii, jj)];
-                                    }
-                                    R_ij += gtu_lm *
-                                        (chris[kk][symIdx(l, ii)] * Gam_jkm +
-                                         chris[kk][symIdx(l, jj)] * Gam_ikm);
-                                    R_ij -= gtu_lm * chris[kk][symIdx(l, m)] * Gam_kij;
-                                }
-                            }
-                        }
-                        Rt[ij] = R_ij;
-
-                        Real D_i_D_j_chi = dd_chi[ii][jj];
-                        for (int kk = 0; kk < 3; ++kk)
-                            D_i_D_j_chi -= chris[kk][ij] * d_chi[kk];
-                        Real D_k_D_k_chi = 0.0, d_chi_sq = 0.0;
-                        for (int l = 0; l < 3; ++l) {
-                            for (int m = 0; m < 3; ++m) {
-                                Real gtu_lm = gtu[symIdx(l, m)];
-                                Real D_l_D_m_chi = dd_chi[l][m];
-                                for (int kk = 0; kk < 3; ++kk)
-                                    D_l_D_m_chi -= chris[kk][symIdx(l, m)] * d_chi[kk];
-                                D_k_D_k_chi += gtu_lm * D_l_D_m_chi;
-                                d_chi_sq += gtu_lm * d_chi[l] * d_chi[m];
-                            }
-                        }
-                        // Baumgarte-Shapiro eq. 3.68: coefficient is -3, NOT +2
-                        Rchi[ij] = (0.5 / (chi + 1e-30)) * (D_i_D_j_chi + gt[ij] * D_k_D_k_chi) -
-                            (0.25 / ((chi * chi) + 1e-30)) *
-                                (d_chi[ii] * d_chi[jj] - 3.0 * gt[ij] * d_chi_sq);
                     }
                 }
 
@@ -1133,10 +1169,10 @@ void CCZ4Evolution::computeConstraints(const GridBlock& grid,
                 Real d_At[6][3];
                 for (int v = 0; v < 6; ++v)
                     for (int d = 0; d < 3; ++d)
-                        d_At[v][d] = d1_4th(At_vars[v], d);
+                        d_At[v][d] = d1(grid, At_vars[v], d, i, j, k);
                 Real d_K[3];
                 for (int d = 0; d < 3; ++d)
-                    d_K[d] = d1_4th(iK, d);
+                    d_K[d] = d1(grid, iK, d, i, j, k);
 
                 for (int ii = 0; ii < 3; ++ii) {
                     Real Mi = 0.0;

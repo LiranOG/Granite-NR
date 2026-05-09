@@ -333,28 +333,29 @@ public:
                             for (int j = 0; j < ny; ++j) {
                                 Real y = g.x(1, j);
                                 Real z = g.x(2, k);
+                                // Hoist r_int — depends only on the fixed interior cell, not gi
+                                Real x_int_lo = g.x(0, is);
+                                Real r_int_lo =
+                                    std::sqrt(x_int_lo * x_int_lo + y * y + z * z) + 1e-30;
+                                Real x_int_hi = g.x(0, iex);
+                                Real r_int_hi =
+                                    std::sqrt(x_int_hi * x_int_hi + y * y + z * z) + 1e-30;
+                                Real f_int_lo = g.data(v, is, j, k);
+                                Real f_int_hi = g.data(v, iex, j, k);
                                 for (int gi = 0; gi < ng; ++gi) {
                                     // -X face
                                     {
-                                        Real x_int = g.x(0, is);
                                         Real x_gh = g.x(0, is - 1 - gi);
-                                        Real r_int =
-                                            std::sqrt(x_int * x_int + y * y + z * z) + 1e-30;
                                         Real r_gh = std::sqrt(x_gh * x_gh + y * y + z * z) + 1e-30;
-                                        Real f_int = g.data(v, is, j, k);
                                         g.data(v, is - 1 - gi, j, k) =
-                                            finf + (f_int - finf) * r_int / r_gh;
+                                            finf + (f_int_lo - finf) * r_int_lo / r_gh;
                                     }
                                     // +X face
                                     {
-                                        Real x_int = g.x(0, iex);
                                         Real x_gh = g.x(0, iex + 1 + gi);
-                                        Real r_int =
-                                            std::sqrt(x_int * x_int + y * y + z * z) + 1e-30;
                                         Real r_gh = std::sqrt(x_gh * x_gh + y * y + z * z) + 1e-30;
-                                        Real f_int = g.data(v, iex, j, k);
                                         g.data(v, iex + 1 + gi, j, k) =
-                                            finf + (f_int - finf) * r_int / r_gh;
+                                            finf + (f_int_hi - finf) * r_int_hi / r_gh;
                                     }
                                 }
                             }
@@ -363,26 +364,26 @@ public:
                             for (int i = 0; i < nx; ++i) {
                                 Real x = g.x(0, i);
                                 Real z = g.x(2, k);
+                                Real y_int_lo = g.x(1, is);
+                                Real r_int_lo =
+                                    std::sqrt(x * x + y_int_lo * y_int_lo + z * z) + 1e-30;
+                                Real y_int_hi = g.x(1, iey);
+                                Real r_int_hi =
+                                    std::sqrt(x * x + y_int_hi * y_int_hi + z * z) + 1e-30;
+                                Real f_int_lo = g.data(v, i, is, k);
+                                Real f_int_hi = g.data(v, i, iey, k);
                                 for (int gi = 0; gi < ng; ++gi) {
                                     {
-                                        Real y_int = g.x(1, is);
                                         Real y_gh = g.x(1, is - 1 - gi);
-                                        Real r_int =
-                                            std::sqrt(x * x + y_int * y_int + z * z) + 1e-30;
                                         Real r_gh = std::sqrt(x * x + y_gh * y_gh + z * z) + 1e-30;
-                                        Real f_int = g.data(v, i, is, k);
                                         g.data(v, i, is - 1 - gi, k) =
-                                            finf + (f_int - finf) * r_int / r_gh;
+                                            finf + (f_int_lo - finf) * r_int_lo / r_gh;
                                     }
                                     {
-                                        Real y_int = g.x(1, iey);
                                         Real y_gh = g.x(1, iey + 1 + gi);
-                                        Real r_int =
-                                            std::sqrt(x * x + y_int * y_int + z * z) + 1e-30;
                                         Real r_gh = std::sqrt(x * x + y_gh * y_gh + z * z) + 1e-30;
-                                        Real f_int = g.data(v, i, iey, k);
                                         g.data(v, i, iey + 1 + gi, k) =
-                                            finf + (f_int - finf) * r_int / r_gh;
+                                            finf + (f_int_hi - finf) * r_int_hi / r_gh;
                                     }
                                 }
                             }
@@ -391,26 +392,26 @@ public:
                             for (int i = 0; i < nx; ++i) {
                                 Real x = g.x(0, i);
                                 Real y = g.x(1, j);
+                                Real z_int_lo = g.x(2, is);
+                                Real r_int_lo =
+                                    std::sqrt(x * x + y * y + z_int_lo * z_int_lo) + 1e-30;
+                                Real z_int_hi = g.x(2, iez);
+                                Real r_int_hi =
+                                    std::sqrt(x * x + y * y + z_int_hi * z_int_hi) + 1e-30;
+                                Real f_int_lo = g.data(v, i, j, is);
+                                Real f_int_hi = g.data(v, i, j, iez);
                                 for (int gi = 0; gi < ng; ++gi) {
                                     {
-                                        Real z_int = g.x(2, is);
                                         Real z_gh = g.x(2, is - 1 - gi);
-                                        Real r_int =
-                                            std::sqrt(x * x + y * y + z_int * z_int) + 1e-30;
                                         Real r_gh = std::sqrt(x * x + y * y + z_gh * z_gh) + 1e-30;
-                                        Real f_int = g.data(v, i, j, is);
                                         g.data(v, i, j, is - 1 - gi) =
-                                            finf + (f_int - finf) * r_int / r_gh;
+                                            finf + (f_int_lo - finf) * r_int_lo / r_gh;
                                     }
                                     {
-                                        Real z_int = g.x(2, iez);
                                         Real z_gh = g.x(2, iez + 1 + gi);
-                                        Real r_int =
-                                            std::sqrt(x * x + y * y + z_int * z_int) + 1e-30;
                                         Real r_gh = std::sqrt(x * x + y * y + z_gh * z_gh) + 1e-30;
-                                        Real f_int = g.data(v, i, j, iez);
                                         g.data(v, i, j, iez + 1 + gi) =
-                                            finf + (f_int - finf) * r_int / r_gh;
+                                            finf + (f_int_hi - finf) * r_int_hi / r_gh;
                                     }
                                 }
                             }

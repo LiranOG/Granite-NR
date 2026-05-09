@@ -16,7 +16,7 @@
 #include <cmath>
 #include <iostream>
 #include <memory>
-#include <set>
+#include <unordered_map>
 
 namespace granite {
 
@@ -45,27 +45,33 @@ void BlockBundle::clearScratch() {
 
 void SimulationContext::syncBlocks() {
     auto active_blocks = hierarchy.getAllBlocks();
-    std::set<int> active_ids;
+
+    // Build a fast lookup of currently active block IDs → block pointers
+    std::unordered_map<int, GridBlock*> active_map;
+    active_map.reserve(active_blocks.size());
+    for (auto* b : active_blocks)
+        active_map[b->getId()] = b;
+
+    // Remove stale bundles whose IDs no longer appear in the hierarchy.
+    // O(N) scan with O(1) lookup per bundle — replaces previous O(N log N) std::set.
+    active_bundles.erase(
+        std::remove_if(active_bundles.begin(),
+                        active_bundles.end(),
+                        [&](const BlockBundle& bundle) {
+                            return active_map.find(bundle.id) == active_map.end();
+                        }),
+        active_bundles.end());
+
+    // Rebuild id_to_index for the surviving bundles (needed for O(1) "exists?" check below)
+    id_to_index.clear();
+    for (size_t idx = 0; idx < active_bundles.size(); ++idx)
+        id_to_index[active_bundles[idx].id] = idx;
+
+    // Add missing bundles and sync ST pointers — O(1) per block via id_to_index
     for (auto* b : active_blocks) {
-        active_ids.insert(b->getId());
-    }
-
-    // Remove outdated bundles
-    active_bundles.erase(std::remove_if(active_bundles.begin(),
-                                        active_bundles.end(),
-                                        [&](const BlockBundle& bundle) {
-                                            return active_ids.find(bundle.id) ==
-                                                active_ids.end();
-                                        }),
-                         active_bundles.end());
-
-    // Add missing bundles and sync ST pointers
-    std::set<int> existing_ids;
-    for (const auto& bundle : active_bundles)
-        existing_ids.insert(bundle.id);
-
-    for (auto* b : active_blocks) {
-        if (existing_ids.find(b->getId()) == existing_ids.end()) {
+        auto it = id_to_index.find(b->getId());
+        if (it == id_to_index.end()) {
+            // New block — allocate a full bundle
             BlockBundle bundle;
             bundle.id = b->getId();
             bundle.st = b;
@@ -113,20 +119,12 @@ void SimulationContext::syncBlocks() {
                                                              b->upperCorner(),
                                                              b->getNumGhost(),
                                                              NUM_HYDRO_VARS);
+            id_to_index[bundle.id] = active_bundles.size();
             active_bundles.push_back(std::move(bundle));
         } else {
-            // O(1) lookup via id_to_index map
-            auto it = id_to_index.find(b->getId());
-            if (it != id_to_index.end()) {
-                active_bundles[it->second].st = b;
-            }
+            // Existing block — sync the ST pointer
+            active_bundles[it->second].st = b;
         }
-    }
-
-    // Synchronize O(1) neighbor/boundary lookup map
-    id_to_index.clear();
-    for (size_t i = 0; i < active_bundles.size(); ++i) {
-        id_to_index[active_bundles[i].id] = i;
     }
 
     // Allocate scratch buffers (one-time per bundle)
