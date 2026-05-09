@@ -272,31 +272,92 @@ include_directories(
 )
 
 # ---------------------------------------------------------------------------
-# Collect all source modules into a static library
+# Per-module OBJECT libraries (explicit source lists — no GLOB)
 # ---------------------------------------------------------------------------
-# Core infrastructure
-file(GLOB_RECURSE CORE_SOURCES       src/core/*.cpp)
-file(GLOB_RECURSE SPACETIME_SOURCES  src/spacetime/*.cpp)
-file(GLOB_RECURSE GRMHD_SOURCES     src/grmhd/*.cpp)
-file(GLOB_RECURSE RADIATION_SOURCES  src/radiation/*.cpp)
-file(GLOB_RECURSE NEUTRINO_SOURCES   src/neutrino/*.cpp)
-file(GLOB_RECURSE AMR_SOURCES        src/amr/*.cpp)
-file(GLOB_RECURSE INITIAL_SOURCES    src/initial_data/*.cpp)
-file(GLOB_RECURSE HORIZON_SOURCES    src/horizon/*.cpp)
-file(GLOB_RECURSE IO_SOURCES         src/io/*.cpp)
-file(GLOB_RECURSE POSTPROC_SOURCES   src/postprocess/*.cpp)
 
+# ── Core infrastructure ───────────────────────────────────────────────────
+add_library(granite_core OBJECT
+    src/core/grid.cpp
+)
+
+# ── Spacetime evolution ───────────────────────────────────────────────────
+add_library(granite_spacetime OBJECT
+    src/spacetime/ccz4.cpp
+)
+
+# ── GRMHD ─────────────────────────────────────────────────────────────────
+add_library(granite_grmhd OBJECT
+    src/grmhd/grmhd.cpp
+    src/grmhd/hlld.cpp
+    src/grmhd/tabulated_eos.cpp
+)
+
+# ── Radiation (M1 + neutrino) ─────────────────────────────────────────────
+add_library(granite_radiation OBJECT
+    src/radiation/m1.cpp
+    src/neutrino/neutrino.cpp
+)
+
+# ── AMR ───────────────────────────────────────────────────────────────────
+add_library(granite_amr OBJECT
+    src/amr/amr.cpp
+)
+
+# ── Initial data ──────────────────────────────────────────────────────────
+add_library(granite_initial_data OBJECT
+    src/initial_data/initial_data.cpp
+)
+
+# ── Horizon finder ────────────────────────────────────────────────────────
+add_library(granite_horizon OBJECT
+    src/horizon/horizon_finder.cpp
+)
+
+# ── I/O ───────────────────────────────────────────────────────────────────
+add_library(granite_io OBJECT
+    src/io/hdf5_io.cpp
+)
+
+# ── Post-processing ──────────────────────────────────────────────────────
+add_library(granite_postprocess OBJECT
+    src/postprocess/postprocess.cpp
+)
+
+# ---------------------------------------------------------------------------
+# Propagate include directories to all OBJECT targets
+# ---------------------------------------------------------------------------
+set(GRANITE_OBJECT_TARGETS
+    granite_core
+    granite_spacetime
+    granite_grmhd
+    granite_radiation
+    granite_amr
+    granite_initial_data
+    granite_horizon
+    granite_io
+    granite_postprocess
+)
+
+foreach(_target IN LISTS GRANITE_OBJECT_TARGETS)
+    target_include_directories(${_target} PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src>
+    )
+endforeach()
+
+# ---------------------------------------------------------------------------
+# Aggregate OBJECT libraries into a single static library
+# ---------------------------------------------------------------------------
 add_library(granite_lib STATIC
-    ${CORE_SOURCES}
-    ${SPACETIME_SOURCES}
-    ${GRMHD_SOURCES}
-    ${RADIATION_SOURCES}
-    ${NEUTRINO_SOURCES}
-    ${AMR_SOURCES}
-    ${INITIAL_SOURCES}
-    ${HORIZON_SOURCES}
-    ${IO_SOURCES}
-    ${POSTPROC_SOURCES}
+    $<TARGET_OBJECTS:granite_core>
+    $<TARGET_OBJECTS:granite_spacetime>
+    $<TARGET_OBJECTS:granite_grmhd>
+    $<TARGET_OBJECTS:granite_radiation>
+    $<TARGET_OBJECTS:granite_amr>
+    $<TARGET_OBJECTS:granite_initial_data>
+    $<TARGET_OBJECTS:granite_horizon>
+    $<TARGET_OBJECTS:granite_io>
+    $<TARGET_OBJECTS:granite_postprocess>
 )
 
 target_include_directories(granite_lib PUBLIC
