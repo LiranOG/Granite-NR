@@ -14,6 +14,7 @@
 #include "granite/simulation_setup.hpp"
 
 #include <iostream>
+#include <stdexcept>
 
 #ifdef GRANITE_USE_PETSC
 #include <petscsys.h>
@@ -36,26 +37,32 @@ int main(int argc, char* argv[]) {
     MPI_Init(&argc, &argv);
 #endif
 
-    using namespace granite;
+    int rc = 0;
+    try {
+        using namespace granite;
 
-    printBanner();
+        printBanner();
 
-    // 1. Parse CLI arguments and YAML parameter file
-    ParsedConfig config = parseConfig(argc, argv);
+        // 1. Parse CLI arguments and YAML parameter file
+        ParsedConfig config = parseConfig(argc, argv);
 
-    // 2. Construct all simulation components and apply initial data
-    auto ctx = setupSimulation(config);
+        // 2. Construct all simulation components and apply initial data
+        auto ctx = setupSimulation(config);
 
-    // 3. Run the evolution loop
-    runEvolutionLoop(*ctx);
-
-#ifdef GRANITE_USE_MPI
-    MPI_Finalize();
-#endif
+        // 3. Run the evolution loop
+        runEvolutionLoop(*ctx);
+    } catch (const std::exception& e) {
+        std::cerr << "GRANITE fatal error: " << e.what() << "\n";
+        rc = 1;
+    }
 
 #ifdef GRANITE_USE_PETSC
     PetscFinalize();
 #endif
 
-    return 0;
+#ifdef GRANITE_USE_MPI
+    MPI_Finalize();
+#endif
+
+    return rc;
 }

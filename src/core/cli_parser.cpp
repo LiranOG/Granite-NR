@@ -12,6 +12,7 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <stdexcept>
 #include <string>
 #include <yaml-cpp/yaml.h>
 
@@ -123,7 +124,7 @@ ParsedConfig parseConfig(int argc, char* argv[]) {
             }
         } catch (const YAML::Exception& e) {
             std::cerr << "YAML parsing error: " << e.what() << "\n";
-            std::exit(1);
+            throw std::runtime_error(std::string("YAML parsing error: ") + e.what());
         }
     }
 

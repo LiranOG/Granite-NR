@@ -573,28 +573,32 @@ void AMRHierarchy::restrict_data(const GridBlock& fine, GridBlock& coarse) const
     int nv = fine.getNumVars();
     int ratio = params_.refinement_ratio;
 
-#pragma omp parallel for
-    for (int var = 0; var < nv; ++var) {
-        for (int ck = coarse.istart(2); ck < coarse.iend(2); ++ck) {
-            for (int cj = coarse.istart(1); cj < coarse.iend(1); ++cj) {
-                for (int ci = coarse.istart(0); ci < coarse.iend(0); ++ci) {
-                    Real x = coarse.x(0, ci), y = coarse.x(1, cj), z = coarse.x(2, ck);
+    // Parallelise over coarse spatial cells — each (ci,cj,ck) is written by
+    // exactly one thread, eliminating the previous race on the var loop.
+#ifdef GRANITE_USE_OPENMP
+#pragma omp parallel for collapse(3)
+#endif
+    for (int ck = coarse.istart(2); ck < coarse.iend(2); ++ck) {
+        for (int cj = coarse.istart(1); cj < coarse.iend(1); ++cj) {
+            for (int ci = coarse.istart(0); ci < coarse.iend(0); ++ci) {
+                Real x = coarse.x(0, ci), y = coarse.x(1, cj), z = coarse.x(2, ck);
 
-                    Real fx_float = (x - fine.x(0, 0)) / fine.dx(0);
-                    Real fy_float = (y - fine.x(1, 0)) / fine.dx(1);
-                    Real fz_float = (z - fine.x(2, 0)) / fine.dx(2);
+                Real fx_float = (x - fine.x(0, 0)) / fine.dx(0);
+                Real fy_float = (y - fine.x(1, 0)) / fine.dx(1);
+                Real fz_float = (z - fine.x(2, 0)) / fine.dx(2);
 
-                    int fi_base = static_cast<int>(std::round(fx_float)) - ratio / 2;
-                    int fj_base = static_cast<int>(std::round(fy_float)) - ratio / 2;
-                    int fk_base = static_cast<int>(std::round(fz_float)) - ratio / 2;
+                int fi_base = static_cast<int>(std::round(fx_float)) - ratio / 2;
+                int fj_base = static_cast<int>(std::round(fy_float)) - ratio / 2;
+                int fk_base = static_cast<int>(std::round(fz_float)) - ratio / 2;
 
-                    if (fi_base >= fine.istart(0) &&
-                        fi_base + ratio <= fine.iend(0) + fine.getNumGhost() &&
-                        fj_base >= fine.istart(1) &&
-                        fj_base + ratio <= fine.iend(1) + fine.getNumGhost() &&
-                        fk_base >= fine.istart(2) &&
-                        fk_base + ratio <= fine.iend(2) + fine.getNumGhost()) {
+                if (fi_base >= fine.istart(0) &&
+                    fi_base + ratio <= fine.iend(0) + fine.getNumGhost() &&
+                    fj_base >= fine.istart(1) &&
+                    fj_base + ratio <= fine.iend(1) + fine.getNumGhost() &&
+                    fk_base >= fine.istart(2) &&
+                    fk_base + ratio <= fine.iend(2) + fine.getNumGhost()) {
 
+                    for (int var = 0; var < nv; ++var) {
                         Real sum = 0.0;
                         for (int rk = 0; rk < ratio; ++rk) {
                             for (int rj = 0; rj < ratio; ++rj) {

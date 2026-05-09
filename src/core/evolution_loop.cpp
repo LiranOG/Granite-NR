@@ -456,50 +456,9 @@ public:
 
         applyRHS(false);
 
-        // ── One-shot NaN diagnostic (remove once stable) ─────────
-        {
-            static bool checked = false;
-            if (!checked) {
-                checked = true;
-                for (auto* bundle_ptr : bundles) {
-                    auto& bundle = *bundle_ptr;
-                    GridBlock& rhs_st = *(bundle.st_rhs);
-                    GridBlock& rhs_hy = *(bundle.hydro_rhs);
-                    // Scan spacetime RHS
-                    for (int v = 0; v < rhs_st.getNumVars(); ++v)
-                        for (int k = rhs_st.istart(); k < rhs_st.iend(2); ++k)
-                            for (int j = rhs_st.istart(); j < rhs_st.iend(1); ++j)
-                                for (int i = rhs_st.istart(); i < rhs_st.iend(0); ++i) {
-                                    if (std::isnan(rhs_st.data(v, i, j, k)) ||
-                                        std::isinf(rhs_st.data(v, i, j, k))) {
-                                        std::cout << "  [NaN-DIAG] ST_RHS var=" << v << " at (" << i
-                                                  << "," << j << "," << k << ")"
-                                                  << " val=" << rhs_st.data(v, i, j, k)
-                                                  << std::endl;
-                                        goto done_st;
-                                    }
-                                }
-                    std::cout << "  [NaN-DIAG] ST_RHS: all finite" << std::endl;
-                done_st:
-                    // Scan hydro RHS
-                    for (int v = 0; v < rhs_hy.getNumVars(); ++v)
-                        for (int k = rhs_hy.istart(); k < rhs_hy.iend(2); ++k)
-                            for (int j = rhs_hy.istart(); j < rhs_hy.iend(1); ++j)
-                                for (int i = rhs_hy.istart(); i < rhs_hy.iend(0); ++i) {
-                                    if (std::isnan(rhs_hy.data(v, i, j, k)) ||
-                                        std::isinf(rhs_hy.data(v, i, j, k))) {
-                                        std::cout << "  [NaN-DIAG] HY_RHS var=" << v << " at (" << i
-                                                  << "," << j << "," << k << ")"
-                                                  << " val=" << rhs_hy.data(v, i, j, k)
-                                                  << std::endl;
-                                        goto done_hy;
-                                    }
-                                }
-                    std::cout << "  [NaN-DIAG] HY_RHS: all finite" << std::endl;
-                done_hy:;
-                }
-            }
-        }
+        // (One-shot NaN diagnostic removed — goto-based control flow crossed
+        // variable initialization scopes, which is UB under C++17 §9.7/3.
+        // The per-step NaN scan in runEvolutionLoop() provides equivalent coverage.)
         // ── Physics floors on evolved variables ───────────────────
         // IEEE754: NaN < x = false, +Inf < x = false — so the naive
         // `if (chi < 1e-4)` floor silently passes NaN and +Inf.

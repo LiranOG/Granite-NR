@@ -924,11 +924,11 @@ void GRMHDEvolution::computeRHS(const GridBlock& spacetime_grid,
                         if (dir == 2 && (k < is + 2 || k >= ie2 - 2))
                             continue;
                     } else {
-                        if (dir == 0 && (i < is + 1 || i >= ie0 - 1))
+                        if (dir == 0 && (i < is || i >= ie0))
                             continue;
-                        if (dir == 1 && (j < is + 1 || j >= ie1 - 1))
+                        if (dir == 1 && (j < is || j >= ie1))
                             continue;
-                        if (dir == 2 && (k < is + 1 || k >= ie2 - 1))
+                        if (dir == 2 && (k < is || k >= ie2))
                             continue;
                     }
 
