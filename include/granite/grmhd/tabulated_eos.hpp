@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 Liran M. Schwartz
+
 /**
  * @file granite/grmhd/tabulated_eos.hpp
  * @brief Tabulated Nuclear Equation of State -- StellarCollapse/CompOSE format.

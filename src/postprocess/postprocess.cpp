@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 Liran M. Schwartz
+
 /**
  * @file postprocess.cpp
  * @brief Post-processing suite — GW extraction (Ψ₄), EM diagnostics, recoil.

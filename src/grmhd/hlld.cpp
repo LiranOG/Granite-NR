@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 Liran M. Schwartz
+
 /**
  * @file hlld.cpp
  * @brief HLLD Riemann solver for ideal MHD (Miyoshi & Kusano 2005).

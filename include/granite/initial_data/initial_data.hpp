@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 Liran M. Schwartz
+
 /**
  * @file granite/initial_data/initial_data.hpp
  * @brief Initial data construction — multi-BH punctures and stellar matter.

@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 Liran M. Schwartz
+
 /**
  * @file granite/core/grid.hpp
  * @brief Uniform Cartesian grid block — the fundamental data container.

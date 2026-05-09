@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 Liran M. Schwartz
+
 /**
  * @file granite/neutrino/neutrino.hpp
  * @brief Neutrino transport module — leakage + M1 hybrid.

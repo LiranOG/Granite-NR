@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 Liran M. Schwartz
+
 /**
  * @file granite/io/hdf5_io.hpp
  * @brief HDF5 I/O module — parallel read/write, checkpoint/restart.

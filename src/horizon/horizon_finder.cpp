@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 Liran M. Schwartz
+
 /**
  * @file horizon_finder.cpp
  * @brief Apparent horizon finder — flow method (Gundlach 1998).

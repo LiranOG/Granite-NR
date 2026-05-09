@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 Liran M. Schwartz
+
 /**
  * @file grmhd.cpp
  * @brief Full GRMHD Valencia formulation — HRSC finite-volume evolution.

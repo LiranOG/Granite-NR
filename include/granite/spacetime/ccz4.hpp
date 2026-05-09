@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 Liran M. Schwartz
+
 /**
  * @file granite/spacetime/ccz4.hpp
  * @brief CCZ4 spacetime evolution — public interface.

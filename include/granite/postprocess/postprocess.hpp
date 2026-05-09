@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 Liran M. Schwartz
+
 /**
  * @file granite/postprocess/postprocess.hpp
  * @brief Post-processing suite — GW extraction, EM diagnostics, recoil.
