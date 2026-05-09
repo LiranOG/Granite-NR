@@ -28,7 +28,7 @@ namespace granite {
  * The spacetime grid (st) is a non-owning pointer into the AMR hierarchy.
  */
 struct BlockBundle {
-    int id;
+    int id = -1;
     GridBlock* st;
     std::unique_ptr<GridBlock> hydro;
     std::unique_ptr<GridBlock> prim;
@@ -81,10 +81,10 @@ struct SimulationContext {
     SimulationParams params;
 
     // Constructor — takes ownership of pre-built components
-    SimulationContext(spacetime::CCZ4Evolution ccz4_in,
-                      grmhd::GRMHDEvolution grmhd_in,
-                      amr::AMRHierarchy hierarchy_in,
-                      io::HDF5Writer writer_in,
+    SimulationContext(spacetime::CCZ4Evolution&& ccz4_in,
+                      grmhd::GRMHDEvolution&& grmhd_in,
+                      amr::AMRHierarchy&& hierarchy_in,
+                      io::HDF5Writer&& writer_in,
                       Real dt_in,
                       int initial_ncells_in,
                       const SimulationParams& params_in)

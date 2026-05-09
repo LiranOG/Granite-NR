@@ -639,7 +639,7 @@ void runEvolutionLoop(SimulationContext& ctx) {
 
     // The physics callback for AMR subcycling
     auto evolve_func = [&](std::vector<GridBlock*>& cur_blocks, Real cur_dt) {
-        syncBlocks();
+        ctx.syncBlocks();
         std::vector<BlockBundle*> cur_bundles;
         cur_bundles.reserve(cur_blocks.size());
         for (auto* b : cur_blocks) {
