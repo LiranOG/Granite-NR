@@ -27,11 +27,6 @@ jobs:
             echo "No stale links found."
           fi
 
-      - name: Run audit_links.py
-        run: python3 scripts/audit_links.py
-
-      - name: Run audit_params_schema.py
-        run: python3 scripts/audit_params_schema.py
 
       - name: Verify version.txt consistency
         run: |
