@@ -3,7 +3,7 @@ From: ubuntu:24.04
 
 %labels
     Author LiranOG
-    Version 0.6.7
+    Version 0.6.8
     Description GRANITE NR Code — HPC Container
 
 %post

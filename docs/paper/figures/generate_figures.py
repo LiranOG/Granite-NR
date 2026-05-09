@@ -1,5 +1,5 @@
 """
-GRANITE v0.6.7 — Publication-quality figure generator
+GRANITE v0.6.8 — Publication-quality figure generator
 Produces all figures for the Physical Review D preprint.
 All data is from real simulation logs (benchmark runs documented in README).
 """
@@ -207,7 +207,7 @@ ax2.xaxis.set_minor_locator(matplotlib.ticker.AutoMinorLocator(5))
 ax2.yaxis.set_minor_locator(matplotlib.ticker.AutoMinorLocator(5))
 
 # Suptitle
-fig.suptitle(r'Single Schwarzschild puncture — GRANITE v0.6.7  '
+fig.suptitle(r'Single Schwarzschild puncture — GRANITE v0.6.8  '
              r'($\kappa_1=0.02,\ \eta=2.0,\ \sigma_{\rm KO}=0.35$, 4 AMR levels)',
              fontsize=8, y=1.01)
 
@@ -285,7 +285,7 @@ ax2.grid(True, which='both', ls='--')
 ax2.xaxis.set_minor_locator(matplotlib.ticker.AutoMinorLocator(5))
 ax2.yaxis.set_minor_locator(matplotlib.ticker.AutoMinorLocator(5))
 
-fig.suptitle(r'Equal-mass BBH inspiral — GRANITE v0.6.7  '
+fig.suptitle(r'Equal-mass BBH inspiral — GRANITE v0.6.8  '
              r'($d=10\,M,\ q=1,\ \chi_{1,2}=0$, $\eta=1.0$, 4 AMR levels)',
              fontsize=8, y=1.01)
 
@@ -328,7 +328,7 @@ ax.set_xlim(0, 510)
 ax.set_ylim(8e-4, 3.0)
 ax.set_xlabel(r'$t\ [M]$')
 ax.set_ylabel(r'$\|\mathcal{H}\|_2\,/\,\|\mathcal{H}\|_2^{(0)}$')
-ax.set_title(r'Constraint reduction — GRANITE v0.6.7', fontsize=8.5)
+ax.set_title(r'Constraint reduction — GRANITE v0.6.8', fontsize=8.5)
 ax.legend(loc='upper right')
 ax.grid(True, which='both', ls='--')
 ax.xaxis.set_minor_locator(matplotlib.ticker.AutoMinorLocator(5))
@@ -352,7 +352,7 @@ ax1.plot(threads, ideal_sp, 'k--', lw=1.0, label='Ideal', zorder=1)
 ax1.fill_between(threads, speedup, ideal_sp, alpha=0.12, color='steelblue',
                  label='Overhead')
 ax1.plot(threads, speedup, 'o-', color=C64, lw=1.8, ms=6, zorder=3,
-         label=r'\textsc{Granite} v0.6.7')
+         label=r'\textsc{Granite} v0.6.8')
 for nt, sp in zip(threads, speedup):
     ax1.annotate(f'{sp:.2f}×', xy=(nt, sp), xytext=(nt+0.08, sp-0.06),
                  fontsize=7, color=C64, fontweight='bold')
@@ -387,7 +387,7 @@ ax2.set_title(r'(b) Parallel efficiency', loc='left', pad=3)
 ax2.legend(loc='upper right', fontsize=7.5)
 ax2.grid(True, axis='y', ls='--')
 
-fig.suptitle(r'OpenMP thread scaling — GRANITE v0.6.7  '
+fig.suptitle(r'OpenMP thread scaling — GRANITE v0.6.8  '
              r'(single puncture $64^3$, Intel i5-12600KF, WSL2)',
              fontsize=8, y=1.01)
 
@@ -458,7 +458,7 @@ legend_elements = [
 ax.legend(handles=legend_elements, loc='lower right', fontsize=7.5,
           bbox_to_anchor=(2.18, -2.18), framealpha=0.95)
 
-ax.set_title('Block-structured AMR hierarchy — GRANITE v0.6.7\n'
+ax.set_title('Block-structured AMR hierarchy — GRANITE v0.6.8\n'
              r'(schematic, 4 levels shown; B2$_{\rm eq}$ benchmark configuration)',
              fontsize=8.5, pad=6)
 
@@ -521,7 +521,7 @@ ax3.grid(True, ls='--', alpha=0.5)
 ax3.text(250, 4.5, 'stable\n4-block hierarchy', ha='center', fontsize=7,
          color=CPURP, style='italic')
 
-fig.suptitle(r'BBH inspiral diagnostics — GRANITE v0.6.7  ($d=10\,M$, $q=1$)',
+fig.suptitle(r'BBH inspiral diagnostics — GRANITE v0.6.8  ($d=10\,M$, $q=1$)',
              fontsize=8, y=1.01)
 
 plt.savefig('figures_v067/fig6_bbh_diagnostics.pdf')
@@ -628,7 +628,7 @@ for xb, col, lbl in [(0.3, '#2ca02c', '[OK] wired into RK3'),
     ax.text(xb+1.1, 0.28, lbl, ha='center', va='center',
             fontsize=7, color=col, fontweight='bold', zorder=5)
 
-ax.set_title('GRANITE v0.6.7 — Software architecture overview\n'
+ax.set_title('GRANITE v0.6.8 — Software architecture overview\n'
              '(~8,900 lines C++17 source · 92 unit tests · GPL-3.0)',
              fontsize=8.5, pad=6)
 
@@ -692,7 +692,7 @@ for ax in [ax1, ax2]:
             bbox=dict(boxstyle='round,pad=0.3', facecolor='#e8f8e8',
                       edgecolor='#2ca02c', lw=0.8))
 
-fig.suptitle(r'Hamiltonian constraint reduction — GRANITE v0.6.7',
+fig.suptitle(r'Hamiltonian constraint reduction — GRANITE v0.6.8',
              fontsize=8.5, y=1.01)
 
 plt.savefig('figures_v067/fig8_convergence_summary.pdf')

@@ -78,6 +78,10 @@ ParsedConfig parseConfig(int argc, char* argv[]) {
                     cfg.params.eta = ccz4["eta"].as<Real>();
                 if (ccz4["ko_sigma"])
                     cfg.params.ko_sigma = ccz4["ko_sigma"].as<Real>();
+                if (ccz4["chi_blend_center"])
+                    cfg.params.chi_blend_center = ccz4["chi_blend_center"].as<Real>();
+                if (ccz4["chi_blend_width"])
+                    cfg.params.chi_blend_width = ccz4["chi_blend_width"].as<Real>();
             }
             if (config["io"]) {
                 auto io = config["io"];

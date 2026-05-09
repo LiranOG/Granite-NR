@@ -198,6 +198,8 @@ struct SimulationParams {
     Real kappa2 = 0.0;   ///< Constraint damping κ₂
     Real eta = 2.0;      ///< Γ-driver damping η
     Real ko_sigma = 0.1; ///< Kreiss-Oliger dissipation strength
+    Real chi_blend_center = 0.1; ///< Center for chi-based transition (selective upwinding)
+    Real chi_blend_width = 0.02; ///< Width for chi-based transition
 
     // GRMHD
     Real atm_density = 1.0e-12; ///< Atmosphere density floor

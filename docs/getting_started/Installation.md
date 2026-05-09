@@ -61,11 +61,9 @@ wsl --install
 ```
 Restart your PC when prompted. Ubuntu will be installed automatically.
 
-**Step 2: Open an Ubuntu terminal, then install all dependencies:**
+**Prerequisites for WSL/Linux:**
 ```bash
-sudo apt update && sudo apt upgrade -y
-sudo apt install -y git python3 python3-pip build-essential cmake \
-    libhdf5-dev libopenmpi-dev libyaml-cpp-dev
+sudo apt update && sudo apt install -y cmake build-essential libhdf5-dev libopenmpi-dev yaml-cpp
 ```
 
 **Step 3: Clone & Build**

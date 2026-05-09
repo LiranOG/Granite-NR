@@ -854,7 +854,7 @@ io:
   output_every: 100        # diagnostic output (constraints, GW) frequency
 ```
 
-### 11.2 Restart (Status in v0.6.7)
+### 11.2 Restart (Status in v0.6.8)
 
 `writeCheckpoint()` and `readCheckpoint()` are fully implemented in 
 `src/io/hdf5_io.cpp`. The `--resume` CLI flag to invoke restart from 
@@ -1347,7 +1347,7 @@ Usually a CFL violation at the finest AMR level when the lapse collapses. Fix: e
 Usually incompatible BCs + ID. Verify Sommerfeld BCs are only used with Two-Punctures/Bowen-York ID, never with Brill-Lindquist.
 
 **"AMR blocks stuck at 4 throughout the run"**
-Dynamic regridding is **fully implemented in v0.6.7** and active in production runs. This is not a limitation.
+Dynamic regridding is **fully implemented in v0.6.8** and active in production runs. This is not a limitation.
 
 **"Phase labels show Early Inspiral through t=500M"**
 Phase labels are currently time-based, not separation-based. This is a known accuracy issue. Do not mistake it for a physics bug.

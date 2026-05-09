@@ -63,10 +63,10 @@ def test_parse_grid():
     assert result.dt == 0.0625
 
 def test_parse_version():
-    line = "GRANITE v0.6.7"
+    line = "GRANITE v0.6.8"
     result = parse_telemetry_line(line)
     assert isinstance(result, VersionInfo)
-    assert result.version == "0.6.7"
+    assert result.version == "0.6.8"
 
 def test_parse_invalid_line():
     line = "This is just some random log output"

@@ -1,6 +1,6 @@
 # ════════════════════════════════════════════════════════════════
 # STATUS: Flagship scenario specification — CONCEPT TARGET ONLY
-# This file is NOT consumed by the v0.6.7.x runtime parser.
+# This file is NOT consumed by the v0.6.8 runtime parser.
 # Schema uses concept-only keys (scenario, stars, evolution, physics,
 # expected_results, compute_estimate) not parsed by src/main.cpp.
 # Runtime-compatible B5_star configuration is planned for v1.0.

@@ -138,7 +138,7 @@ VORTEX ships with a curated library of physically calibrated pre-set scenarios, 
 
 ## 🎬 Cinematic & Recording Systems
 
-VORTEX v0.6.7 introduced a complete set of professional-grade capture and presentation tools.
+VORTEX v0.6.8 introduced a complete set of professional-grade capture and presentation tools.
 
 ### Zen Mode (`Z`)
 Press `Z` at any time to instantly toggle Zen Mode. The **entire UI** — top bar, panels, telemetry, minimap, shortcuts bar — fades out in 0.5 seconds via a CSS opacity transition. The WebGL canvas, vignette, and atmospheric haze remain fully visible. A brief `✦ ZEN MODE` toast notification confirms activation and auto-fades after 3 seconds.
@@ -313,7 +313,7 @@ Toggle **Sandbox Mode** (`N`) to pause the simulation and enter the Solar Forge:
 ## 🔮 Roadmap to v1.0
 
 ```
-v0.6.7  ── Gold Master (current)
+v0.6.8  ── Gold Master (current)
             Zen Mode, GW Audio Synth, Cinematic Autopilot,
             NR Diagnostics, Minimap 3.0, FWM Hardening
 
@@ -343,7 +343,7 @@ v1.0.0  ── Unified Visualization Dashboard
   title     = {{VORTEX}: Zero-Allocation Post-Newtonian N-Body
                Simulation Engine},
   year      = {2026},
-  version   = {v0.6.7},
+  version   = {v0.6.8},
   url       = {https://github.com/LiranOG/Granite-NR},
   note      = {WebGL frontend for the GRANITE numerical relativity
                ecosystem. 2.5PN dynamics, GW sonification, real-time
@@ -357,7 +357,7 @@ v1.0.0  ── Unified Visualization Dashboard
 
 *"Simulate the unimaginable."*
 
-**VORTEX v0.6.7 · 2026 · LiranOG**
+**VORTEX v0.6.8 · 2026 · LiranOG**
 
 [![GRANITE Backend](https://img.shields.io/badge/Backend-GRANITE_NR_Engine-0d6efd.svg)](https://github.com/LiranOG/Granite-NR)
 [![Wiki](https://img.shields.io/badge/Docs-GRANITE_Wiki-7c3aed.svg)](https://github.com/LiranOG/Granite-NR/wiki)
