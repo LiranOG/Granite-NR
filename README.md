@@ -120,20 +120,15 @@ Designed from the ground up to model extreme astrophysical events — such as th
 >
 > See [Known Limitations](#%EF%B8%8F-known-limitations-v068) for the full table.
 
-- **Spacetime Evolution (CCZ4):** Robust conformal and covariant Z4 formulation for evolving the Einstein field equations with moving-puncture gauge conditions and active constraint damping (κ₁=0.02, η=2.0).
-- **GRMHD & Matter:** High-resolution shock-capturing (HRSC) in the Valencia formulation — MP5/PPM/PLM reconstruction, HLLE/HLLD Riemann solvers, constrained transport (∇·B = 0 to machine precision).
-- **Adaptive Mesh Refinement (AMR):** Fully dynamic block-structured 
-Berger-Oliger subcycling — gradient-based and puncture-tracking refinement 
-triggers with iterative union-merge box aggregation, trilinear prolongation, 
-volume-weighted restriction, and live per-step regridding integrated into the 
-RK3 loop. Supports up to 12 refinement levels; production benchmarks currently 
-validated at 4 levels.
+- **Spacetime Evolution (CCZ4):** Conformal and covariant Z4 formulation for the Einstein field equations with moving-puncture gauge conditions and constraint damping (κ₁=0.02, η=2.0).
+- **GRMHD & Matter:** High-resolution shock-capturing (HRSC) in the Valencia formulation — MP5/PPM/PLM reconstruction, HLLE/HLLD Riemann solvers, constrained transport (∇·B preserved to round-off error in the CT update step).
+- **Adaptive Mesh Refinement (AMR):** Fully dynamic block-structured Berger-Oliger subcycling — gradient-based and puncture-tracking refinement triggers with iterative union-merge box aggregation, trilinear prolongation, volume-weighted restriction, and live per-step regridding integrated into the RK3 loop. The AMR framework supports up to 12 refinement levels; validation to date has been performed at up to 4 levels.
 - **Multi-BH Initial Data:** Built-in solvers for Brill-Lindquist, Bowen-York, Two-Punctures, and Superposed Kerr-Schild configurations for arbitrarily complex N-body BH systems.
 - **Radiation & Neutrino Transport:** Hybrid neutrino leakage + M1 moment closure for photon and neutrino emission/absorption in hot nuclear matter.
 - **Diagnostics & GW Extraction:** Flow-method Apparent Horizon finder, Newman-Penrose Ψ₄ GW extraction at multiple radii (50–500 r_g), recoil velocity estimation, and real-time constraint monitoring.
 - **HDF5 I/O & Checkpointing:** Fully parallel MPI-IO for grid snapshots and time-series diagnostics. `writeCheckpoint()` serialises the full AMR hierarchy — all grid blocks, spacetime variables, step count, and simulation time — into portable HDF5. `readCheckpoint()` is implemented; `--resume` CLI integration is in active development for v0.7.
-- **Photonic Hardware Abstraction Layer (HAL):** Future-proofed architecture actively being developed to abstract the mathematical operators (FD Stencils, CCZ4 RHS evaluation) from the memory and execution policy. This decouples the physics from the hardware, paving the way for seamless integration with upcoming Zettascale Photonic processors (e.g., Lightmatter Envise/Passage) via Mixed-Precision Iterative Refinement and Optical Tensor Dispatching.
-
+- **Hardware Abstraction Layer (HAL) [Long-term design target]:** An architectural effort to decouple mathematical operators (finite-difference stencils, CCZ4 RHS evaluation) from execution policy and memory layout. The goal is to simplify future CPU/GPU/accelerator portability and to allow experimental integration with novel hardware, including photonic processors, if and when suitable platforms become available. This is not an active execution path in v0.6.8.
+  
 ---
 
 ## ⚖️ How GRANITE Compares
