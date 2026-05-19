@@ -8,7 +8,7 @@ This document outlines the core philosophy, the technological roadmap to v1.0, a
 
 ---
 
-## 🏗️ Pillar I: Total Architectural Modularity (The YAML Revolution)
+## Pillar I: Total Architectural Modularity (The YAML Revolution)
 
 Historically, generating complex simulations in frameworks like the Einstein Toolkit or SpECTRE required an immense amount of boilerplate coding. If a scenario did not exist, researchers had to build it from scratch—navigating the deeply coupled architecture of the engine, writing custom C++ modules, and hoping the physics did not break the grid infrastructure. 
 
@@ -21,7 +21,7 @@ Historically, generating complex simulations in frameworks like the Einstein Too
 
 ---
 
-## 🤝 Pillar II: Decentralized Science & The Global Challenge Board
+## Pillar II: Decentralized Science & The Global Challenge Board
 
 I believe that every individual has something to offer, and no contribution is "too small." The complexity of NR means that building a flawless engine requires a diversity of thought that no single institution possesses.
 
@@ -31,7 +31,7 @@ I believe that every individual has something to offer, and no contribution is "
 
 ---
 
-## 🌀 Pillar III: Real-Time Telemetry & Browser Visualization (VORTEX Live)
+## Pillar III: Real-Time Telemetry & Browser Visualization (VORTEX Live)
 
 In traditional NR workflows, visualizing a binary black hole merger involves simulating for weeks, generating terabytes of HDF5 files, transferring them locally, and rendering them offline using tools like ParaView. 
 
@@ -43,11 +43,31 @@ In traditional NR workflows, visualizing a binary black hole merger involves sim
 
 ---
 
-## 🌉 Pillar IV: HPC Accessibility
+## Pillar IV: HPC Accessibility
 
 Long-term, I aim to explore pathways for connecting independent 
 researchers with institutional computing resources. Details are 
 under research and will be announced when concrete plans exist.
+
+---
+
+## Pillar V: The Path to Zettascale - Photonic Computing Readiness
+
+The traditional limits of the Von Neumann architecture—specifically the "Memory Wall" and MPI communication latency—pose insurmountable barriers for full-scale, extreme-mass-ratio inspiral (EMRI) or >3 body Supermassive Black Hole (SMBH) simulations at ultra-high resolutions. Moving electrons across silicon to fetch 31 coupled non-linear PDE variables (22 for CCZ4, 9 for GRMHD) per grid point incurs unacceptable energy and latency overheads.
+
+To breach these limits, GRANITE is undergoing a fundamental architectural refactoring towards **Hardware-Agnostic Policy-Based Design**, specifically targeting future integration with **Photonic Processors** (e.g., Lightmatter's optical computing and interconnect fabrics).
+
+### 1. Mixed-Precision & Abstraction
+Optical coprocessors operate fundamentally as analog Mach-Zehnder Interferometer (MZI) arrays, executing Matrix-Vector Multiplications (MACs) at the speed of light but inherently at lower precisions (e.g., FP16). Numerical Relativity, conversely, requires strict `FP64` to maintain constraint damping ($\Vert H \Vert_2 \to 0$). 
+
+GRANITE reconciles this by implementing **Mixed-Precision Iterative Refinement**:
+* **Abstraction:** The underlying data types and memory layouts are abstracted via `DenseTensor3D<ComputeType, StorageType, Allocator>`.
+* **Execution:** Initial elliptic constraint solving (e.g., Bowen-York initial data) will leverage the photonic fabric as an $O(1)$ low-precision preconditioner, offloading the final residual reduction to the conventional CPU in `FP64`.
+
+### 2. Operator Dispatching & Optical Communication
+The mathematical formulation (the "What") is being strictly decoupled from the execution policy (the "How"). 
+* **Stencil Operations:** 4th-order Finite Difference operations are being redefined as abstract mathematical operators. On x86_64, these compile to tightly nested, SIMD-aligned loops. On a future Photonic Target, these operators will dispatch flat vectors mapped to Toeplitz matrices directly into the optical buffer.
+* **Ghost Zone Synchronization:** MPI communication is abstracted behind an `ICommunicator` interface, anticipating direct optical interconnect protocols (e.g., Lightmatter Passage) for zero-latency AMR block boundary synchronization.
 
 ---
 
