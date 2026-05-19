@@ -1,28 +1,47 @@
 cff-version: 1.2.0
 title: "GRANITE: General-Relativistic Adaptive N-body Integrated Tool for Extreme Astrophysics"
-message: "If you use GRANITE in your research, please cite the following paper."
+message: "If you use GRANITE in your research, please cite this software using the metadata in this file."
 type: software
 license: GPL-3.0-or-later
 repository-code: "https://github.com/LiranOG/Granite-NR"
+url: "https://github.com/LiranOG/Granite-NR"
 version: 0.6.8
 date-released: "2026-05-09"
+doi: "10.5281/zenodo.20284043"
+abstract: >-
+  GRANITE is an open-source C++17 numerical relativity and General-Relativistic
+  Magnetohydrodynamics (GRMHD) engine. It implements CCZ4 spacetime evolution
+  with moving-puncture gauge and active constraint damping, Valencia GRMHD
+  with HLLD Riemann solvers and constrained transport, fully dynamic block-
+  structured Berger-Oliger adaptive mesh refinement with subcycling, an M1
+  radiation transport and neutrino leakage formalism, and a complete initial-
+  data solver suite (Brill-Lindquist, Bowen-York, Two-Punctures, Superposed
+  Kerr-Schild). The engine targets extreme astrophysical scenarios including
+  multi-body supermassive black hole mergers in dense stellar environments.
 keywords:
   - numerical-relativity
   - general-relativity
-  - black-holes
+  - CCZ4
   - GRMHD
+  - black-holes
   - gravitational-waves
   - adaptive-mesh-refinement
+  - astrophysics
+  - computational-physics
+  - HPC
 identifiers:
   - type: doi
-    value: "10.5281/zenodo.19502265"
-    description: "Zenodo DOI for GRANITE v0.6.5"
+    value: "10.5281/zenodo.20284043"
+    description: "Zenodo DOI for GRANITE v0.6.8 (this release)"
   - type: doi
-    value: "10.5281/zenodo.19502264"
-    description: "Zenodo concept DOI (always resolves to latest version)"
+    value: "10.5281/zenodo.19502265"
+    description: "Zenodo DOI for GRANITE v0.6.5 (historical reference)"
+  - type: url
+    value: "https://zenodo.org/records/20284043"
+    description: "Zenodo record page for GRANITE v0.6.8"
   - type: url
     value: "https://zenodo.org/records/19502265"
-    description: "Zenodo record for GRANITE v0.6.5"
+    description: "Zenodo record page for GRANITE v0.6.5"
 authors:
   - given-names: "Liran M."
     family-names: "Schwartz"
