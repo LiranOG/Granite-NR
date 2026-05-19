@@ -761,7 +761,7 @@ The current VORTEX code uses pre-allocated `Float32Array` buffers on hot paths t
 ## 📎 Citing GRANITE
 
 If you use GRANITE as a software reference, teaching tool, benchmark target, or basis for further development, please cite:
-note      = {}
+
 ```bibtex
 @software{granite2026,
   author    = {Schwartz, Liran M.},
@@ -792,6 +792,8 @@ To anyone who runs `B2_eq` on different hardware and shares the exact configurat
 To anyone who reviews a formula in `ccz4.cpp` and catches a sign, index, or convention error — especially thank you.
 
 GRANITE can only become more reliable through external testing, careful review, and honest reporting of failures. Small contributions matter when they make the code easier to build, verify, reproduce, or understand.
+
+This project exists because the science demands it. It will reach its potential because the community makes it.
 
 I have written a **[Personal Note to the Community](docs/design/PERSONAL_NOTE.md)** with more background on why GRANITE was started and what kind of collaboration would be most useful.
 
