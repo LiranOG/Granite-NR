@@ -160,7 +160,6 @@ The project targets compact-object and high-energy astrophysical simulations, in
 
 - **Equation of state support:** Tabulated nuclear EOS support with trilinear interpolation, with an ideal-gas fallback path.
 
-- **Hardware Abstraction Layer (HAL) [long-term design target]:** Planned architecture work to decouple mathematical operators, memory layout, and execution policy for future CPU/GPU/accelerator portability. Experimental photonic/optical accelerator support is a long-term research direction, not an implemented backend in v0.6.8.
 
 ---
 
@@ -526,7 +525,10 @@ GRANITE/
 | **v0.9.0** | Q2 2027 | 📋 Planned | Full SXS catalog validation (~60 BBH configs), multi-group M1 |
 | **v1.0.0** | Q3 2027 | 🎯 Target | Community-facing release; B5\_star validation target if GPU/HPC scaling, AMR reflux, and benchmark review are completed |
 
-**Proposed scaling path toward B5\_star:** desktop development benchmarks → GPU-porting experiments → small cluster scaling studies → larger AMR/HPC production trials.  
+
+- **Proposed scaling path toward B5\_star:** desktop development benchmarks → GPU-porting experiments → small cluster scaling studies → larger AMR/HPC production trials.  
+
+- **Hardware Abstraction Layer (HAL) [long-term design target]:** Planned architecture work to decouple mathematical operators, memory layout, and execution policy for future CPU/GPU/accelerator portability. Experimental photonic/optical accelerator support is a long-term research direction, not an implemented backend in v0.6.8.
 
 The currently estimated upper-end resource target is approximately 12 AMR levels, ~2 TB RAM, and ~5×10⁶ CPU-hours, but this estimate remains provisional until profiling and scaling studies are completed.
 
