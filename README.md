@@ -30,6 +30,9 @@ The project targets compact-object and high-energy astrophysical simulations, in
 
 ---
 
+
+
+
 > [!IMPORTANT]
 > ### Development Hiatus — May to August 2026
 >
@@ -56,10 +59,11 @@ The project targets compact-object and high-energy astrophysical simulations, in
 >   without a proper response.
 > - Replies may be intermittent or absent. Please do not interpret
 >   silence as disinterest — every submission will be addressed.
-> - The Zenodo record (DOI: [10.5281/zenodo.20284043](https://doi.org/10.5281/zenodo.20284043))
->   and the in-preparation arXiv preprint
->   (`docs/paper/granite_preprint_v067.tex`) remain the canonical
->   scientific references for this version.
+> - The Zenodo record (DOI: [10.5281/zenodo.20284043](https://doi.org/10.5281/zenodo.20284043)) and the in-preparation arXiv preprint  
+>   (`docs/paper/granite_preprint_v067.tex`; describing the immediately prior v0.6.7 release) remain the canonical scientific references.
+>   v0.6.8 is a pre-release refactor of that codebase — test count, module structure, and CLI workflows
+>   have been updated, but the core physics formulation, benchmark scenarios, and v0.6.7
+>   results documented in the preprint remain accurate descriptions of the underlying engine.
 >
 > **Impact on the roadmap.** A multi-month pause necessarily affects
 > downstream milestones. The `v0.7.0` target (currently listed as
@@ -287,8 +291,9 @@ The reported values are taken from simulation logs and are intended to be reprod
 > **Stable baseline for first-time users:** The current `main` branch is under active v0.6.8 restructuring, including CLI cleanup, Python tooling migration, documentation synchronization, and benchmark-schema updates. If you prefer a known-good first-run workflow without debugging current `main`-branch integration changes, use the `v0.6.5` tag as the recommended stable baseline.
 > 
 > Download the ZIP archive from the `v0.6.5` tag, extract it inside WSL/Linux, and follow the commands documented in that tagged version. For live simulation monitoring, use the legacy `sim_tracker.py` workflow included with `v0.6.5`, which was the most stable telemetry path for that release.
-> ```bash
-> Stable v0.6.5 ZIP workflow
+> 
+> **Stable v0.6.5 ZIP workflow**
+> ```markdown
 >1. Open the repository **Tags** page.
 >2. Download **v0.6.5 → zip**.
 >3. Extract the ZIP inside WSL/Linux.
