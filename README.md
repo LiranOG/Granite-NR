@@ -797,9 +797,9 @@ I have written a **[Personal Note to the Community](docs/design/PERSONAL_NOTE.md
 
 <div align="center">
 
-### **Thank you for reading, testing, questioning, and improving the project.**
+### **Careful testing, honest feedback, and reproducible reports are the true foundation of a reliable engine.**
 
-***Welcome aboard. Let's simulate the universe — together.***
+***Thank you for holding GRANITE to that standard.***
 
 </div>
 
