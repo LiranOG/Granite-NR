@@ -781,7 +781,7 @@ See `docs/paper/granite_preprint_v067.tex` and `docs/citation.bib`.
 
 ---
 
-### 🙏 A Genuine Thank You
+### 🙏 A Note of Thanks
 
 To anyone who files a reproducible bug report because a run did not converge, thank you.
 
@@ -789,7 +789,7 @@ To anyone who writes a small test for an edge case, corrects a documentation err
 
 To anyone who runs `B2_eq` on different hardware and shares the exact configuration, compiler, MPI/OpenMP settings, logs, and constraint behavior, thank you.
 
-To those who will read a formula in `ccz4.cpp` and say "wait, shouldn't that sign be negative?" — *especially* thank you.
+To anyone who reviews a formula in `ccz4.cpp` and catches a sign, index, or convention error — especially thank you.
 
 GRANITE can only become more reliable through external testing, careful review, and honest reporting of failures. Small contributions matter when they make the code easier to build, verify, reproduce, or understand.
 
