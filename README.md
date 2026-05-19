@@ -21,7 +21,7 @@
 
 </div>
 
-> **Status: ⏸️ v0.6.8 (development hiatus — May to August 2026; see notice below)** — Core engine stable. CCZ4 + full GRMHD + fully dynamic Berger-Oliger AMR, moving-puncture gauge, HDF5 checkpoint write, VORTEX Frontend. 107 unit tests across 20 test suites. `single_puncture` + `B2_eq` validated **stable** through t = 500 M. — CCZ4 + full GRMHD + fully dynamic Berger-Oliger AMR, moving-puncture gauge, HDF5 checkpoint write, VORTEX Frontend. 107 unit tests across 20 test suites covering all physics modules: CCZ4, GRMHD, AMR, horizon finder, M1 radiation, HDF5 I/O, initial data, and grid kernels. `single_puncture` + `B2_eq` validated **stable** through t = 500 M (early inspiral phase; full merger run is a v0.8 target).
+> **Status: ⏸️ v0.6.8 (development hiatus — May to August 2026; see notice below)** — Core engine stable. CCZ4 + full GRMHD + fully dynamic Berger-Oliger AMR, moving-puncture gauge, HDF5 checkpoint write, VORTEX Frontend. 107 unit tests across 20 test suites. `single_puncture` + `B2_eq` validated **stable** through t = 500 M. (early inspiral phase; full merger run is a v0.8 target).
 
 GRANITE is a high-performance, next-generation numerical relativity and General-Relativistic Magnetohydrodynamics (GRMHD) engine.
 Designed from the ground up to model extreme astrophysical events — such as the inspiral and merger of multiple Supermassive Black Holes (SMBHs) interacting with dense stellar environments and accretion discs — GRANITE brings state-of-the-art multi-scale physics into a cohesive, open-source framework.
