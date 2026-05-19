@@ -7,7 +7,7 @@
 [![Development Status](https://img.shields.io/badge/Status-Hiatus%20%E2%80%94%20returning%20Aug%202026-f59e0b.svg)](https://github.com/LiranOG/Granite-NR#-development-hiatus--may-to-august-2026)
 
 [![ORCID](https://img.shields.io/badge/ORCID-Profile-A6CE39?logo=orcid&logoColor=white)](https://orcid.org/0009-0008-8035-1308)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19502265.svg)](https://doi.org/10.5281/zenodo.19502265)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20284043.svg)](https://doi.org/10.5281/zenodo.20284043)
 [![License: GPL v3](https://img.shields.io/badge/license-GPL--3.0-green.svg)](LICENSE)
 
 [![C++ Standard](https://img.shields.io/badge/c%2B%2B-17-007acc.svg)](https://isocpp.org/)
