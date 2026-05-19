@@ -819,7 +819,9 @@ void TwoPuncturesBBH::generate(GridBlock& grid) const {
     const int nghost = grid.getNumGhost();
     const Real dx = grid.dx(0);
     const Real dx2 = dx * dx;
-    std::vector<Real> A2(nx * ny * nz, 0.0);
+    const std::size_t total_cells = static_cast<std::size_t>(nx) * static_cast<std::size_t>(ny) *
+                                    static_cast<std::size_t>(nz);
+    std::vector<Real> A2(total_cells, 0.0);
 
 #pragma omp parallel for
     for (int k = nghost; k < nz - nghost; ++k) {
@@ -841,8 +843,8 @@ void TwoPuncturesBBH::generate(GridBlock& grid) const {
         }
     }
 
-    std::vector<Real> u(nx * ny * nz, 0.0);
-    std::vector<Real> u_new(nx * ny * nz, 0.0);
+    std::vector<Real> u(total_cells, 0.0);
+    std::vector<Real> u_new(total_cells, 0.0);
     const Real tol = 1.0e-10;
     const int max_iter = 10000;
 
