@@ -131,6 +131,7 @@ validated at 4 levels.
 - **Radiation & Neutrino Transport:** Hybrid neutrino leakage + M1 moment closure for photon and neutrino emission/absorption in hot nuclear matter.
 - **Diagnostics & GW Extraction:** Flow-method Apparent Horizon finder, Newman-Penrose Ψ₄ GW extraction at multiple radii (50–500 r_g), recoil velocity estimation, and real-time constraint monitoring.
 - **HDF5 I/O & Checkpointing:** Fully parallel MPI-IO for grid snapshots and time-series diagnostics. `writeCheckpoint()` serialises the full AMR hierarchy — all grid blocks, spacetime variables, step count, and simulation time — into portable HDF5. `readCheckpoint()` is implemented; `--resume` CLI integration is in active development for v0.7.
+- **Photonic Hardware Abstraction Layer (HAL):** Future-proofed architecture actively being developed to abstract the mathematical operators (FD Stencils, CCZ4 RHS evaluation) from the memory and execution policy. This decouples the physics from the hardware, paving the way for seamless integration with upcoming Zettascale Photonic processors (e.g., Lightmatter Envise/Passage) via Mixed-Precision Iterative Refinement and Optical Tensor Dispatching.
 
 ---
 
