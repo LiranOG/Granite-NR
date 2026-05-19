@@ -4,7 +4,7 @@
 ### **General-Relativistic Adaptive N-body Integrated Tool for Extreme Astrophysics**
 
 [![Build Status](https://github.com/LiranOG/Granite-NR/actions/workflows/ci.yml/badge.svg)](https://github.com/LiranOG/Granite-NR/actions) 
-[![Development Status](https://img.shields.io/badge/Status-Active%20Development-2d3436.svg)](https://github.com/LiranOG/Granite-NR/pulse)
+[![Development Status](https://img.shields.io/badge/Status-Hiatus%20%E2%80%94%20returning%20Aug%202026-f59e0b.svg)](https://github.com/LiranOG/Granite-NR#-development-hiatus--may-to-august-2026)
 
 [![ORCID](https://img.shields.io/badge/ORCID-Profile-A6CE39?logo=orcid&logoColor=white)](https://orcid.org/0009-0008-8035-1308)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19502265.svg)](https://doi.org/10.5281/zenodo.19502265)
