@@ -29,19 +29,50 @@ Designed from the ground up to model extreme astrophysical events — such as th
 ---
 
 > [!IMPORTANT]
-> **Current development status — please read before the feature list.**
+> ### Development Hiatus — May to August 2026
 >
-> GRANITE is an **active research project** by a **solo independent researcher** (not affiliated with any NR collaboration or institution). Before reading the feature list, please be aware of the following current limitations:
+> I am stepping back from active development on GRANITE for a few months
+> to attend to personal matters. **The project is not abandoned.** This
+> notice is intended to set clear expectations during the pause.
 >
-> - **Merger runs are a v0.8 target.** The t=500M BBH benchmarks below reach *early inspiral only* — no merger has been observed. Full merger + SXS catalog validation is planned for v0.9.
-> - **M1 radiation transport** is compiled and unit-tested, but is **not yet wired** into the main RK3 evolution loop.
-> - **`--resume` checkpoint restart** is not yet exposed at the CLI (`writeCheckpoint()` works; the `--resume` flag is a v0.7 target).
-> - **Recoil velocity** (`computeRecoilVelocity`) throws `std::runtime_error` — not yet implemented.
-> - **AMR reflux correction** at coarse-fine interfaces: known accuracy limitation.
-> - **Unit tests cover all major physics modules** (107 tests across 20 suites). Only `postprocess` lacks dedicated unit tests.
-> - **Native Windows** unsupported; use WSL2. **macOS** is experimentally supported via Homebrew (community-tested, not CI-gated).
+> **Current state — `v0.6.8` (Architecture & Stability Release):**
+> The core engine is stable and validated. CCZ4 spacetime evolution,
+> Valencia GRMHD with HLLD, fully dynamic Berger–Oliger AMR with
+> subcycling, moving-puncture gauge, and the full initial-data suite
+> (Brill–Lindquist, Bowen–York, Two-Punctures, Superposed Kerr–Schild)
+> are functional. 105 / 107 tests pass across 20 GoogleTest suites
+> (2 skipped: horizon finder on coarse 16³ grids). The `single_puncture`
+> and `B2_eq` benchmarks are validated stable through t = 500 M. The
+> repository remains public — clone, build, run, cite, and extend it
+> freely under GPL-3.0.
 >
-> See [Known Limitations](#%EF%B8%8F-known-limitations-v068) for the full table.
+> **During the hiatus:**
+> - Issues, pull requests, and discussions remain open and will be
+>   reviewed in full upon return. Nothing will be dismissed or closed
+>   without a proper response.
+> - Replies may be intermittent or absent. Please do not interpret
+>   silence as disinterest — every submission will be addressed.
+> - The Zenodo record (DOI: [10.5281/zenodo.19502265](https://doi.org/10.5281/zenodo.19502265))
+>   and the in-preparation arXiv preprint
+>   (`docs/paper/granite_preprint_v067.tex`) remain the canonical
+>   scientific references for this version.
+>
+> **Impact on the roadmap.** A multi-month pause necessarily affects
+> downstream milestones. The `v0.7.0` target (currently listed as
+> Q4 2026 — GPU CUDA kernels, `--resume` checkpoint restart, M1 wired
+> into the RK3 loop) and all subsequent versions (`v0.8.0`, `v0.9.0`,
+> `v1.0.0`) will be re-evaluated and updated in `CHANGELOG.md` and the
+> roadmap table once active development resumes. I would rather publish
+> revised dates that I can meet than hold to a schedule that no longer
+> reflects reality.
+>
+> **Resumption:** active development resumes approximately
+> **June–August 2026.**
+>
+> Thank you for your patience and for your continued interest in GRANITE.
+>
+> — *Liran M. Schwartz (LiranOG), Founder & Lead Developer*
+> — Contact: `scliran9@gmail.com` · ORCID: [0009-0008-8035-1308](https://orcid.org/0009-0008-8035-1308)
 
 ## 📖 Table of Contents
 
@@ -72,6 +103,21 @@ Designed from the ground up to model extreme astrophysical events — such as th
 ---
 
 ## ✨ Key Features
+
+> [!IMPORTANT]
+> **Current development status — please read before the feature list.**
+>
+> GRANITE is an **active research project** by a **solo independent researcher** (not affiliated with any NR collaboration or institution). Before reading the feature list, please be aware of the following current limitations:
+>
+> - **Merger runs are a v0.8 target.** The t=500M BBH benchmarks below reach *early inspiral only* — no merger has been observed. Full merger + SXS catalog validation is planned for v0.9.
+> - **M1 radiation transport** is compiled and unit-tested, but is **not yet wired** into the main RK3 evolution loop.
+> - **`--resume` checkpoint restart** is not yet exposed at the CLI (`writeCheckpoint()` works; the `--resume` flag is a v0.7 target).
+> - **Recoil velocity** (`computeRecoilVelocity`) throws `std::runtime_error` — not yet implemented.
+> - **AMR reflux correction** at coarse-fine interfaces: known accuracy limitation.
+> - **Unit tests cover all major physics modules** (107 tests across 20 suites). Only `postprocess` lacks dedicated unit tests.
+> - **Native Windows** unsupported; use WSL2. **macOS** is experimentally supported via Homebrew (community-tested, not CI-gated).
+>
+> See [Known Limitations](#%EF%B8%8F-known-limitations-v068) for the full table.
 
 - **Spacetime Evolution (CCZ4):** Robust conformal and covariant Z4 formulation for evolving the Einstein field equations with moving-puncture gauge conditions and active constraint damping (κ₁=0.02, η=2.0).
 - **GRMHD & Matter:** High-resolution shock-capturing (HRSC) in the Valencia formulation — MP5/PPM/PLM reconstruction, HLLE/HLLD Riemann solvers, constrained transport (∇·B = 0 to machine precision).
