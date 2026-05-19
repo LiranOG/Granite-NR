@@ -21,10 +21,12 @@
 
 </div>
 
-> **Status: ⏸️ v0.6.8 (development hiatus — May to August 2026; see notice below)** — Core engine stable. CCZ4 + full GRMHD + fully dynamic Berger-Oliger AMR, moving-puncture gauge, HDF5 checkpoint write, VORTEX Frontend. 107 unit tests across 20 test suites. `single_puncture` + `B2_eq` validated **stable** through t = 500 M. (early inspiral phase; full merger run is a v0.8 target).
+> **Status: ⏸️ v0.6.8 pre-release / development hiatus — May to August 2026.**  
+> Selected core C++ components are functional and covered by 105 / 107 passing GoogleTest cases across 20 test suites. The `single_puncture` and `B2_eq` benchmarks have been run stably through t = 500 M without NaN events, reaching early inspiral only. Full merger evolution, SXS waveform comparison, CLI-level checkpoint resume, and production radiation-coupled runs remain roadmap targets.
 
-GRANITE is a high-performance, next-generation numerical relativity and General-Relativistic Magnetohydrodynamics (GRMHD) engine.
-Designed from the ground up to model extreme astrophysical events — such as the inspiral and merger of multiple Supermassive Black Holes (SMBHs) interacting with dense stellar environments and accretion discs — GRANITE brings state-of-the-art multi-scale physics into a cohesive, open-source framework.
+GRANITE is an open-source C++17 research code for 3+1 numerical relativity and General-Relativistic Magnetohydrodynamics (GRMHD). It implements CCZ4 spacetime evolution and Valencia-formulation GRMHD components, with a development focus on modular architecture, explicit benchmark scenarios, Adaptive Mesh Refinement (AMR), HDF5 output, and future GPU/HPC portability.
+
+The project targets compact-object and high-energy astrophysical simulations, including binary black holes, binary neutron-star scenarios, and exploratory multi-body supermassive black-hole configurations. GRANITE should currently be treated as an active research prototype, not as a production-validated NR/GRMHD platform.
 
 ---
 
@@ -35,17 +37,19 @@ Designed from the ground up to model extreme astrophysical events — such as th
 > to attend to personal matters. **The project is not abandoned.** This
 > notice is intended to set clear expectations during the pause.
 >
-> **Current state — `v0.6.8` (Architecture & Stability Release):**
-> The core engine is stable and validated. CCZ4 spacetime evolution,
-> Valencia GRMHD with HLLD, fully dynamic Berger–Oliger AMR with
-> subcycling, moving-puncture gauge, and the full initial-data suite
-> (Brill–Lindquist, Bowen–York, Two-Punctures, Superposed Kerr–Schild)
-> are functional. 105 / 107 tests pass across 20 GoogleTest suites
-> (2 skipped: horizon finder on coarse 16³ grids). The `single_puncture`
-> and `B2_eq` benchmarks are validated stable through t = 500 M. The
-> repository remains public — clone, build, run, cite, and extend it
-> freely under GPL-3.0.
->
+> **Current state — `v0.6.8` (Architecture & Stability Pre-release):**
+> Selected core subsystems are functional and covered by the current test suite:
+> CCZ4 spacetime evolution, Valencia GRMHD components, Berger–Oliger AMR
+> infrastructure with subcycling, moving-puncture gauge support, HDF5 checkpoint
+> writing, and the main initial-data suite. 105 / 107 tests pass across 20
+> GoogleTest suites (2 skipped: horizon finder on coarse 16³ grids).
+> 
+> The `single_puncture` and `B2_eq` benchmarks have been run stably through
+> t = 500 M without NaN events. These runs demonstrate selected stability
+> behavior in the tested regimes; they do not yet constitute full merger
+> validation or broad production validation. The repository remains public under
+> GPL-3.0 for review, testing, citation, and extension.
+> 
 > **During the hiatus:**
 > - Issues, pull requests, and discussions remain open and will be
 >   reviewed in full upon return. Nothing will be dismissed or closed
@@ -73,6 +77,20 @@ Designed from the ground up to model extreme astrophysical events — such as th
 >
 >  *Liran M. Schwartz (LiranOG), Founder & Lead Developer*  
 > — Contact: `scliran9@gmail.com` · ORCID: [0009-0008-8035-1308](https://orcid.org/0009-0008-8035-1308)
+
+> [!NOTE]
+> ### Why this is a pre-release
+>
+> v0.6.8 includes a significant architecture and repository refactor: CMake module
+> boundaries were made more explicit, CLI workflows were reorganized, Python
+> tooling was moved toward a package-based layout, and documentation paths are
+> being synchronized after the repository rename to `Granite-NR`.
+>
+> This release is therefore intended for review, testing, and stabilization rather
+> than as a fully stable user-facing release. Integration bugs, documentation
+> mismatches, platform-specific build issues, and edge-case regressions may still
+> exist. Reports through GitHub Issues or Discussions are especially useful for
+> stabilizing this line before the next development stage.
 
 ## 📖 Table of Contents
 
@@ -107,33 +125,50 @@ Designed from the ground up to model extreme astrophysical events — such as th
 > [!IMPORTANT]
 > **Current development status — please read before the feature list.**
 >
-> GRANITE is an **active research project** by a **solo independent researcher** (not affiliated with any NR collaboration or institution). Before reading the feature list, please be aware of the following current limitations:
+> GRANITE is an **active research project** maintained by an independent solo
+> developer. The list below includes implemented subsystems, partially integrated
+> components, and roadmap-oriented architecture targets. Each capability should
+> be read together with the limitation notes and validation status below.
 >
 > - **Merger runs are a v0.8 target.** The t=500M BBH benchmarks below reach *early inspiral only* — no merger has been observed. Full merger + SXS catalog validation is planned for v0.9.
 > - **M1 radiation transport** is compiled and unit-tested, but is **not yet wired** into the main RK3 evolution loop.
 > - **`--resume` checkpoint restart** is not yet exposed at the CLI (`writeCheckpoint()` works; the `--resume` flag is a v0.7 target).
 > - **Recoil velocity** (`computeRecoilVelocity`) throws `std::runtime_error` — not yet implemented.
 > - **AMR reflux correction** at coarse-fine interfaces: known accuracy limitation.
-> - **Unit tests cover all major physics modules** (107 tests across 20 suites). Only `postprocess` lacks dedicated unit tests.
+> - **Test coverage:** 105 / 107 GoogleTest cases currently pass across 20 suites. The suite covers the major C++ physics and infrastructure modules, but passing unit tests do not replace convergence testing, cross-code comparison, or full production validation.
 > - **Native Windows** unsupported; use WSL2. **macOS** is experimentally supported via Homebrew (community-tested, not CI-gated).
-> - **Photonic Hardware Abstraction Layer (HAL) is not yet implemented:** it is currently a long-term design and refactoring target for future hardware-agnostic CPU/GPU/photonic accelerator backends, not an active execution path in v0.6.8.
+> - **Photonic Hardware Abstraction Layer (HAL) is not implemented:** it is a long-term architecture and refactoring target for future hardware-agnostic CPU/GPU/experimental accelerator backends, not an active execution path or validated photonic backend.
 >
 > See [Known Limitations](#%EF%B8%8F-known-limitations-v068) for the full table.
 
-- **Spacetime Evolution (CCZ4):** Conformal and covariant Z4 formulation for the Einstein field equations with moving-puncture gauge conditions and constraint damping (κ₁=0.02, η=2.0).
-- **GRMHD & Matter:** High-resolution shock-capturing (HRSC) in the Valencia formulation — MP5/PPM/PLM reconstruction, HLLE/HLLD Riemann solvers, constrained transport (∇·B preserved to round-off error in the CT update step).
-- **Adaptive Mesh Refinement (AMR):** Fully dynamic block-structured Berger-Oliger subcycling — gradient-based and puncture-tracking refinement triggers with iterative union-merge box aggregation, trilinear prolongation, volume-weighted restriction, and live per-step regridding integrated into the RK3 loop. The AMR framework supports up to 12 refinement levels; validation to date has been performed at up to 4 levels.
-- **Multi-BH Initial Data:** Built-in solvers for Brill-Lindquist, Bowen-York, Two-Punctures, and Superposed Kerr-Schild configurations for arbitrarily complex N-body BH systems.
-- **Radiation & Neutrino Transport:** Hybrid neutrino leakage + M1 moment closure for photon and neutrino emission/absorption in hot nuclear matter.
-- **Diagnostics & GW Extraction:** Flow-method Apparent Horizon finder, Newman-Penrose Ψ₄ GW extraction at multiple radii (50–500 r_g), recoil velocity estimation, and real-time constraint monitoring.
-- **HDF5 I/O & Checkpointing:** Fully parallel MPI-IO for grid snapshots and time-series diagnostics. `writeCheckpoint()` serialises the full AMR hierarchy — all grid blocks, spacetime variables, step count, and simulation time — into portable HDF5. `readCheckpoint()` is implemented; `--resume` CLI integration is in active development for v0.7.
-- **Hardware Abstraction Layer (HAL) [Long-term design target]:** An architectural effort to decouple mathematical operators (finite-difference stencils, CCZ4 RHS evaluation) from execution policy and memory layout. The goal is to simplify future CPU/GPU/accelerator portability and to allow experimental integration with novel hardware, including photonic processors, if and when suitable platforms become available. This is not an active execution path in v0.6.8.
-  
+- **Spacetime evolution (CCZ4):** CCZ4 evolution infrastructure for the Einstein field equations, using moving-puncture gauge conditions and active constraint damping. Current default parameters include κ₁ = 0.02 and η = 2.0 in the documented benchmark configurations.
+
+- **GRMHD and matter evolution:** Valencia-formulation GRMHD components with HRSC reconstruction options including MP5, PPM, and PLM, together with HLLE/HLLD Riemann-solver support and constrained-transport infrastructure for magnetic-field divergence control.
+
+- **Adaptive Mesh Refinement (AMR):** Dynamic block-structured Berger–Oliger AMR infrastructure with subcycling, gradient-based and puncture-tracking refinement triggers, iterative union-merge box aggregation, trilinear prolongation, volume-weighted restriction, and per-step regridding integrated into the RK3 loop. The framework supports up to 12 refinement levels in design; validation to date is limited to 4-level benchmark runs.
+
+- **Initial data:** Built-in support for Brill–Lindquist, Bowen–York, Two-Punctures, and Superposed Kerr–Schild black-hole initial-data configurations, plus TOV neutron-star initial data. Complex N-body configurations remain an active validation target and should be treated as exploratory until benchmarked.
+
+- **Radiation and neutrino transport:** Hybrid neutrino leakage and M1 two-moment transport modules are present and covered by unit tests. They are not yet wired into the main RK3 production evolution loop; this integration is a v0.7 target.
+
+- **Diagnostics and gravitational-wave extraction:** Apparent-horizon finding, Newman–Penrose Ψ₄ extraction at multiple radii, constraint monitoring, and Python-facing telemetry output. Recoil-velocity estimation is planned but `computeRecoilVelocity` is not implemented in v0.6.8.
+
+- **HDF5 I/O and checkpointing:** Parallel MPI-IO HDF5 output for grid snapshots and time-series diagnostics. `writeCheckpoint()` serializes the AMR hierarchy, grid blocks, evolved variables, step count, and simulation time. `readCheckpoint()` exists, while CLI-level `--resume` workflow integration remains a v0.7 target.
+
+- **Parallel execution:** MPI communication with non-blocking `Isend` / `Irecv` patterns and OpenMP support. CUDA/GPU offloading is planned but not active in v0.6.8.
+
+- **Equation of state support:** Tabulated nuclear EOS support with trilinear interpolation, with an ideal-gas fallback path.
+
+- **Hardware Abstraction Layer (HAL) [long-term design target]:** Planned architecture work to decouple mathematical operators, memory layout, and execution policy for future CPU/GPU/accelerator portability. Experimental photonic/optical accelerator support is a long-term research direction, not an implemented backend in v0.6.8.
+
 ---
 
 ## ⚖️ How GRANITE Compares
 
-The table below shows the current implementation status of GRANITE v0.6.8 relative to other open‑source NR codes. Combining all of these capabilities in a single, validated framework is a long‑term goal; the present version is verified for single‑BH and binary‑BH inspiral.
+The table below is a high-level comparison of GRANITE v0.6.8 against several established open-source NR or astrophysical simulation codes.  
+It is intended to clarify project scope, not to claim superiority over mature frameworks. Capability status depends on code version, enabled modules, problem setup, and validation standard. 
+
+GRANITE v0.6.8 is currently tested on selected single-BH and early-inspiral BBH benchmarks; broader validation remains ongoing.
 
 ### Summary Comparison
 
@@ -146,11 +181,13 @@ The table below shows the current implementation status of GRANITE v0.6.8 relati
 | N > 3 BH simultaneous merger | ❌ | ❌ | ❌ | ❌ | 🟡 | 
 | Open license | LGPL | ✅ MIT | ✅ MIT | ✅ BSD | ✅ GPL-3.0 |
 
-> - *N>3 BH: This is a research-frontier target: to the best of our
-> knowledge, no open-source NR/GRMHD code currently supports a
-> fully resolved, stable simultaneous merger of more than
-> 3+ black holes. Achieving it is a long-term goal that depends on
-> GPU porting, AMR reflux completion, and thorough validation.*
+*(Table abridged. See the full feature matrix below.)*
+
+> - *N > 3 BH: This is a research-frontier target, not a validated v0.6.8 capability. We are not aware of an open-source NR/GRMHD workflow
+> that currently provides a fully resolved, stable, radiation/GRMHD-coupled simultaneous merger of more than three black holes as a
+> routine reproducible benchmark. This comparison depends strongly on definitions, code versions, enabled modules, and validation
+> criteria. Achieving this in GRANITE is a long-term goal that depends on GPU/HPC scaling, AMR reflux completion, and extensive
+> validation.*
 >
 > - *Dynamic AMR marked 🔶 for GRANITE: the Berger–Oliger subcycling hierarchy
 > is implemented and integrated into the production RK3 loop with live
@@ -161,15 +198,12 @@ The table below shows the current implementation status of GRANITE v0.6.8 relati
 > 4 refinement levels, not the 12-level target required for B5\_star.
 > Full ✅ status is the v0.8 target.*
 
-*(Table abridged. See the full feature matrix below.)*
-
 **Legend:**
-* ✅ = **Fully implemented** (Production-ready and integrated)
-* 🔵 = **Core module built, pending integration** (Mathematical logic and tests pass)
-* 🔶 = **Partial / in development** (Currently being actively developed)
-* 🟡 = **Under development / Design phase** (Currently being actively developed) No validated results produced yet
-* ❌ = **Not available**
-
+* ✅ = **Implemented and integrated** for the stated scope
+* 🔵 = **Module implemented / pending production integration**
+* 🔶 = **Partial implementation or known limitations**
+* 🟡 = **Roadmap / research target; no validated production result yet**
+* ❌ = **Not available in the compared scope**
 
 > [!NOTE]
 > 💡 **Deep-Dive Architectural Analysis & Full Comparison**
@@ -179,7 +213,8 @@ The table below shows the current implementation status of GRANITE v0.6.8 relati
 
 ## 📊 Benchmark Results
 
-All results are from **production runs on a single desktop workstation** (Intel i5-8400, 6-core, 16 GB DDR4, Linux/WSL2). Every number below is from real simulation logs and is fully reproducible by cloning this repository.
+The benchmark results below are from local production-style runs on a single desktop workstation (Intel i5-8400, 6-core, 16 GB DDR4, Linux/WSL2), unless otherwise stated. 
+The reported values are taken from simulation logs and are intended to be reproducible using the documented benchmark configurations, subject to compiler, platform, MPI/OpenMP, and hardware differences.
 
 > - **Hardware note:** The three-resolution gauge-wave convergence test, the `{1,2,3,6}`-thread scaling extension to 128³, and the matched BBH convergence series targeting SXS:BBH:3634 have **not yet been executed** — access to the second development machine (i5-12600KF) is temporarily unavailable. These are v0.7 deliverables; once hardware is restored, all runs will be completed and results published here.
 
@@ -199,7 +234,7 @@ All results are from **production runs on a single desktop workstation** (Intel 
 
 > - **What ‖H‖₂ reduction means:** The Hamiltonian constraint measures how accurately the evolved spacetime satisfies Einstein's equations. A monotonically *decreasing* ‖H‖₂ over 500 M of simulated time is a necessary (but not sufficient) indicator of **numerical stability and correct constraint damping**.
 >
-> - **What these benchmarks do NOT yet prove:** The t=500M runs above reach *early inspiral phase only* (no merger observed). Merger-waveform validation against the SXS catalog is a **v0.8–v0.9 target**. See [Known Limitations](#️-known-limitations-v067).
+> - **What these benchmarks do NOT yet prove:** The t=500M runs above reach *early inspiral phase only* (no merger observed). Merger-waveform validation against the SXS catalog is a **v0.8–v0.9 target**. See [Known Limitations](#️-known-limitations-v068).
 >
 > 📄 Raw telemetry, step-by-step logs, and extended resolution tables: [`docs/user_guide/BENCHMARKS.md`](./docs/user_guide/BENCHMARKS.md)
 
@@ -259,11 +294,15 @@ All results are from **production runs on a single desktop workstation** (Intel 
 >3. Extract the ZIP inside WSL/Linux.
 >4. Follow the build/run commands included in the tagged version.
 >5. Use the legacy `sim_tracker.py` workflow for live telemetry.
+>```
 
 >  [!WARNING]
 > **v0.6.8 — Active Stabilization in Progress**
 >
-> A recent structural reorganisation of the `scripts/` directory introduced several integration issues that are currently being triaged and resolved. Some CLI workflows, Python analysis tools, and virtual environment setup steps may temporarily behave unexpectedly until the patch is complete. All core physics (C++ engine, unit tests, simulation runs) is unaffected — 105/107 tests pass (2 skipped: horizon finder on coarse 16³ grid).
+> A recent structural reorganisation of the `scripts/` directory introduced several integration issues that are currently being triaged and resolved. Some CLI workflows, Python analysis tools, and virtual environment setup steps may temporarily behave unexpectedly until the patch is complete.  
+>
+> The intended C++ physics behavior is unchanged relative to the current v0.6.x baseline, and the C++ test suite currently reports 105 / 107 passing tests (2 skipped: horizon finder on coarse 16³ grid).
+> However, users should still treat v0.6.8 as a stabilization line until CLI, Python tooling, and documentation paths are fully synchronized.
 >
 > Fixes are being pushed continuously. If something doesn't work as documented, check [`CHANGELOG.md`](./CHANGELOG.md) for the latest patch status or open an [issue](https://github.com/LiranOG/Granite-NR/issues).
 
@@ -483,18 +522,21 @@ GRANITE/
 | **v0.7.0** | Q4 2026 | 🔄 In Progress | GPU CUDA kernels, `--resume` checkpoint restart CLI, M1 wired into RK3 loop |
 | **v0.8.0** | Q1 2027 | 📋 Planned | Tabulated nuclear EOS + reaction network |
 | **v0.9.0** | Q2 2027 | 📋 Planned | Full SXS catalog validation (~60 BBH configs), multi-group M1 |
-| **v1.0.0** | Q3 2027 | 🎯 Target | B5\_star production run + publication, full community release + full support across all native OS systems |
+| **v1.0.0** | Q3 2027 | 🎯 Target | Community-facing release; B5\_star validation target if GPU/HPC scaling, AMR reflux, and benchmark review are completed |
 
-**Scaling path to B5\_star:** Development (128³, desktop) → GPU porting (vast.ai H100) → cluster production (256³–512³) → flagship (12 AMR levels, ~2 TB RAM, ~5×10⁶ CPU-hours).
+**Proposed scaling path toward B5\_star:** desktop development benchmarks → GPU-porting experiments → small cluster scaling studies → larger AMR/HPC production trials.  
+
+The currently estimated upper-end resource target is approximately 12 AMR levels, ~2 TB RAM, and ~5×10⁶ CPU-hours, but this estimate remains provisional until profiling and scaling studies are completed.
 
 ---
 
 ## ⚠️ Known Limitations (v0.6.8)
 
-Scientific integrity demands transparency. These limitations are known, documented, and actively addressed.
+The limitations below are known and documented. Some are active v0.7 engineering targets; others require additional hardware access, community testing, or broader validation before they can be resolved.
 
 | Limitation | Impact | Status | Planned Fix |
 |---|---|:---:|---|
+| v0.6.8 is a pre-release after major refactoring | CLI/Python/docs integration may expose regressions even if C++ tests pass | 🔄 Active | v0.6.8 patch line / v0.7 |
 | `writeCheckpoint()` fully implemented; `--resume` CLI flag not yet wired | Long runs cannot be resumed without code modification | 🔄 Active | v0.7 |
 | M1 radiation built but not wired into RK3 loop | Radiation not active in production runs | 🔄 Active | v0.7 |
 | `alpha_center` reads from AMR level 0, not finest level near puncture | Misleading lapse diagnostic | 📋 Known | v0.7 |
@@ -544,8 +586,9 @@ straightforward to engage at any level. The timeline is honest: one person, a la
 scope, no fixed date. But when it ships, GRANITE will be genuinely ready for
 collaboration in a way it has not been before.
 
-Until then — the engine is real, the physics is sound, and every contribution,
-however small, is taken seriously.
+Until then, the implemented components are open for inspection, the current
+benchmarks are documented, and every reproducible contribution — however small —
+is taken seriously.
 
 ### What GitHub Tags Mean
 
@@ -588,17 +631,16 @@ python3 scripts/run_granite.py format   # Auto-format all C++ contributions
 
 ### 🌍 How You Can Contribute — On Your Own Terms
 
-There is no minimum. There is no gatekeeping. There is no "small enough to not matter."
+Contributions do not need to be large to be useful. Clear bug reports, failed builds, documentation corrections, benchmark logs, and small tests are all valuable because they make the project easier to verify and reproduce.
 
 | What you bring | How it helps GRANITE |
 |---|---|
-| **You run it on your cluster** | Real-world scaling data and hardware-specific failure modes a desktop cannot surface |
-| **You read the physics and find something wrong** | A wrong formula caught early is worth a thousand correct ones discovered late |
-| **You submit a PR — any size** | A one-line fix, a new unit test, a missing C2P edge case — all of it moves the needle |
-| **You open an issue** | Describing what broke, what confused you, or what's missing is itself a contribution of enormous value |
-| **You share it with a colleague** | The person most likely to find the deepest bug is the one I haven't met yet |
-| **You validate a benchmark** | Running `B2_eq` and sharing constraint norms takes 20 minutes and generates ground truth I cannot produce alone |
-| **You review the theory** | If you work in NR, GRMHD, or computational astrophysics — your professional eye is the most valuable thing you could offer |
+| **Cluster or workstation test runs** | Exposes hardware-specific build issues, MPI behavior, memory pressure, and scaling limits |
+| **Physics review** | Helps identify sign errors, formulation mistakes, gauge issues, or missing validation cases |
+| **Small pull requests** | Improves correctness, tests, documentation, and maintainability without requiring whole-codebase knowledge |
+| **Reproducible bug reports** | Provides actionable evidence: command, YAML file, compiler, platform, log output, and failure mode |
+| **Benchmark validation** | Allows comparison of constraint norms, runtime behavior, and diagnostic output across systems |
+| **Module-specific expertise** | Contributors can work on isolated subsystems such as radiation transport, AMR, HDF5 I/O, Python telemetry, or documentation |
 
 No contribution requires understanding the whole codebase. The modules are deliberately decoupled: an expert in radiation transport can engage with `src/radiation/` without touching the CCZ4 RHS loop.
 
@@ -630,7 +672,7 @@ No contribution requires understanding the whole codebase. The modules are delib
 
 ## 📖 Deep-Dive Documentation — GRANITE Wiki
 
-The `docs/` directory covers the essentials, but GRANITE is a large and technically demanding engine. For researchers, contributors, and institutions who need to go beyond the surface level, every subsystem has its own dedicated Wiki page — written at the same level of technical depth as a peer-reviewed software paper.
+The `docs/` directory covers the essential build, benchmark, and developer references. The Wiki provides longer-form subsystem notes for readers who need more architectural, numerical, or operational context. Some pages may lag behind the current v0.6.8 refactor and should be cross-checked against the root README and current benchmark YAML files.
 
 > **[→ Visit the GRANITE Wiki](https://github.com/LiranOG/Granite-NR/wiki)**
 
@@ -656,7 +698,7 @@ The Wiki covers, in full technical detail:
 | Explore the interactive WebGL N-body simulator | [VORTEX Engine](https://github.com/LiranOG/Granite-NR/wiki/VORTEX-Simulator) |
 | Learn about the Architecture History of GRANITE & VORTEX | [Theoretical & Architectural Overview](https://github.com/LiranOG/Granite-NR/wiki/GRANITE%E2%80%90Astrophysics%E2%80%90Suite-%E2%80%94-Theoretical-&-Architectural-Overview#-granite-astrophysics-suite--the-definitive-theoretical--architectural-overview) |
 
-***If something is unclear — in the code, in the physics, or in the parameters — the answer is almost certainly in one of these pages.***
+***If something is unclear, start with these pages; if the documentation and code disagree, please open an issue so the discrepancy can be corrected.***
 
 ---
 
@@ -670,47 +712,56 @@ The Wiki covers, in full technical detail:
 
 The C++ engine in this repository was preceded by a series of personal research notes
 exploring the physics of multi-BH merger scenarios. These notes motivated the key
-architectural choices:
+architectural choices.
 
-Every major architectural decision in GRANITE traces to a specific physical requirement:
+Several architectural choices in GRANITE were motivated by specific physical and numerical requirements:
 
 - **CCZ4 over BSSN** — for active constraint damping on long evolution timescales required by cascade scenarios
 - **Valencia GRMHD** — for exact conservation on curved spacetime during stellar disruption events
 - **M1 radiation transport** — for accurate photon and neutrino coupling in hot nuclear debris
 - **Deep AMR (≥12 levels targeted)** — for the ~10⁸ dynamic range spanning BH horizons to circumbinary disk scales
 
-These choices are grounded in established NR literature. The personal research notes that
-preceded the code are archived separately for transparency at
-**[GRANITE-Astrophysics-Suite](https://github.com/LiranOG/GRANITE-Astrophysics-Suite)**.
+These choices are intended to follow established NR/GRMHD practice where applicable, but the project-specific scenarios still require formal validation.  
+The personal research notes that preceded the code are archived separately for transparency at
+***`GRANITE-Astrophysics-Suite`***.
 
 > *For the derivation archive and interactive kinematic simulations:*
 > **[→ GRANITE-Astrophysics-Suite](https://github.com/LiranOG/GRANITE-Astrophysics-Suite)**
 
 ---
 
-## 🌀 VORTEX: The Interactive WebGL Simulator
+## 🌀 VORTEX: Browser-Native Visualization and Kinematic Playback
 
-**VORTEX** ([`viz/vortex_eternity/`](./viz/vortex_eternity/)) is a standalone, browser-native N-body physics renderer built on a strict **Zero-Allocation Architecture** — all hot-path computation operates on pre-allocated Float32Arrays with no per-frame garbage collection.
+**VORTEX** ([`viz/vortex_eternity/`](./viz/vortex_eternity/)) is a standalone browser-native N-body sandbox and kinematic visualization frontend. It is designed for interactive exploration, playback, and reduced diagnostic visualization, not as a replacement for full NR post-processing or scientific validation.
 
-**Physics Engine:** 4th-Order Hermite Predictor-Corrector integrator with Kahan compensated summation and dynamic Aarseth timestepping. Implements 1.5PN Lense-Thirring frame-dragging, 2.5PN radiation-reaction (GW inspiral), mass-defect mergers, and Tidal Disruption Events — all running in real time in the browser.
+### 🌐 Live Demo
 
-**Research-Grade Diagnostics:**
-- `🔭 NR Diagnostics` — live Chart.js panels for orbital eccentricity vs. semi-major axis, GW chirp frequency sweep (f_GW), and relativistic velocity parameter (β²)
-- Minimap 3.0 with gravitational isobar contours (marching-squares), radiation flux thermal overlay, ISCO proximity warnings, and logarithmic projection
-- CPU-side Relativistic Doppler/Beaming and Einstein Cross gravitational lens GLSL shader extension
+[→ Launch VORTEX](https://liranog.github.io/VORTEX/)
 
-**Cinematic Systems:** Zen Mode (full UI fade to black for recording), Cinematic Autopilot camera director, and ESC-abort placement system.
+> No installation is required. The demo runs directly in a modern browser.
+>
+> The current demo is a standalone N-body / kinematic visualization environment. It should be understood as a frontend and interaction prototype, not as a validated numerical-relativity analysis tool.  
+> Future GRANITE integration is planned around reduced telemetry, HDF5-derived playback streams, and selected runtime diagnostics.
 
-**v1.0 Coupling Vision:** GRANITE's HDF5 outputs will be distilled into kinematic streams and ingested by VORTEX as a high-fidelity 3D playback viewer, enabling real-time interactive exploration of full GR numerical relativity data.
+The current VORTEX code uses pre-allocated `Float32Array` buffers on hot paths to reduce per-frame allocation and garbage-collection pressure. Its browser-side physics layer includes a 4th-order Hermite predictor-corrector integrator, Kahan compensated summation, dynamic Aarseth-style timestepping, and selected post-Newtonian-inspired visual effects.
 
-> **[🚀 Explore VORTEX](./viz/vortex_eternity/)**
+**Current visualization capabilities include:**
+- live Chart.js panels for orbital eccentricity, semi-major axis, estimated GW chirp-frequency trends, and relativistic velocity parameters;
+- minimap visualization with gravitational-isobar contours, radiation-flux overlays, ISCO proximity indicators, and logarithmic projection modes;
+- browser-side Doppler/beaming and lensing-style shader effects for visualization.
+
+**Important limitation:** VORTEX is not currently a validated GR numerical-relativity analysis pipeline. Its role in the GRANITE roadmap is to become a lightweight frontend for reduced telemetry and kinematic playback derived from GRANITE outputs. Full scientific interpretation must remain tied to the C++ solver output, benchmark diagnostics, convergence tests, and documented post-processing workflows.
+
+**v1.0 coupling target:** GRANITE HDF5 outputs may be distilled into reduced kinematic and diagnostic streams for VORTEX playback. This is a visualization and inspection workflow, not a substitute for full-resolution NR analysis.
+
+> **[Explore VORTEX](./viz/vortex_eternity/)**
 
 ---
 
 ## 📎 Citing GRANITE
 
-If you use GRANITE in academic research, teaching, or scientific software, please cite:
-
+If you use GRANITE as a software reference, teaching tool, benchmark target, or basis for further development, please cite:
+note      = {}
 ```bibtex
 @software{granite2026,
   author    = {Schwartz, Liran M.},
@@ -721,7 +772,7 @@ If you use GRANITE in academic research, teaching, or scientific software, pleas
   version   = {v0.6.8},
   doi       = {10.5281/zenodo.20284043},
   url       = {https://github.com/LiranOG/Granite-NR},
-  note      = {CCZ4 + GRMHD + AMR engine for multi-body black hole merger simulations}
+  note      = {Open-source C++17 research code for CCZ4, GRMHD, AMR, and compact-object simulation workflows}
 }
 ```
 
@@ -732,26 +783,30 @@ See `docs/paper/granite_preprint_v067.tex` and `docs/citation.bib`.
 
 ### 🙏 A Genuine Thank You
 
-To those who will file a bug report at 11pm because something didn't converge and they couldn't let it go — thank you in advance.
+To anyone who files a reproducible bug report because a run did not converge, thank you.
 
-To those who will spend a Saturday writing a test for a corner case nobody asked them to cover — thank you in advance.
+To anyone who writes a small test for an edge case, corrects a documentation error, or checks a formula against the literature, thank you.
 
-To those who will send a message saying "I ran `B2_eq` on our cluster and here's what happened" — thank you in advance.
+To anyone who runs `B2_eq` on different hardware and shares the exact configuration, compiler, MPI/OpenMP settings, logs, and constraint behavior, thank you.
 
-To those who will read a formula in `ccz4.cpp` and say "wait, shouldn't that sign be negative?" — *especially* thank you in advance.
+To those who will read a formula in `ccz4.cpp` and say "wait, shouldn't that sign be negative?" — *especially* thank you.
 
+GRANITE can only become more reliable through external testing, careful review, and honest reporting of failures. Small contributions matter when they make the code easier to build, verify, reproduce, or understand.
 
-This project exists because the science demands it. It will reach its potential because the community makes it.
+I have written a **[Personal Note to the Community](docs/design/PERSONAL_NOTE.md)** with more background on why GRANITE was started and what kind of collaboration would be most useful.
 
-I have written a **[Personal Note to the Community](docs/design/PERSONAL_NOTE.md)** explaining exactly why GRANITE was built and the philosophy behind it. If you share this obsession with the cosmos, I invite you to read it.
+<div align="center">
 
+### **Thank you for reading, testing, questioning, and improving the project.**
 
-**Welcome aboard. Let's simulate the universe — together.**
+***Welcome aboard. Let's simulate the universe — together.***
+
+</div>
 
 <div align="right">
 
-[![GitHub Issues](https://img.shields.io/github/issues/LiranOG/Granite?label=open%20issues&color=blue)](https://github.com/LiranOG/Granite-NR/issues)
-[![GitHub Discussions](https://img.shields.io/github/discussions/LiranOG/Granite?label=discussions&color=purple)](https://github.com/LiranOG/Granite-NR/discussions)
+[![GitHub Issues](https://img.shields.io/github/issues/LiranOG/Granite-NR?label=open%20issues&color=blue)](https://github.com/LiranOG/Granite-NR/issues)
+[![GitHub Discussions](https://img.shields.io/github/discussions/LiranOG/Granite-NR?label=discussions&color=purple)](https://github.com/LiranOG/Granite-NR/discussions)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/LiranOG/Granite-NR/blob/main/.github/CONTRIBUTING.md)
 
 </div>
