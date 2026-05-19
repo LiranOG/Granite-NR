@@ -71,7 +71,7 @@ Designed from the ground up to model extreme astrophysical events — such as th
 >
 > Thank you for your patience and for your continued interest in GRANITE.
 >
-> — *Liran M. Schwartz (LiranOG), Founder & Lead Developer*  
+>  *Liran M. Schwartz (LiranOG), Founder & Lead Developer*  
 > — Contact: `scliran9@gmail.com` · ORCID: [0009-0008-8035-1308](https://orcid.org/0009-0008-8035-1308)
 
 ## 📖 Table of Contents
