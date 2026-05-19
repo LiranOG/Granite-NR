@@ -116,6 +116,7 @@ Designed from the ground up to model extreme astrophysical events — such as th
 > - **AMR reflux correction** at coarse-fine interfaces: known accuracy limitation.
 > - **Unit tests cover all major physics modules** (107 tests across 20 suites). Only `postprocess` lacks dedicated unit tests.
 > - **Native Windows** unsupported; use WSL2. **macOS** is experimentally supported via Homebrew (community-tested, not CI-gated).
+> - **Photonic Hardware Abstraction Layer (HAL) is not yet implemented:** it is currently a long-term design and refactoring target for future hardware-agnostic CPU/GPU/photonic accelerator backends, not an active execution path in v0.6.8.
 >
 > See [Known Limitations](#%EF%B8%8F-known-limitations-v068) for the full table.
 
