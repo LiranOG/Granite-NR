@@ -30,9 +30,6 @@ The project targets compact-object and high-energy astrophysical simulations, in
 
 ---
 
-
-
-
 > [!IMPORTANT]
 > ### Development Hiatus — May to August 2026
 >
