@@ -52,7 +52,7 @@ Designed from the ground up to model extreme astrophysical events — such as th
 >   without a proper response.
 > - Replies may be intermittent or absent. Please do not interpret
 >   silence as disinterest — every submission will be addressed.
-> - The Zenodo record (DOI: [10.5281/zenodo.19502265](https://doi.org/10.5281/zenodo.19502265))
+> - The Zenodo record (DOI: [10.5281/zenodo.20284043](https://doi.org/10.5281/zenodo.20284043))
 >   and the in-preparation arXiv preprint
 >   (`docs/paper/granite_preprint_v067.tex`) remain the canonical
 >   scientific references for this version.
@@ -71,7 +71,7 @@ Designed from the ground up to model extreme astrophysical events — such as th
 >
 > Thank you for your patience and for your continued interest in GRANITE.
 >
-> — *Liran M. Schwartz (LiranOG), Founder & Lead Developer*
+> — *Liran M. Schwartz (LiranOG), Founder & Lead Developer*  
 > — Contact: `scliran9@gmail.com` · ORCID: [0009-0008-8035-1308](https://orcid.org/0009-0008-8035-1308)
 
 ## 📖 Table of Contents
