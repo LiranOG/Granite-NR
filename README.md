@@ -146,7 +146,11 @@ The table below shows the current implementation status of GRANITE v0.6.8 relati
 | N > 3 BH simultaneous merger | ❌ | ❌ | ❌ | ❌ | 🟡 | 
 | Open license | LGPL | ✅ MIT | ✅ MIT | ✅ BSD | ✅ GPL-3.0 |
 
-> - *N>3 BH: Brill-Lindquist multi-BH initial data and 5-BH `B5_star` benchmark configuration exist; production run at research resolution (256³+) requires GPU porting (v0.7 target).*
+> - *N>3 BH: This is a research-frontier target: to the best of our
+> knowledge, no open-source NR/GRMHD code currently supports a
+> fully resolved, stable simultaneous merger of more than
+> 3+ black holes. Achieving it is a long-term goal that depends on
+> GPU porting, AMR reflux completion, and thorough validation.*
 >
 > - *Dynamic AMR marked 🔶 for GRANITE: the Berger–Oliger subcycling hierarchy
 > is implemented and integrated into the production RK3 loop with live
