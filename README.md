@@ -716,7 +716,9 @@ If you use GRANITE in academic research, teaching, or scientific software, pleas
   title     = {{GRANITE}: General-Relativistic Adaptive N-body Integrated
                Tool for Extreme Astrophysics},
   year      = {2026},
+  month     = {5},
   version   = {v0.6.8},
+  doi       = {10.5281/zenodo.20284043},
   url       = {https://github.com/LiranOG/Granite-NR},
   note      = {CCZ4 + GRMHD + AMR engine for multi-body black hole merger simulations}
 }
