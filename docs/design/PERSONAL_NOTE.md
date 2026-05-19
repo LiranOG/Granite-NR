@@ -1,46 +1,88 @@
-# 💙 To the Community — A Personal Word
+# 💙 To the Community — A Personal Note
 
-I want to speak to you directly—not as a detached author of a technical manual, but as an engineer and dreamer who built something they believe in with absolute conviction. I am reaching out to the minds who might look at the cosmos and feel the same obsessive need to understand it as I do.
+I want to speak directly to the physicists, engineers, students, developers, HPC practitioners, visualization people, and anyone who cares seriously about computational astrophysics.
 
-### The Origin: A Private Obsession
-GRANITE did not start as an institutional mandate. It began as a profound, private obsession. I held onto the conviction that the astrophysics community—and indeed, anyone with a deep passion for the universe—deserved an open-source engine capable of simulating the most extreme, multi-body gravitational events in existence. Not "someday." Not in a restricted theoretical paper. But *now*, running on your screens, backed by rigorous, reproducible, hard science.
+GRANITE began as a personal project. It did not come out of an institution, a funded collaboration, or an established numerical relativity group. It started from a simple motivation: I wanted to understand extreme gravitational systems more deeply, and I wanted to build an open-source tool that could make serious NR/GRMHD experimentation more approachable over time.
 
-Every single line of this codebase was forged from that conviction. The CCZ4 formulation, the GRMHD Valencia kernels, the Berger-Oliger adaptive mesh subcycling, the constraint damping—none of it was approximated or hastily scaffolded. It was derived, implemented, iteratively debugged, and validated against the most unforgiving standards of academic peer review. I poured my soul into ensuring the math is uncompromised.
+That motivation is still personal. I care about this work. I care about the mathematics, the software architecture, the physics, and the possibility that more people could participate in this field if the tools were easier to inspect, configure, and reproduce.
 
-### Breaking the Ivory Tower
-For decades, the field of Numerical Relativity has operated like a closed club. To run a complex simulation in existing legacy frameworks, you couldn't just be a physicist; you had to be a master software architect. You had to construct almost everything from scratch—from defining the raw, underlying variables to hardcoding exactly how the engine's core interfaces with your specific, novel scenario. 
+At the same time, I want to be clear about where the project stands.
 
-If you wanted to test a new chaotic multi-black-hole interaction, you were forced to rebuild the engine around it. This towering barrier of entry has stifled innovation and kept brilliant minds—enthusiasts, first-year undergraduates, and even seasoned theoretical physicists—locked out of the laboratory of the universe.
+GRANITE is currently an active research project, not a finished production platform. The current foundation has meaningful implemented components, but the road to a credible v1.0 release is still very long. Some goals described in the Technical Vision — including broader YAML-defined scenarios, runtime browser telemetry, GPU execution, community challenge workflows, improved HPC deployment, and future hardware-abstraction work — are roadmap targets that require further implementation, validation, and review.
 
-**I built GRANITE to shatter that wall.**
+## Why I Started Building GRANITE
 
-### The Paradigm Shift: Total Accessibility
-My ultimate goal is the complete democratization of computational physics. I want GRANITE to be the first simulator where the physics engine and the physical scenario are completely, fundamentally decoupled. 
+Numerical relativity and GRMHD are difficult fields to enter. The physics is already hard: Einstein’s equations, gauge choices, constraint control, relativistic fluids, magnetic fields, adaptive mesh refinement, boundary conditions, and stability issues all interact in ways that require care.
 
-The heavy, unforgiving C++ High-Performance Computing (HPC) core operates entirely behind the scenes. You communicate with it through elegant, human-readable YAML configuration files. If you want to change a spin parameter, alter a mass ratio, or add an accretion disk, you simply edit a text file—you do not recompile a million lines of code. 
+On top of that, the software can be difficult to approach. Many existing frameworks are powerful and historically important, but using them well often requires a strong background in C++, HPC systems, build environments, and framework-specific design. For a student, independent researcher, or theorist who wants to test a scenario, the software barrier can become almost as significant as the physics barrier.
 
-You do not need to be a C++ veteran to use this tool. You need spatial intelligence, a healthy sense of logic, and a willingness to learn the physics. If you understand the mechanics of the universe, the software will no longer stand in your way. 
+The goal of GRANITE is to reduce that barrier where it can be reduced responsibly.
 
-### The Invitation
-Right now, I am the sole architect of this engine. But a scientific instrument of this magnitude cannot reach its true potential in isolation. It requires a community.
+That does not mean hiding the complexity or pretending that simulations become simple. They do not. A readable configuration file does not replace convergence testing. A visualization does not prove physical correctness. A benchmark run does not validate every regime. But better interfaces, clearer configuration, documented scenarios, and reproducible workflows can help more people engage with the science in a serious way.
 
-I am not asking you to rewrite the core solvers (unless that is your passion!). I am asking you to bring what ***you know*** and what ***you love*** to the table. Every **single** contribution pushes human knowledge forward:
-* An undergraduate spotting a misplaced minus sign in the telemetry output.
-* A hobbyist fixing a grammatical error in this very README.
-* A postdoc designing a YAML scenario that pushes the engine to its absolute breaking point.
-* A developer optimizing a single loop in the Riemann solver.
+## What I Am Trying to Build
 
-Every run you execute, every bug you report, every scenario you dream up is a brick in the foundation of this project. Even the smallest act of engagement helps reach scientific frontiers previously thought impossible.
+My long-term goal is for GRANITE to separate the numerical engine from the user-defined simulation scenario as much as possible.
 
-GRANITE is released to the world completely open-source, under the GPL 3.0 license, forever. It belongs to anyone who wishes to use it. 
+The high-performance C++ core should handle the difficult computational work: evolution equations, AMR, MPI communication, GRMHD kernels, checkpointing, diagnostics, and performance-critical memory layout. The user-facing layer should allow scenarios to be described through structured YAML files, so that changing masses, spins, refinement settings, diagnostics, or output options does not require editing the solver itself.
 
-I promise to remain transparent, dedicated, and brutally honest about the project's limitations and triumphs. I invite you to bring your curiosity, your expertise, and your imagination.
+This is an engineering goal, not a completed claim.
 
-> ***Let’s simulate the universe — together.***
+To make this reliable, the project needs schema validation, clear defaults, useful error messages, benchmark scenarios, documentation, and tests that catch invalid or physically questionable configurations. The purpose is not to make numerical relativity look easy. The purpose is to make the workflow more transparent, reproducible, and accessible without weakening the numerical standards.
 
-— **LiranOG**, Founder & Lead Architect | April 17, 2026
+I believe that is a worthwhile direction.
 
-***
+## Where the Project Stands
 
-###  Ready to see the future?
-If you want to understand exactly *how* I plan to achieve this—the plans for the YAML revolution, the VORTEX real-time visualization, and the HPC Cloud Bridge economy—read the **[GRANITE v1.0 Vision & Manifesto](VISION.md)**.
+GRANITE started as the work of one person. That matters because it explains both the focus of the project and its current limitations.
+
+A single developer can build a foundation, explore architecture, implement kernels, write documentation, and push the project forward. But a credible scientific code cannot mature in isolation. It needs review. It needs people to run it on different machines. It needs physicists to question assumptions. It needs HPC engineers to profile real workloads. It needs developers to find unsafe abstractions. It needs users to report where the documentation fails.
+
+The project’s potential depends on that transition: from a personal effort into a shared technical and scientific effort.
+
+## How People Can Help
+
+You do not need to rewrite the core solvers to contribute. There are many useful ways to help, and not all of them require the same background.
+
+A contribution can be:
+
+- fixing a typo or unclear sentence in the documentation;
+- testing the build instructions on a new machine;
+- reporting a compiler, MPI, or platform issue;
+- running a small benchmark and sharing the exact configuration;
+- checking whether an example YAML file is understandable;
+- improving error messages or configuration validation;
+- reviewing a numerical method against known literature;
+- adding unit tests around a fragile subsystem;
+- profiling a performance bottleneck;
+- helping prepare GPU-porting work;
+- improving visualization and runtime telemetry;
+- designing a realistic benchmark scenario;
+- helping document deployment on an HPC cluster.
+
+Small contributions matter because they reduce friction for the next person. A corrected command, a clearer explanation, a reproducible bug report, or a failed benchmark with good logs can save someone else hours of work.
+
+Larger contributions are also welcome, especially from people with experience in numerical relativity, GRMHD, scientific computing, C++ performance engineering, GPU programming, MPI, HPC operations, or scientific visualization. GRANITE needs that kind of expertise if it is going to move from an ambitious prototype toward a tool that others can evaluate seriously.
+
+## What I Can Promise
+
+I cannot promise that every planned feature will arrive quickly.
+
+I cannot promise that every scenario will work, or that every numerical issue has already been solved.
+
+I can promise that I will try to keep the project honest: clear about what is implemented, clear about what is experimental, clear about what is only a roadmap item, and clear about what still needs validation.
+
+The code is released as open source under the GPL-3.0 license. My intention is for GRANITE to remain inspectable, modifiable, and available to people who want to learn from it, test it, improve it, or build on it.
+
+If you are reading this as a researcher, engineer, student, or independent developer: you are welcome here. Bring criticism. Bring bug reports. Bring benchmarks. Bring questions. Bring careful skepticism. That is how a project like this becomes stronger.
+
+GRANITE began as one person’s attempt to build a serious open tool for extreme astrophysical simulation. It will only become something more useful if other people help test, challenge, and improve it.
+
+Thank you for reading, and thank you to anyone who chooses to contribute.
+
+— **Liran M. Schwartz (LiranOG),**
+Founder and Lead Developer  
+
+---
+
+For the technical roadmap, current limitations, and planned development path, see the **[GRANITE Technical Vision](VISION.md)**.
