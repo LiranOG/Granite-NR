@@ -504,6 +504,7 @@ GRANITE/
 ├── scripts/             # Build/run wrappers, health check, live diagnostics.
 ├── src/                 # C++17 physics kernels (~8,900 lines).
 ├── tests/               # 107-test GoogleTest suite across 20 suites (covers all physics modules: CCZ4, GRMHD, AMR, horizon, M1, HDF5 I/O, initial data).
+├── validation/          # Benchmark reproducibility artifacts for versioned releases.
 └── viz/                 # Post-processing and visualisation scripts.
     └── vortex_eternity/       # The new WebGL frontend directory
 ```
