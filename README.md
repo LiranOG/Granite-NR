@@ -21,7 +21,7 @@
 
 </div>
 
-> **Status: ⏸️ v0.6.8 pre-release / development hiatus — May to August 2026.**  
+> **Status:** 🚧 `v0.6.8` pre-release / active development.
 > Selected core C++ components are functional and covered by 105 / 107 passing GoogleTest cases across 20 test suites. The `single_puncture` and `B2_eq` benchmarks have been run stably through t = 500 M without NaN events, reaching early inspiral only. Full merger evolution, SXS waveform comparison, CLI-level checkpoint resume, and production radiation-coupled runs remain roadmap targets.
 
 GRANITE is an open-source C++17 research code for 3+1 numerical relativity and General-Relativistic Magnetohydrodynamics (GRMHD). It implements CCZ4 spacetime evolution and Valencia-formulation GRMHD components, with a development focus on modular architecture, explicit benchmark scenarios, Adaptive Mesh Refinement (AMR), HDF5 output, and future GPU/HPC portability.
@@ -31,53 +31,7 @@ The project targets compact-object and high-energy astrophysical simulations, in
 ---
 
 > [!IMPORTANT]
-> ### Development Hiatus — May to August 2026
->
-> I am stepping back from active development on GRANITE for a few months
-> to attend to personal matters. **The project is not abandoned.** This
-> notice is intended to set clear expectations during the pause.
->
-> **Current state — `v0.6.8` (Architecture & Stability Pre-release):**
-> Selected core subsystems are functional and covered by the current test suite:
-> CCZ4 spacetime evolution, Valencia GRMHD components, Berger–Oliger AMR
-> infrastructure with subcycling, moving-puncture gauge support, HDF5 checkpoint
-> writing, and the main initial-data suite. 105 / 107 tests pass across 20
-> GoogleTest suites (2 skipped: horizon finder on coarse 16³ grids).
-> 
-> The `single_puncture` and `B2_eq` benchmarks have been run stably through
-> t = 500 M without NaN events. These runs demonstrate selected stability
-> behavior in the tested regimes; they do not yet constitute full merger
-> validation or broad production validation. The repository remains public under
-> GPL-3.0 for review, testing, citation, and extension.
-> 
-> **During the hiatus:**
-> - Issues, pull requests, and discussions remain open and will be
->   reviewed in full upon return. Nothing will be dismissed or closed
->   without a proper response.
-> - Replies may be intermittent or absent. Please do not interpret
->   silence as disinterest — every submission will be addressed.
-> - The Zenodo record (DOI: [10.5281/zenodo.20284043](https://doi.org/10.5281/zenodo.20284043)) and the in-preparation arXiv preprint  
->   (`docs/paper/granite_preprint_v067.tex`; describing the immediately prior v0.6.7 release) remain the canonical scientific references.
->   v0.6.8 is a pre-release refactor of that codebase — test count, module structure, and CLI workflows
->   have been updated, but the core physics formulation, benchmark scenarios, and v0.6.7
->   results documented in the preprint remain accurate descriptions of the underlying engine.
->
-> **Impact on the roadmap.** A multi-month pause necessarily affects
-> downstream milestones. The `v0.7.0` target (currently listed as
-> Q4 2026 — GPU CUDA kernels, `--resume` checkpoint restart, M1 wired
-> into the RK3 loop) and all subsequent versions (`v0.8.0`, `v0.9.0`,
-> `v1.0.0`) will be re-evaluated and updated in `CHANGELOG.md` and the
-> roadmap table once active development resumes. I would rather publish
-> revised dates that I can meet than hold to a schedule that no longer
-> reflects reality.
->
-> **Resumption:** active development resumes approximately
-> **June–August 2026.**
->
-> Thank you for your patience and for your continued interest in GRANITE.
->
->  *Liran M. Schwartz (LiranOG), Founder & Lead Developer*  
-> — Contact: `scliran9@gmail.com` · ORCID: [0009-0008-8035-1308](https://orcid.org/0009-0008-8035-1308)
+> The `v0.7.0 → v1.0.0` roadmap is currently under review and will be updated with revised milestones soon. Current state remains `v0.6.8` (Architecture & Stability Pre-release) — see [`CHANGELOG.md`](./CHANGELOG.md) for details.
 
 > [!NOTE]
 > ### Why this is a pre-release
